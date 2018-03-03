@@ -1,0 +1,31 @@
+connect
+batch
+
+# register the mariadb driver modul on name mariadb
+/subsystem=datasources/jdbc-driver=mariadb:add( \
+    driver-name=mariadb, \
+    driver-module-name=org.mariadb.driver, \
+    driver-xa-datasource-class-name=org.mariadb.jdbc.MariaDbDataSource \
+)
+
+# add a xa datasource using the mariadb driver module.
+# instead of writing real connection values we use placeholders, which we can replace
+# on the fly when container starts.
+xa-data-source add \
+    --name=MariadbConnexion \
+    --driver-name=mariadb \
+    --jndi-name=java:jboss/datasources/MariadbConnexion \
+    --user-name=###DB_USER### \
+    --password=###DB_PASSWORD### \
+    --use-ccm=false \
+    --max-pool-size=25 \
+    --blocking-timeout-wait-millis=5000 \
+    --enabled=true \
+    --check-valid-connection-sql="SELECT 1" \
+    --background-validation=true \
+    --background-validation-millis=1000
+/subsystem=datasources/xa-data-source=MariadbConnexion/xa-datasource-properties=ServerName:add(value=###DB_HOST###)
+/subsystem=datasources/xa-data-source=MariadbConnexion/xa-datasource-properties=PortNumber:add(value=###DB_PORT###)
+/subsystem=datasources/xa-data-source=MariadbConnexion/xa-datasource-properties=DatabaseName:add(value=###DB_SCHEMA###)
+
+run-batch
