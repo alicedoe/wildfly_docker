@@ -14,8 +14,7 @@ No screenshot for now
 
 * Mariadb container with a simple database and a user
 * Create a wildfly container with mariadb drivers and connect it to the database already created
-* Setup hibernate and use to create a simple CRUD
-* Next step : create a wiki to explain all steps i followed precisely
+* Setup Rest Api and one endpoint : http://ipadresswildflycontainer:8080/application/hello/toto
 
 ## License
 
