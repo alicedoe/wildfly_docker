@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.alicegabbana.hellotest</groupId>
-  <artifactId>HelloWorld</artifactId>
+  <groupId>com.alicegabbana</groupId>
+  <artifactId>restserver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   
@@ -19,12 +19,20 @@
 		<version.jboss.spec.javaee.7.0>1.0.3.Final</version.jboss.spec.javaee.7.0>
 	</properties>
 
-	<dependencies>		
+	<dependencies>
 		<dependency>
-        <groupId>org.jboss.resteasy</groupId>
-	        <artifactId>resteasy-multipart-provider</artifactId>
-	        <scope>provided</scope>
-	    </dependency>		
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.1-api</artifactId>
+		</dependency>			
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.spec.javax.ejb</groupId>
+		    <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+		    <scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

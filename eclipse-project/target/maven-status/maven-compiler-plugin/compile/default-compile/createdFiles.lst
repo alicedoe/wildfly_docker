@@ -1,0 +1,3 @@
+com/alicegabbana/restserver/model/dao/UserDao.class
+com/alicegabbana/restserver/endpoints/user/ApplicationEndpoint.class
+com/alicegabbana/resterver/model/template/Book.class

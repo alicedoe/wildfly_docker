@@ -1,2 +1,4 @@
-/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/helloworld/endpoints/EndpointVersion.java
-/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/helloworld/endpoints/AdminEndpoint.java
+/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/restserver/model/dao/UserDao.java
+/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/resterver/model/template/Book.java
+/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/restserver/endpoints/user/UserEndpoint.java
+/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/restserver/endpoints/user/ApplicationEndpoint.java
