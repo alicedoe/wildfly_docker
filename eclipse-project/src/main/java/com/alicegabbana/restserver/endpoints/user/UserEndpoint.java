@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.resterver.model.template.Book;
+import com.alicegabbana.resterver.model.User;
 import com.alicegabbana.restserver.model.dao.UserDao;
 
 @Path("/user")
@@ -22,11 +22,8 @@ public class UserEndpoint {
 	@GET
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
-	public int addUser() {
-
-		Book newBook = userDao.create();
-		
-		return newBook.getId();
+	public String addUser() {		
+		return "Created !";
 	}
 
 }

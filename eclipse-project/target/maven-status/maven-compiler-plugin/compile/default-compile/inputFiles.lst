@@ -1,4 +1,10 @@
-/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/restserver/model/dao/UserDao.java
-/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/resterver/model/template/Book.java
-/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/restserver/endpoints/user/UserEndpoint.java
-/home/aliiiiiiiiii/dev/workspace/restserver/src/main/java/com/alicegabbana/restserver/endpoints/user/ApplicationEndpoint.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/Tag.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/Role.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/restserver/endpoints/user/UserEndpoint.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/Classe.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/Niveau.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/User.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/Devoir.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/restserver/model/dao/UserDao.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/resterver/model/Matiere.java
+/home/aliiiiiiiiii/dev/cahierenligne/eclipse-project/src/main/java/com/alicegabbana/restserver/endpoints/user/ApplicationEndpoint.java

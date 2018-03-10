@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.resterver.model.template.Book;
+import com.alicegabbana.resterver.model.User;
 
 import javax.ejb.Stateless;
 
@@ -17,12 +17,11 @@ public class UserDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Book create( ) {		
+	public void create( ) {		
 		
-		Book book = new Book("mon super titre","auteur",12);
-		book.setId(2);
-		Book loadedBook = em.merge(book);
-		return loadedBook;
+//		User book = new User();
+//		User loadedBook = em.merge(book);
+//		return loadedBook;
 		
 	}
 }
