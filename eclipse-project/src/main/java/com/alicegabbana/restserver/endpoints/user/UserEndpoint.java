@@ -1,6 +1,5 @@
 package com.alicegabbana.restserver.endpoints.user;
 
-import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,14 +11,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.User;
-import com.alicegabbana.restserver.dao.UserDao;
-
 @Path("/user")
 public class UserEndpoint {
-	
-	@EJB
-	UserDao userDao;
 	
 	Logger logger = Logger.getLogger(UserEndpoint.class);
 

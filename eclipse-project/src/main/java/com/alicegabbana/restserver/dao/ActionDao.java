@@ -49,5 +49,18 @@ public class ActionDao {
 				
 		return null;
 	}
+	
+	public Action getAction (String name) {
+		
+		TypedQuery<Action> query_name = em.createQuery("SELECT action FROM Action action WHERE action.nom = :name", Action.class)
+				.setParameter("name", name);
+		List<Action> loadedActions = query_name.getResultList();
+		logger.error(loadedActions.size());
+		if ( loadedActions.size() != 0 ) {
+			return loadedActions.get(0);
+		}
+				
+		return null;
+	}
 
 }

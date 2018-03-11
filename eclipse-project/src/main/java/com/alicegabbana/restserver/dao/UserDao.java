@@ -8,15 +8,22 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.model.Role;
 import com.alicegabbana.restserver.model.User;
+import com.alicegabbana.restserver.service.AuthService;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.KeyLengthException;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
 public class UserDao {
 	
 	Logger logger = Logger.getLogger(UserDao.class);
+	
+	@EJB
+	AuthService authService;
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
@@ -30,6 +37,19 @@ public class UserDao {
 		}
 		
 		if ( userExist(user) == true ) {
+			return null;
+		}
+		
+		try {
+			String token = authService.createToken(user.getEmail());
+			user.setToken(token);
+		} catch (KeyLengthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (JOSEException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return null;
 		}
 		

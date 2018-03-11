@@ -33,8 +33,6 @@ public class User {
 	private String pwd;
 	@NotNull
 	private String token;
-	@NotNull
-	private Date tokenCreation;
 		
 	public String getEmail() {
 		return email;
@@ -84,16 +82,11 @@ public class User {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Date getTokenCreation() {
-		return tokenCreation;
-	}
-	public void setTokenCreation(Date tokenCreation) {
-		this.tokenCreation = tokenCreation;
-	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", role=" + role + ", prenom=" + prenom + ", nom=" + nom + ", classe=" + classe
-				+ ", pwd=" + pwd + ", token=" + token + ", tokenCreation=" + tokenCreation + "]";
+				+ ", pwd=" + pwd + ", token=" + token + "]";
 	}
 	
 }
