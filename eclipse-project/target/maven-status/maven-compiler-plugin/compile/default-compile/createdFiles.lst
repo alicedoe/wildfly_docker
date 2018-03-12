@@ -21,4 +21,5 @@ com/alicegabbana/restserver/model/User.class
 com/alicegabbana/restserver/dao/UserDao.class
 com/alicegabbana/restserver/dao/AdminDao.class
 com/alicegabbana/restserver/model/Devoir.class
+com/alicegabbana/restserver/service/UserService.class
 com/alicegabbana/restserver/model/Tag.class

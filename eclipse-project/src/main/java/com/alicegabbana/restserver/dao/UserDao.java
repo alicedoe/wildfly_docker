@@ -30,13 +30,7 @@ public class UserDao {
 
 	public User create( User user ) {		
 		
-		if ( user.getId() != null ) {
-			String message = "Id must be null for Role creation : " + user;
-			logger.error(message);
-			throw new IllegalArgumentException(message);
-		}
-		
-		if ( userExist(user) == true ) {
+		if ( emailExist(user.getEmail()) ) {
 			return null;
 		}
 		
@@ -44,11 +38,9 @@ public class UserDao {
 			String token = authService.createToken(user.getEmail());
 			user.setToken(token);
 		} catch (KeyLengthException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		} catch (JOSEException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -58,10 +50,10 @@ public class UserDao {
 		
 	}
 	
-	public boolean userExist (User user) {
+	public boolean emailExist(String email) {
 		
 		TypedQuery<User> query_email = em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
-				.setParameter("email", user.getEmail());
+				.setParameter("email", email);
 		List<User> loadedUsers = query_email.getResultList();
 		
 		if ( loadedUsers.size() != 0 ) {

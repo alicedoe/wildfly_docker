@@ -18,6 +18,7 @@ import com.alicegabbana.restserver.model.Role;
 import com.alicegabbana.restserver.model.Setting;
 import com.alicegabbana.restserver.model.User;
 import com.alicegabbana.restserver.service.AuthService;
+import com.alicegabbana.restserver.service.UserService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 import com.alicegabbana.restserver.dao.ActionDao;
@@ -43,25 +44,17 @@ public class CreateDumpEndpoint {
 	@EJB
 	AuthService authService;
 	
+	@EJB
+	UserService userService;
+	
 	Logger logger = Logger.getLogger(CreateDumpEndpoint.class);
 	
 	@GET
 	@Path("/ping")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String ping() { 
-		
-		
-		try {
-			return authService.createToken("toto@toto.com");
-		} catch (KeyLengthException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JOSEException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
+	public boolean ping() { 
+	
+			return userService.validateEmail("totototo.com");
 		
 	}
 
