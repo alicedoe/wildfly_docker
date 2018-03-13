@@ -20,7 +20,7 @@ public class AuthDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public boolean userCan ( Action action, String token ) {		
+	public boolean userCanDoAction( String token, Action action ) {		
 		
 		User currentUser;
 		
@@ -42,7 +42,7 @@ public class AuthDao {
 		
 	}
 	
-	public Action getAction ( String name ) {
+	public Action getActionByItsName( String name ) {
 		
 		Action currentAction;
 		

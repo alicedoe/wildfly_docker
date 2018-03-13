@@ -21,7 +21,18 @@ public class Role {
 	private String nom;	
 	@ManyToMany
 	@NotNull
-	private List <Action> actions;
+	private List <Action> actions;	
+
+	public Role() {
+		super();
+	}
+	
+	public Role(Long id, String nom, List<Action> actions) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.actions = actions;
+	}
 
 	public List<Action> getActions() {
 		return actions;

@@ -1,5 +1,9 @@
 package com.alicegabbana.restserver.endpoints.role;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,6 +19,7 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.model.Action;
 import com.alicegabbana.restserver.model.Role;
+import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.dao.AuthDao;
 import com.alicegabbana.restserver.dao.RoleDao;
 import com.alicegabbana.restserver.dao.UserDao;
@@ -26,7 +31,7 @@ public class RoleEndpoint {
 	RoleDao roleDao;
 	
 	@EJB
-	AuthDao authDao;
+	AuthService authService;
 	
 	Logger logger = Logger.getLogger(RoleEndpoint.class);
 
@@ -40,21 +45,16 @@ public class RoleEndpoint {
 			logger.debug("Endpoint Post : /role/add");
 		}
 		
-		String actionNeeded = "add role";
-		Action authAction = authDao.getAction(actionNeeded);
-		logger.error("we are if user can do action : "+authAction.getId());
-		if ( !authDao.userCan(authAction, userToken) ) {
-			
-			throw new SecurityException("Your role doesn't allowed you to perfom this action : "+actionNeeded);
-			
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"create role"
+	            		));
+		if (authService.userCanDoActions(userToken, actionsNeeded)) {
+//			Role newRole = roleDao.create(role);		
+			return role;
 		} else {
-			
-			logger.info("Auth granted");
-			
+			return new Role ( 0L, "Access not granted", null);
 		}
-		
-//		Role newRole = roleDao.create(role);		
-		return role;
 	}
 	
 	@GET

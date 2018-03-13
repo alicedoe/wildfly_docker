@@ -2,6 +2,8 @@ package com.alicegabbana.restserver.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.function.Consumer;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -13,6 +15,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import com.alicegabbana.restserver.dao.AdminDao;
+import com.alicegabbana.restserver.dao.AuthDao;
+import com.alicegabbana.restserver.model.Action;
 import com.alicegabbana.restserver.model.Setting;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -28,6 +32,11 @@ public class AuthService {
 	
 	@EJB
 	AdminDao adminDao;
+	
+	@EJB
+	AuthDao authDao;
+	
+	boolean userIsGranted;
 
 	public String createToken(String email) throws KeyLengthException, JOSEException {
 		
@@ -52,5 +61,20 @@ public class AuthService {
 		return signedJWT.serialize();
 		
 	}
+	
+	public boolean userCanDoActions (String token, List<String> actions) {		
 
+		final String currentUserToken = token;
+		
+		actions.forEach(new Consumer<String>() {
+			public void accept(String actionName) {
+				Action action = authDao.getActionByItsName(actionName);
+				if ( !authDao.userCanDoAction(currentUserToken, action) ) {
+					userIsGranted = false;
+				} else userIsGranted = true;
+			}
+		});
+
+		return userIsGranted;
+	}
 }
