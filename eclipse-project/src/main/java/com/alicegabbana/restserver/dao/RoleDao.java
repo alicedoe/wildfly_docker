@@ -19,14 +19,9 @@ public class RoleDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Role create( Role role ) {		
+	public Role createRole ( Role role ) {		
 		
-		if ( role.getId() != null ) {
-			String message = "Id must be null for Role creation : " + role;
-			logger.error(message);
-			throw new IllegalArgumentException(message);
-		}
-		
+		logger.info("Dao createRole : check if role exist");
 		if ( roleExist(role) == true ) {
 			return null;
 		}
@@ -43,9 +38,10 @@ public class RoleDao {
 		List<Role> loadedRoles = query_name.getResultList();
 		
 		if ( loadedRoles.size() != 0 ) {
+			logger.info("Dao createRole : role already exist");	
 			return true;
 		}
-				
+		logger.info("Dao createRole : role doesn't exist");		
 		return false;
 	}
 

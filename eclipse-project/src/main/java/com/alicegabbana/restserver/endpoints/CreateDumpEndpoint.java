@@ -18,6 +18,7 @@ import com.alicegabbana.restserver.model.Role;
 import com.alicegabbana.restserver.model.Setting;
 import com.alicegabbana.restserver.model.User;
 import com.alicegabbana.restserver.service.AuthService;
+import com.alicegabbana.restserver.service.RoleService;
 import com.alicegabbana.restserver.service.UserService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
@@ -46,6 +47,9 @@ public class CreateDumpEndpoint {
 	
 	@EJB
 	UserService userService;
+	
+	@EJB
+	RoleService roleService;
 	
 	Logger logger = Logger.getLogger(CreateDumpEndpoint.class);
 	
@@ -92,18 +96,18 @@ public class CreateDumpEndpoint {
 		adminActions.add(actionDao.getAction("update role"));
 		adminActions.add(actionDao.getAction("read role"));
 		admin.setActions(adminActions);
-		Role adminRole = roleDao.create(admin);
+//		Role adminRole = roleService.createRole(admin);
 		
 //		Dump Users
-		User userAdmin = new User();
-		userAdmin.setEmail("admin@admin.com");
-		userAdmin.setNom("admin");
-		userAdmin.setPrenom("admin");
-		userAdmin.setPwd("admin");
-		userAdmin.setRole(adminRole);
-		userAdmin.setToken("monsupertoken");
-		userDao.create(userAdmin);
-
+//		User userAdmin = new User();
+//		userAdmin.setEmail("admin@admin.com");
+//		userAdmin.setNom("admin");
+//		userAdmin.setPrenom("admin");
+//		userAdmin.setPwd("admin");
+//		userAdmin.setRole(adminRole);
+//		userAdmin.setToken("monsupertoken");
+//		userService.createUser(userAdmin);
+//
 		return "Dump created !";
 		
 	}

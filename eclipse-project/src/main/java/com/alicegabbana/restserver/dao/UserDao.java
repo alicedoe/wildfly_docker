@@ -28,7 +28,7 @@ public class UserDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public User create( User user ) {		
+	public User createUser ( User user ) {		
 		
 		if ( emailExist(user.getEmail()) ) {
 			return null;

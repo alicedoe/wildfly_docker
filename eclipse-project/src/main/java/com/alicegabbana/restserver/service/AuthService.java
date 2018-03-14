@@ -16,6 +16,7 @@ import org.joda.time.Period;
 
 import com.alicegabbana.restserver.dao.AdminDao;
 import com.alicegabbana.restserver.dao.AuthDao;
+import com.alicegabbana.restserver.dao.UserDao;
 import com.alicegabbana.restserver.model.Action;
 import com.alicegabbana.restserver.model.Setting;
 import com.nimbusds.jose.JOSEException;
@@ -37,6 +38,7 @@ public class AuthService {
 	AuthDao authDao;
 	
 	boolean userIsGranted;
+	Logger logger = Logger.getLogger(AuthService.class);
 
 	public String createToken(String email) throws KeyLengthException, JOSEException {
 		
@@ -62,7 +64,7 @@ public class AuthService {
 		
 	}
 	
-	public boolean userCanDoActions (String token, List<String> actions) {		
+	public boolean userCanDoListOfActions (String token, List<String> actions) {		
 
 		final String currentUserToken = token;
 		
@@ -74,7 +76,7 @@ public class AuthService {
 				} else userIsGranted = true;
 			}
 		});
-
+		logger.info("userCanDoListOfActions : user is granted");
 		return userIsGranted;
 	}
 }

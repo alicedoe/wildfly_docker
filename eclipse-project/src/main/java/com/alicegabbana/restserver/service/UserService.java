@@ -5,6 +5,8 @@ import javax.ejb.Stateless;
 
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.dao.AuthDao;
+import com.alicegabbana.restserver.dao.UserDao;
 import com.alicegabbana.restserver.model.User;
 
 import java.util.regex.Matcher;
@@ -12,9 +14,9 @@ import java.util.regex.Pattern;
 
 @Stateless
 public class UserService {
-
+	
 	@EJB
-	UserService userService;
+	UserDao userDao;
 	
 	Logger logger = Logger.getLogger(UserService.class);
 	
@@ -40,7 +42,7 @@ public class UserService {
 			return null;
 		}
 		
-		User newUser = userService.createUser(user);
+		User newUser = userDao.createUser(user);
 		
 		return newUser;
 	}

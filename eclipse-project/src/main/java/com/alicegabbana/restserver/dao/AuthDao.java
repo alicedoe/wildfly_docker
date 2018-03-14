@@ -30,14 +30,14 @@ public class AuthDao {
 		
 		if ( loadedUsers.size() != 0 ) {
 			currentUser = loadedUsers.get(0);
-			logger.error("we are checkin user : "+currentUser.getNom());
+			logger.info("userCanDoAction : user "+currentUser.getNom());
 			if ( !currentUser.getRole().getActions().contains(action) ) {
 				return false;
 			}
 		} else {
 			return false;
 		}
-		
+		logger.info("userCanDoAction : return true");
 		return true;
 		
 	}

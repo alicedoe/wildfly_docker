@@ -4,6 +4,7 @@ com/alicegabbana/restserver/dao/NiveauDao.class
 com/alicegabbana/restserver/dao/ActionDao.class
 com/alicegabbana/restserver/endpoints/ApplicationEndpoint.class
 com/alicegabbana/restserver/model/Niveau.class
+com/alicegabbana/restserver/service/RoleService.class
 com/alicegabbana/restserver/model/Matiere.class
 com/alicegabbana/restserver/endpoints/user/UserEndpoint.class
 com/alicegabbana/restserver/model/Action.class
