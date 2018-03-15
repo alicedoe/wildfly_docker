@@ -16,22 +16,15 @@ import org.jboss.logging.Logger;
 import com.alicegabbana.restserver.model.Action;
 import com.alicegabbana.restserver.model.Role;
 import com.alicegabbana.restserver.model.Setting;
-import com.alicegabbana.restserver.model.User;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.RoleService;
 import com.alicegabbana.restserver.service.UserService;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.KeyLengthException;
 import com.alicegabbana.restserver.dao.ActionDao;
 import com.alicegabbana.restserver.dao.AdminDao;
-import com.alicegabbana.restserver.dao.RoleDao;
 import com.alicegabbana.restserver.dao.UserDao;
 
 @Path("/dump")
 public class CreateDumpEndpoint {
-	
-	@EJB
-	RoleDao roleDao;
 	
 	@EJB
 	ActionDao actionDao;
