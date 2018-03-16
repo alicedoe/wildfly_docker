@@ -56,6 +56,23 @@ public class RoleService {
 		return builder.build();
 	}
 	
+	public Response updateRole(Role role) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		if ( role == null || role.getId() == null ) return builder.build();
+		
+		if ( !roleExist(role) ) builder.status(Response.Status.NOT_FOUND);
+		else {
+			Role updatedRole = em.merge(role);
+			builder.entity(updatedRole);
+			builder.status(Response.Status.OK);
+		}
+		
+		return builder.build();
+	}
+	
 	public Response getRole(Role role) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);

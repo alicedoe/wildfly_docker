@@ -130,16 +130,27 @@ public class RoleEndpoint {
 	}
 	
 	@PUT
-	@Path("/{roleId}")
+	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String editRole() {	
+	public Response editRole(Role role, @HeaderParam("UserToken") String userToken) {
 		
-		if (logger.isDebugEnabled()) {
-			logger.debug("Endpoint Put : /role/edit");
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"update role"
+	            		));
+		
+		if (authService.userCanDoListOfActions(userToken, actionsNeeded)) {
+			Response updateRoleServiceResponse = roleService.updateRole(role);
+			builder.status(updateRoleServiceResponse.getStatus());
+			builder.entity(updateRoleServiceResponse.getEntity());
+			
+		} else {
+			builder.status(Response.Status.FORBIDDEN);
 		}
-		
-		return "Edited !";
+		return builder.build();
 	}
 
 }
