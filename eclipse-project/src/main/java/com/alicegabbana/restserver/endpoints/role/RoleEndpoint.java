@@ -120,8 +120,8 @@ public class RoleEndpoint {
 	            		));
 		
 		if (authService.userCanDoListOfActions(userToken, actionsNeeded)) {
-			Response deleteRoleRemoval = roleService.deleteRole(role);
-			builder.status(deleteRoleRemoval.getStatus());
+			Response deleteRoleResponse = roleService.deleteRole(role);
+			builder.status(deleteRoleResponse.getStatus());
 			
 		} else {
 			builder.status(Response.Status.FORBIDDEN);

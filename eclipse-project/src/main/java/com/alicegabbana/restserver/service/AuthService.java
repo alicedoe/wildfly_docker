@@ -1,7 +1,5 @@
 package com.alicegabbana.restserver.service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -9,16 +7,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import org.jboss.logging.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import com.alicegabbana.restserver.dao.AdminDao;
 import com.alicegabbana.restserver.dao.AuthDao;
-import com.alicegabbana.restserver.dao.UserDao;
 import com.alicegabbana.restserver.model.Action;
-import com.alicegabbana.restserver.model.Setting;
+import com.alicegabbana.restserver.model.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -79,4 +74,16 @@ public class AuthService {
 		logger.info("userCanDoListOfActions : user is granted");
 		return userIsGranted;
 	}
+	
+	public boolean myUserAccount (String token, User user) {		
+		
+		User currentUser = authDao.getUserByToken(token);
+		
+		if ( currentUser != null && currentUser.getId() == user.getId() ) {
+			return true;
+			
+		} else return false;
+		
+	}
+	
 }

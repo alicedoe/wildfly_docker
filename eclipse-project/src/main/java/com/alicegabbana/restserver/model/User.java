@@ -17,9 +17,9 @@ public class User {
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_User")
 	@SequenceGenerator(name = "SEQUENCE_User", sequenceName = "SEQUENCE_User", allocationSize=25)
-	private Long id;	
-	@NotNull
+	private Long id;
 	@ManyToOne
+	@NotNull
 	private Role role;
 	@NotNull
 	private String prenom;

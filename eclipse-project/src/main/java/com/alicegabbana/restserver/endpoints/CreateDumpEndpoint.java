@@ -21,16 +21,12 @@ import com.alicegabbana.restserver.service.RoleService;
 import com.alicegabbana.restserver.service.UserService;
 import com.alicegabbana.restserver.dao.ActionDao;
 import com.alicegabbana.restserver.dao.AdminDao;
-import com.alicegabbana.restserver.dao.UserDao;
 
 @Path("/dump")
 public class CreateDumpEndpoint {
 	
 	@EJB
 	ActionDao actionDao;
-	
-	@EJB
-	UserDao userDao;
 	
 	@EJB
 	AdminDao adminDao;

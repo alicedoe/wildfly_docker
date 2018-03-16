@@ -28,7 +28,7 @@ public class RoleService {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
-		if (role.getId() != null) role.setId(null);
+		if (role.getId() != null) builder.build();
 		if ( roleExist(role) ) builder.status(Response.Status.CONFLICT);
 		else {
 			Role newRole = em.merge(role);

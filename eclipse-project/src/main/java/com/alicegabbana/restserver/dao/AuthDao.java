@@ -15,7 +15,7 @@ import com.alicegabbana.restserver.model.User;
 @Stateless
 public class AuthDao {
 	
-	Logger logger = Logger.getLogger(UserDao.class);
+	Logger logger = Logger.getLogger(AuthDao.class);
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
@@ -24,12 +24,9 @@ public class AuthDao {
 		
 		User currentUser;
 		
-		TypedQuery<User> query_user = em.createQuery("SELECT user FROM User user WHERE user.token = :token", User.class)
-				.setParameter("token", token);
-		List<User> loadedUsers = query_user.getResultList();
+		currentUser = getUserByToken(token);
 		
-		if ( loadedUsers.size() != 0 ) {
-			currentUser = loadedUsers.get(0);
+		if ( currentUser != null ) {
 			logger.info("userCanDoAction : user "+currentUser.getNom());
 			if ( !currentUser.getRole().getActions().contains(action) ) {
 				return false;
@@ -40,6 +37,16 @@ public class AuthDao {
 		logger.info("userCanDoAction : return true");
 		return true;
 		
+	}
+	
+	public User getUserByToken ( String token ) {
+		TypedQuery<User> query_user = em.createQuery("SELECT user FROM User user WHERE user.token = :token", User.class)
+				.setParameter("token", token);
+		List<User> loadedUsers = query_user.getResultList();
+		
+		if ( loadedUsers.size() != 0 ) {
+			return loadedUsers.get(0);
+		} else return null;
 	}
 	
 	public Action getActionByItsName( String name ) {
