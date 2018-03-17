@@ -1,7 +1,5 @@
 package com.alicegabbana.restserver.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +26,7 @@ public class User {
 	@NotNull
 	private String email;
 	@ManyToOne
-	private Classe classe;
+	private Kidsclass kidsClass;
 	@NotNull
 	private String pwd;
 	@NotNull
@@ -64,11 +62,11 @@ public class User {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public Classe getClasse() {
-		return classe;
+	public Kidsclass getKidsClass() {
+		return kidsClass;
 	}
-	public void setClasse(Classe classe) {
-		this.classe = classe;
+	public void setKidsClass(Kidsclass kidsClass) {
+		this.kidsClass = kidsClass;
 	}
 	public String getPwd() {
 		return pwd;
@@ -82,11 +80,10 @@ public class User {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", role=" + role + ", prenom=" + prenom + ", nom=" + nom + ", classe=" + classe
-				+ ", pwd=" + pwd + ", token=" + token + "]";
+		return "User [id=" + id + ", role=" + role + ", prenom=" + prenom + ", nom=" + nom + ", email=" + email
+				+ ", kidsClass=" + kidsClass + ", pwd=" + pwd + ", token=" + token + "]";
 	}
 	
 }

@@ -9,56 +9,49 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Classe {
+public class Kidsclass {
 
 	@Id
-	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Classe")
-	@SequenceGenerator(name = "SEQUENCE_Classe", sequenceName = "SEQUENCE_Classe", allocationSize=25)
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Kidsclass")
+	@SequenceGenerator(name = "SEQUENCE_Kidsclass", sequenceName = "SEQUENCE_Kidsclass", allocationSize=25)
     private Long id;	
 	@NotNull
 	@ManyToOne
-	private Niveau niveau;	
+	private Level level;	
 	@NotNull
 	@ManyToOne
-	private Ville ville;
+	private School school;
 	@NotNull
-	private String nom;	
+	private String nom;
 	
-	public Ville getVille() {
-		return ville;
-	}
-
-	public void setVille(Ville ville) {
-		this.ville = ville;
-	}
-
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Niveau getNiveau() {
-		return niveau;
+	public Level getLevel() {
+		return level;
 	}
-
-	public void setNiveau(Niveau niveau) {
-		this.niveau = niveau;
+	public void setLevel(Level level) {
+		this.level = level;
 	}
-
+	public School getSchool() {
+		return school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
 	public String getNom() {
 		return nom;
 	}
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
 	@Override
 	public String toString() {
-		return "Classe [id=" + id + ", niveau=" + niveau + ", ville=" + ville + ", nom=" + nom + "]";
-	}
-
+		return "Kidsclass [id=" + id + ", level=" + level + ", school=" + school + ", nom=" + nom + "]";
+	}	
+	
+	
 }

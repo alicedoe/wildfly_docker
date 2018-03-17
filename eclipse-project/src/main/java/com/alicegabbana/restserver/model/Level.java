@@ -8,20 +8,19 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Niveau {
+public class Level {
 	
 	@Id
-	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Niveau")
-	@SequenceGenerator(name = "SEQUENCE_Niveau", sequenceName = "SEQUENCE_Niveau", allocationSize=25)
-    protected Long id;
-	
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Level")
+	@SequenceGenerator(name = "SEQUENCE_Level", sequenceName = "SEQUENCE_Level", allocationSize=25)
+    protected Long id;	
 	@NotNull
     protected String nom;
  
-    public Niveau() {
+    public Level() {
     }
  
-    public Niveau(String nom) {
+    public Level(String nom) {
         this.nom = nom;
     }
  

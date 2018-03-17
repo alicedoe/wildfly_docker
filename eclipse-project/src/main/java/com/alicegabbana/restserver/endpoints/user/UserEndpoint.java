@@ -42,23 +42,13 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(User user, @HeaderParam("UserToken") String userToken) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"create role"
 	            		));
-		
-		if (authService.userCanDoListOfActions(userToken, actionsNeeded)) {
-			Response addUserServiceResponse = userService.createUser(user);
-			builder.status(addUserServiceResponse.getStatus());
-			builder.entity(addUserServiceResponse.getEntity());
-			
-		} else {
-			builder.status(Response.Status.FORBIDDEN);
-		}
-		return builder.build();
+		Response addUserServiceResponse = userService.createUserService( userToken, actionsNeeded, user );
+		return addUserServiceResponse;
 	}
 	
 	@GET
@@ -66,46 +56,26 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getUser(User user, @HeaderParam("UserToken") String userToken) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"read role"
 	            		));
-		
-		if (authService.userCanDoListOfActions(userToken, actionsNeeded) || authService.myUserAccount(userToken, user)) {
-			Response getUserServiceResponse = userService.getUser(user);
-			builder.status(getUserServiceResponse.getStatus());
-			builder.entity(getUserServiceResponse.getEntity());
-			
-		} else {
-			builder.status(Response.Status.FORBIDDEN);
-		}
-		return builder.build();
+		Response getUserServiceResponse = userService.getUserService( userToken, actionsNeeded, user );
+		return getUserServiceResponse;
 	}
 	
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUser(@HeaderParam("UserToken") String userToken) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"read role"
 	            		));
-		
-		if (authService.userCanDoListOfActions(userToken, actionsNeeded)) {
-			Response getAllUserServiceResponse = userService.getAllUser();
-			builder.status(getAllUserServiceResponse.getStatus());
-			builder.entity(getAllUserServiceResponse.getEntity());
-			
-		} else {
-			builder.status(Response.Status.FORBIDDEN);
-		}
-		return builder.build();
+		Response getAllUserServiceResponse = userService.getAllUserService( userToken, actionsNeeded );
+		return getAllUserServiceResponse;
 	}
 	
 	@DELETE
@@ -113,22 +83,13 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteRole(User user, @HeaderParam("UserToken") String userToken) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"delete role"
 	            		));
-		
-		if (authService.userCanDoListOfActions(userToken, actionsNeeded)) {
-			Response deleteUserResponse = userService.deleteUser(user);
-			builder.status(deleteUserResponse.getStatus());
-			
-		} else {
-			builder.status(Response.Status.FORBIDDEN);
-		}
-		return builder.build();
+		Response deleteUserResponse = userService.deleteUserService( userToken, actionsNeeded, user );
+		return deleteUserResponse;
 	}
 	
 	@PUT
@@ -137,22 +98,12 @@ public class UserEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response editRole(User user, @HeaderParam("UserToken") String userToken) {
 		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"update role"
 	            		));
-		
-		if (authService.userCanDoListOfActions(userToken, actionsNeeded)) {
-			Response updateUserServiceResponse = userService.updateUser(user);
-			builder.status(updateUserServiceResponse.getStatus());
-			builder.entity(updateUserServiceResponse.getEntity());
-			
-		} else {
-			builder.status(Response.Status.FORBIDDEN);
-		}
-		return builder.build();
+		Response updateUserServiceResponse = userService.updateUser( userToken, actionsNeeded, user );
+		return updateUserServiceResponse;
 	}
 
 }

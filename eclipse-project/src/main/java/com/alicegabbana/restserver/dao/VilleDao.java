@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.Ville;
+import com.alicegabbana.restserver.model.Town;
 
 @Stateless
 public class VilleDao {
@@ -19,7 +19,7 @@ public class VilleDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Ville create( Ville ville ) {		
+	public Town create( Town ville ) {		
 		
 		if ( ville.getId() != null ) {
 			String message = "Id must be null for Role creation : " + ville;
@@ -31,16 +31,16 @@ public class VilleDao {
 			return null;
 		}
 		
-		Ville loadedVille = em.merge(ville);
+		Town loadedVille = em.merge(ville);
 		return loadedVille;
 		
 	}
 	
-	public boolean villeExist (Ville ville) {
+	public boolean villeExist (Town ville) {
 		
-		TypedQuery<Ville> query_name = em.createQuery("SELECT ville FROM Role ville WHERE ville.nom = :name", Ville.class)
+		TypedQuery<Town> query_name = em.createQuery("SELECT ville FROM Role ville WHERE ville.nom = :name", Town.class)
 				.setParameter("name", ville.getNom());
-		List<Ville> loadedVilles = query_name.getResultList();
+		List<Town> loadedVilles = query_name.getResultList();
 		
 		if ( loadedVilles.size() != 0 ) {
 			return true;

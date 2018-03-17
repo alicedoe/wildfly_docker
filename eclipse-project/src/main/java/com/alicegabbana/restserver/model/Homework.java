@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,11 +17,11 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class Devoir {
+public class Homework {
 	
 	@Id
-	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Devoir")
-	@SequenceGenerator(name = "SEQUENCE_Devoir", sequenceName = "SEQUENCE_Devoir", allocationSize=25)
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Homework")
+	@SequenceGenerator(name = "SEQUENCE_Homework", sequenceName = "SEQUENCE_Homework", allocationSize=25)
 	private Long id;	
 	@NotNull
 	@ManyToOne
@@ -31,7 +32,7 @@ public class Devoir {
 	@NotNull
 	private String text;
 	@NotNull
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Tag> tag;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation;

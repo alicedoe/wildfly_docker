@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -37,7 +38,82 @@ public class UserService {
 	private static Pattern pattern;
 	private Matcher matcher;
 	
-	public boolean validateEmail(String email) {		
+	public Response createUserService( String userToken, List<String> actionsNeeded, User user) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			return builder.status(Response.Status.UNAUTHORIZED).build();
+		
+		if ( newUserIsComplete(user) == false ) return builder.status(Response.Status.BAD_REQUEST).build();
+		
+		if ( userEmailExist(user) ) return builder.status(Response.Status.CONFLICT).build();
+		
+		String newToken = createTokenUser(user);
+		
+		if ( newToken == null ) return builder.status(Response.Status.BAD_REQUEST).build();
+
+		user.setToken(newToken);		
+		User newUser = em.merge(user);
+		builder.status(Response.Status.OK);
+		builder.entity(newUser);
+		
+		return builder.build();
+	}
+	
+	public Response getUserService ( String userToken, List<String> actionsNeeded, User user ) {
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		if ( authService.userIsAuthorized(userToken, actionsNeeded) == false && itsMyAccount(userToken, user) == false ) 
+			return builder.status(Response.Status.UNAUTHORIZED).build();
+		
+		if ( user == null || user.getId() == null ) builder.status(Response.Status.BAD_REQUEST);
+		
+		if ( !userIdExistDao(user) ) return builder.status(Response.Status.NOT_FOUND).build();
+
+		user = em.find(User.class, user.getId());
+		builder.entity(user);
+		builder.status(Response.Status.OK);
+		return builder.build();
+	}
+	
+	public Response getAllUserService( String userToken, List<String> actionsNeeded ) {
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			return builder.status(Response.Status.UNAUTHORIZED).build();
+		
+		List<User> allUsers = fetchAllUserDao();	
+		logger.error("nombre d'users : "+allUsers.size());
+		builder.entity(allUsers);
+		builder.status(Response.Status.OK);
+		return builder.build();
+	}
+	
+	public Response deleteUserService( String userToken, List<String> actionsNeeded, User user ) {
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			return builder.status(Response.Status.UNAUTHORIZED).build();
+		
+		return builder.build();
+	}
+	
+	public Response updateUser( String userToken, List<String> actionsNeeded, User user ) {
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			return builder.status(Response.Status.UNAUTHORIZED).build();
+		
+		return builder.build();
+	}
+	
+	public boolean emailFormatCorrect(String email) {		
 		logger.info("validateEmail : " + email);	
 		pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(email);
@@ -59,7 +135,33 @@ public class UserService {
 		return false;
 	}
 	
-	public boolean userIdExist (User user) {
+	public boolean itsMyAccount (String token, User user) {		
+		if ( user.getId() == getUserByToken(token).getId() )
+		return true;
+		else return false;
+	}
+	
+	public User getUserByToken (String token) {
+		
+		TypedQuery<User> query_token = em.createQuery("SELECT user FROM User user WHERE user.token = :token", User.class)
+				.setParameter("token", token);
+		List<User> loadedUsers = query_token.getResultList();
+		
+		if ( loadedUsers.size() != 0 ) {
+			logger.info("Dao createUser : email already exist");	
+			return loadedUsers.get(0);
+		}
+		logger.info("Dao createUser : user doesn't exist");		
+		return null;
+	}
+	
+	public List<User> fetchAllUserDao () {
+		List<User> userDetailsList = em.createQuery("SELECT user FROM User user", User.class)
+				.getResultList();
+		return userDetailsList;
+	}
+	
+	public boolean userIdExistDao (User user) {
 		
 		TypedQuery<User> query_id = em.createQuery("SELECT user FROM User user WHERE user.id = :id", User.class)
 				.setParameter("id", user.getId());
@@ -73,86 +175,38 @@ public class UserService {
 		return false;
 	}
 	
-	public Response createUser(User user) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		if ( user.getEmail() == null ||  !validateEmail(user.getEmail()) ) 
+	public String createTokenUser (User user) {
+		try {
+			String token = authService.createToken(user.getEmail());
+			return token;
+		} catch (KeyLengthException e) {
+			e.printStackTrace();
+			return null;
+		} catch (JOSEException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean newUserIsComplete (User user) {
+		if ( user.getEmail() == null ||  !emailFormatCorrect(user.getEmail()) ) 
 		{	logger.info("invalid_null_email");
-			return Response.status(400).build();
+			return false;
 			}
 		
-		if ( user.getNom() == null || user.getPrenom() == null || user.getPwd() == null ) 
+		else if ( user.getNom() == null || user.getPrenom() == null || user.getPwd() == null ) 
 		{	logger.info("missing_attributes");
-			return Response.status(400).build(); }
+			return false; }
 		
-		if ( user.getId() != null || user.getEmail() == null )
+		else if ( user.getId() != null || user.getEmail() == null )
 		{	logger.info("forced_id");
-			return Response.status(400).build(); }
+			return false; }
 		
-		if ( !roleService.roleExist(user.getRole()) )
+		else if ( !roleService.roleNameExist(user.getRole()) )
 		{	logger.info("role_doesnt_exist");
-			return Response.status(400).build(); }
+			return false; }
 		
-		if ( userEmailExist(user) ) builder.status(Response.Status.CONFLICT);
-		else {
-			
-			try {
-				String token = authService.createToken(user.getEmail());
-				user.setToken(token);
-			} catch (KeyLengthException e) {
-				e.printStackTrace();
-				builder.status(Response.Status.LENGTH_REQUIRED);
-				return builder.build();
-			} catch (JOSEException e) {
-				e.printStackTrace();
-				return builder.build();
-			}
-			User newUser = em.merge(user);
-			builder.status(Response.Status.OK);
-			builder.entity(newUser);
-		}
-		
-		return builder.build();
+		return true;
 	}
-	
-	public Response getUser(User user) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		if ( user == null || user.getId() == null ) return Response.status(400).entity("missing_attributes").build();
-		
-		if ( !userIdExist(user) ) builder.status(Response.Status.NOT_FOUND);
-		else {
-			user = em.find(User.class, user.getId());
-			builder.entity(user);
-			builder.status(Response.Status.OK);
-		}
-		
-		return builder.build();
-	}
-	
-	public Response getAllUser() {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		return builder.build();
-	}
-	
-	public Response deleteUser(User user) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		return builder.build();
-	}
-	
-	public Response updateUser(User user) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		return builder.build();
-	}
-	
 	
 }

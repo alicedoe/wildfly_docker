@@ -59,7 +59,7 @@ public class AuthService {
 		
 	}
 	
-	public boolean userCanDoListOfActions (String token, List<String> actions) {		
+	public boolean userIsAuthorized (String token, List<String> actions) {		
 
 		final String currentUserToken = token;
 		

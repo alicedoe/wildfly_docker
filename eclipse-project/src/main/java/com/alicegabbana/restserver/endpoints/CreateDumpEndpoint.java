@@ -47,7 +47,7 @@ public class CreateDumpEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean ping() { 
 	
-			return userService.validateEmail("totototo.com");
+			return userService.emailFormatCorrect("totototo.com");
 		
 	}
 

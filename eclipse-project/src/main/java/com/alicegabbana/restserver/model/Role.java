@@ -2,6 +2,7 @@ package com.alicegabbana.restserver.model;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

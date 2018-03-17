@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Ville {
+public class Town {
 	
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Ville")

@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.Niveau;
+import com.alicegabbana.restserver.model.Level;
 
 @Stateless
 public class NiveauDao {
@@ -19,7 +19,7 @@ public class NiveauDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Niveau create( Niveau niveau ) {		
+	public Level create( Level niveau ) {		
 		
 		if ( niveau.getId() != null ) {
 			String message = "Id must be null for Role creation : " + niveau;
@@ -31,16 +31,16 @@ public class NiveauDao {
 			return null;
 		}
 		
-		Niveau loadedNiveau = em.merge(niveau);
+		Level loadedNiveau = em.merge(niveau);
 		return loadedNiveau;
 		
 	}
 	
-	public boolean niveauExist (Niveau niveau) {
+	public boolean niveauExist (Level niveau) {
 		
-		TypedQuery<Niveau> query_name = em.createQuery("SELECT niveau FROM Role niveau WHERE niveau.nom = :name", Niveau.class)
+		TypedQuery<Level> query_name = em.createQuery("SELECT niveau FROM Role niveau WHERE niveau.nom = :name", Level.class)
 				.setParameter("name", niveau.getNom());
-		List<Niveau> loadedNiveaus = query_name.getResultList();
+		List<Level> loadedNiveaus = query_name.getResultList();
 		
 		if ( loadedNiveaus.size() != 0 ) {
 			return true;

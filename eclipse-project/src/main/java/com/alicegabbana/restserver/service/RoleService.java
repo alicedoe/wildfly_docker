@@ -21,77 +21,95 @@ public class RoleService {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
+	@EJB
+	AuthService authService;
+	
 	Logger logger = Logger.getLogger(RoleService.class);
 	
-	public Response createRole(Role role) {
+	public Response createRole(String userToken, List<String> actionsNeeded, Role role) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
-		if (role.getId() != null) builder.build();
-		if ( roleExist(role) ) builder.status(Response.Status.CONFLICT);
+		if (role.getId() != null) return builder.build();
+		
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			return builder.status(Response.Status.UNAUTHORIZED).build();
+
+		if ( roleNameExist(role) ) return builder.status(Response.Status.CONFLICT).build();
 		else {
 			Role newRole = em.merge(role);
 			builder.status(Response.Status.OK);
 			builder.entity(newRole);
-		}
+		}	
 		
 		return builder.build();
 	}
 	
-	public Response deleteRole(Role role) {
+	public Response deleteRole(String userToken, List<String> actionsNeeded, Role role) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
 		if ( role == null || role.getId() == null ) return builder.build();
 		
-		if ( !roleExist(role) ) builder.status(Response.Status.NOT_FOUND);
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			builder.status(Response.Status.UNAUTHORIZED);
 		else {
-			role = em.find(Role.class, role.getId());
-			em.remove(role);
-			builder.status(Response.Status.OK);
+			if ( roleNameExist(role) == false ) builder.status(Response.Status.NOT_FOUND);
+			else {
+				role = em.find(Role.class, role.getId());
+				em.remove(role);
+				builder.status(Response.Status.OK);
+			}
 		}
 		
 		return builder.build();
 	}
 	
-	public Response updateRole(Role role) {
+	public Response updateRole(String userToken, List<String> actionsNeeded, Role role) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
 		if ( role == null || role.getId() == null ) return builder.build();
 		
-		if ( !roleExist(role) ) builder.status(Response.Status.NOT_FOUND);
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			builder.status(Response.Status.UNAUTHORIZED);
 		else {
-			Role updatedRole = em.merge(role);
-			builder.entity(updatedRole);
-			builder.status(Response.Status.OK);
+		if ( roleNameExist(role) == false ) builder.status(Response.Status.NOT_FOUND);
+			else {
+				Role updatedRole = em.merge(role);
+				builder.entity(updatedRole);
+				builder.status(Response.Status.OK);
+			}
 		}
 		
 		return builder.build();
 	}
 	
-	public Response getRole(Role role) {
+	public Response getRole(String userToken, List<String> actionsNeeded, Role role) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
 		if ( role == null || role.getId() == null ) return builder.build();
 		
-		if ( !roleExist(role) ) builder.status(Response.Status.NOT_FOUND);
+		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+			builder.status(Response.Status.UNAUTHORIZED);
 		else {
-			role = em.find(Role.class, role.getId());
-			builder.entity(role);
-			builder.status(Response.Status.OK);
+			if ( !roleNameExist(role) ) builder.status(Response.Status.NOT_FOUND);
+			else {
+				role = em.find(Role.class, role.getId());
+				builder.entity(role);
+				builder.status(Response.Status.OK);
+			}
 		}
 		
 		return builder.build();
 	}
 	
-	public Response getAllRole() {
-		
+	public Response getAllRole(String userToken, List<String> actionsNeeded) {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
@@ -107,7 +125,7 @@ public class RoleService {
 		return builder.build();
 	}
 	
-	public boolean roleExist (Role role) {
+	public boolean roleNameExist (Role role) {
 		
 		TypedQuery<Role> query_name = em.createQuery("SELECT role FROM Role role WHERE role.id = :id", Role.class)
 				.setParameter("id", role.getId());
