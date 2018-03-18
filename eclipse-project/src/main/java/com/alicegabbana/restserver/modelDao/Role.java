@@ -1,10 +1,8 @@
-package com.alicegabbana.restserver.model;
+package com.alicegabbana.restserver.modelDao;
 
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,8 +18,8 @@ public class Role {
 	@SequenceGenerator(name = "SEQUENCE_Role", sequenceName = "SEQUENCE_Role", allocationSize=25)
 	private Long id;	
 	@NotNull
-	private String nom;	
-	@ManyToMany(fetch=FetchType.EAGER)
+	private String name;	
+	@ManyToMany
 	private List <Action> actions;
 
 	public List<Action> getActions() {
@@ -40,17 +38,17 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", nom=" + nom + "]";
+		return "Role [id=" + id + ", name=" + name + "]";
 	}
 	
 }

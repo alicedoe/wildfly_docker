@@ -2,6 +2,7 @@ package com.alicegabbana.restserver.dao;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,11 +10,14 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.Action;
-import com.alicegabbana.restserver.model.User;
+import com.alicegabbana.restserver.modelDao.Action;
+import com.alicegabbana.restserver.modelDao.User;
 
 @Stateless
 public class AuthDao {
+	
+	@EJB
+	UserDao userDao;
 	
 	Logger logger = Logger.getLogger(AuthDao.class);
 	
@@ -24,7 +28,7 @@ public class AuthDao {
 		
 		User currentUser;
 		
-		currentUser = getUserByToken(token);
+		currentUser = userDao.getByToken(token);
 		
 		if ( currentUser != null ) {
 			logger.info("userCanDoAction : user "+currentUser.getNom());
@@ -32,37 +36,11 @@ public class AuthDao {
 				return false;
 			}
 		} else {
+			logger.info("userCanDoAction : return false");
 			return false;
 		}
 		logger.info("userCanDoAction : return true");
 		return true;
-		
-	}
-	
-	public User getUserByToken ( String token ) {
-		TypedQuery<User> query_user = em.createQuery("SELECT user FROM User user WHERE user.token = :token", User.class)
-				.setParameter("token", token);
-		List<User> loadedUsers = query_user.getResultList();
-		
-		if ( loadedUsers.size() != 0 ) {
-			return loadedUsers.get(0);
-		} else return null;
-	}
-	
-	public Action getActionByItsName( String name ) {
-		
-		Action currentAction;
-		
-		TypedQuery<Action> query_action = em.createQuery("SELECT action FROM Action action WHERE action.nom = :name", Action.class)
-				.setParameter("name", name);
-		List<Action> loadedActions = query_action.getResultList();
-		
-		if ( loadedActions.size() == 0 ) {
-			return null;
-		}
-		
-		currentAction = loadedActions.get(0);
-		return currentAction;
 		
 	}
 	

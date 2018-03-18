@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.model;
+package com.alicegabbana.restserver.modelDao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,14 +8,21 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Matiere {
+public class Level {
 	
 	@Id
-	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Matiere")
-	@SequenceGenerator(name = "SEQUENCE_Matiere", sequenceName = "SEQUENCE_Matiere", allocationSize=25)
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Level")
+	@SequenceGenerator(name = "SEQUENCE_Level", sequenceName = "SEQUENCE_Level", allocationSize=25)
     protected Long id;	
 	@NotNull
     protected String nom;
+ 
+    public Level() {
+    }
+ 
+    public Level(String nom) {
+        this.nom = nom;
+    }
  
     public Long getId() {
         return id;
@@ -35,6 +42,6 @@ public class Matiere {
 
 	@Override
 	public String toString() {
-		return "Matiere [id=" + id + ", nom=" + nom + "]";
+		return "Niveau [id=" + id + ", nom=" + nom + "]";
 	}
 }

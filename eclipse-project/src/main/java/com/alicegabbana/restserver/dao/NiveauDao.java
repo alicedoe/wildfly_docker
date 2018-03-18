@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.Level;
+import com.alicegabbana.restserver.modelDao.Level;
 
 @Stateless
 public class NiveauDao {

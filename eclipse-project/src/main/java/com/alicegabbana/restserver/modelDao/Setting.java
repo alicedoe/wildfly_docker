@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.model;
+package com.alicegabbana.restserver.modelDao;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

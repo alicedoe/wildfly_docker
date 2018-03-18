@@ -6,7 +6,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.Setting;
+import com.alicegabbana.restserver.modelDao.Setting;
 
 @Stateless
 public class AdminDao {

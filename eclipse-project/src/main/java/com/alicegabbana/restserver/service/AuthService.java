@@ -10,10 +10,12 @@ import org.jboss.logging.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
+import com.alicegabbana.restserver.dao.ActionDao;
 import com.alicegabbana.restserver.dao.AdminDao;
 import com.alicegabbana.restserver.dao.AuthDao;
-import com.alicegabbana.restserver.model.Action;
-import com.alicegabbana.restserver.model.User;
+import com.alicegabbana.restserver.dao.UserDao;
+import com.alicegabbana.restserver.modelDao.Action;
+import com.alicegabbana.restserver.modelDao.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -31,6 +33,12 @@ public class AuthService {
 	
 	@EJB
 	AuthDao authDao;
+	
+	@EJB
+	UserDao userDao;
+	
+	@EJB
+	ActionDao actionDao;
 	
 	boolean userIsGranted;
 	Logger logger = Logger.getLogger(AuthService.class);
@@ -65,19 +73,19 @@ public class AuthService {
 		
 		actions.forEach(new Consumer<String>() {
 			public void accept(String actionName) {
-				Action action = authDao.getActionByItsName(actionName);
+				Action action = actionDao.getAction(actionName);
 				if ( !authDao.userCanDoAction(currentUserToken, action) ) {
 					userIsGranted = false;
 				} else userIsGranted = true;
 			}
 		});
-		logger.info("userCanDoListOfActions : user is granted");
+		logger.info("userCanDoListOfActions - user is granted : "+userIsGranted);
 		return userIsGranted;
 	}
 	
 	public boolean myUserAccount (String token, User user) {		
 		
-		User currentUser = authDao.getUserByToken(token);
+		User currentUser = userDao.getByToken(token);
 		
 		if ( currentUser != null && currentUser.getId() == user.getId() ) {
 			return true;

@@ -1,10 +1,9 @@
-package com.alicegabbana.restserver.model;
+package com.alicegabbana.restserver.modelDao;
 
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +31,7 @@ public class Homework {
 	@NotNull
 	private String text;
 	@NotNull
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	private List<Tag> tag;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation;

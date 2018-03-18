@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.endpoints.user;
+package com.alicegabbana.restserver.endpoints;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,90 +20,89 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.model.Role;
-import com.alicegabbana.restserver.model.User;
+import com.alicegabbana.restserver.modelDao.Role;
+import com.alicegabbana.restserver.modelDto.RoleDto;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.RoleService;
-import com.alicegabbana.restserver.service.UserService;
 
-@Path("/user")
-public class UserEndpoint {
+@Path("/role")
+public class RoleEndpoint {
 	
 	@EJB
-	UserService userService;
+	RoleService roleService;
 	
 	@EJB
 	AuthService authService;
 	
-	Logger logger = Logger.getLogger(UserEndpoint.class);
+	Logger logger = Logger.getLogger(RoleEndpoint.class);
 
 	@POST
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(User user, @HeaderParam("UserToken") String userToken) {
-
+	public Response addRole(RoleDto role, @HeaderParam("UserToken") String userToken) {
+		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"create role"
 	            		));
-		Response addUserServiceResponse = userService.createUserService( userToken, actionsNeeded, user );
-		return addUserServiceResponse;
+		Response addRoleServiceResponse = roleService.createRole(userToken, actionsNeeded, role);
+		return addRoleServiceResponse;
 	}
 	
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getUser(User user, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(Role role, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"read role"
-	            		));
-		Response getUserServiceResponse = userService.getUserService( userToken, actionsNeeded, user );
-		return getUserServiceResponse;
+	            		));		
+		Response getRoleServiceResponse = roleService.getRole(userToken, actionsNeeded, role);
+		return getRoleServiceResponse;
 	}
 	
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllUser(@HeaderParam("UserToken") String userToken) {
+	public Response getAllRole(@HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"read role"
 	            		));
-		Response getAllUserServiceResponse = userService.getAllUserService( userToken, actionsNeeded );
-		return getAllUserServiceResponse;
+		Response getAllRoleServiceResponse = roleService.getAllRole(userToken, actionsNeeded);
+		return getAllRoleServiceResponse;
 	}
 	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteRole(User user, @HeaderParam("UserToken") String userToken) {
+	public Response deleteRole(Role role, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"delete role"
 	            		));
-		Response deleteUserResponse = userService.deleteUserService( userToken, actionsNeeded, user );
-		return deleteUserResponse;
+		Response deleteRoleResponse = roleService.deleteRole(userToken, actionsNeeded, role);
+		return deleteRoleResponse;
 	}
 	
 	@PUT
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editRole(User user, @HeaderParam("UserToken") String userToken) {
-		
+	public Response editRole(Role role, @HeaderParam("UserToken") String userToken) {
+
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"update role"
 	            		));
-		Response updateUserServiceResponse = userService.updateUser( userToken, actionsNeeded, user );
-		return updateUserServiceResponse;
+		Response updateRoleServiceResponse = roleService.updateRole(userToken, actionsNeeded, role);
+		return updateRoleServiceResponse;
 	}
 
 }
