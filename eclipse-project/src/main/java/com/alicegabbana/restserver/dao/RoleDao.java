@@ -9,8 +9,8 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Role;
-import com.alicegabbana.restserver.modelDao.User;
+import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.entity.User;
 
 @Stateless
 public class RoleDao {
@@ -20,7 +20,7 @@ public class RoleDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Role get( Long id ) {		
+	public Role getRoleById ( Long id ) {		
 		
 		Role role = em.find(Role.class, id);
 		if (role != null) return role;
@@ -29,7 +29,7 @@ public class RoleDao {
 		
 	}
 	
-	public Role get ( String name ) {		
+	public Role getRoleByName ( String name ) {		
 		
 		TypedQuery<Role> query_name = em.createQuery("SELECT role FROM Role role WHERE role.name = :name", Role.class)
 				.setParameter("name", name);

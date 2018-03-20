@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.User;
+import com.alicegabbana.restserver.entity.User;
 
 @Stateless
 public class UserDao {

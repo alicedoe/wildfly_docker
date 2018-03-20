@@ -6,7 +6,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Setting;
+import com.alicegabbana.restserver.entity.Setting;
 
 @Stateless
 public class AdminDao {
@@ -29,9 +29,9 @@ public class AdminDao {
 		
 	}
 	
-	public Setting getParam(String name) {
-		Setting token = em.find(Setting.class, name);
-		return token;
+	public Setting getSettingByName(String name) {
+		Setting setting = em.find(Setting.class, name);
+		return setting;
 	}
 
 }

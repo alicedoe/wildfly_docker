@@ -20,9 +20,9 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Role;
-import com.alicegabbana.restserver.modelDao.User;
-import com.alicegabbana.restserver.modelDto.UserDto;
+import com.alicegabbana.restserver.dto.UserDto;
+import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.entity.User;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.RoleService;
 import com.alicegabbana.restserver.service.UserService;

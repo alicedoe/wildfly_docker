@@ -13,12 +13,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.annotations.Status;
 
 import com.alicegabbana.restserver.dao.RoleDao;
-import com.alicegabbana.restserver.modelDao.Role;
-import com.alicegabbana.restserver.modelDao.User;
-import com.alicegabbana.restserver.modelDto.RoleDto;
-import com.alicegabbana.restserver.modelDto.UserDto;
+import com.alicegabbana.restserver.dto.RoleDto;
+import com.alicegabbana.restserver.dto.UserDto;
+import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.entity.User;
 
 @Stateless
 public class RoleService {
@@ -34,109 +35,68 @@ public class RoleService {
 	
 	Logger logger = Logger.getLogger(RoleService.class);
 	
-	public Response createRole(String userToken, List<String> actionsNeeded, RoleDto roleDto) {
+	public Response createRole(RoleDto roleDto) {		
 		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		if (roleDto.getId() != null) return builder.build();
-		
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+		if (roleDto.getId() != null) return returnResponse(400);
 
-		if ( roleNameExist(roleDto.getName()) ) return builder.status(Response.Status.CONFLICT).build();
-		else {			
-			Role role = roleDtoToRole(roleDto);
-			Role roleCreated = em.merge(role);
-			builder.status(Response.Status.OK);
-			builder.entity(roleCreated);
-		}	
+		if ( roleNameExist(roleDto.getName()) ) return returnResponse(409);
 		
-		return builder.build();
+		Role role = roleDtoToRole(roleDto);
+		Role roleCreated = em.merge(role);
+		RoleDto roleDtoCreated = roleToRoleDto(roleCreated);
+		return returnResponseWithEntity(200, roleDtoCreated);
+		
 	}
 	
-	public Response deleteRole(String userToken, List<String> actionsNeeded, Role role) {
+	public Response deleteRole(Role role) {
 		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		if ( role == null || role.getId() == null ) return returnResponse(400);
 		
-		if ( role == null || role.getId() == null ) return builder.build();
-		
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
-			builder.status(Response.Status.UNAUTHORIZED);
-		else {
-			if ( roleNameExist(role.getName()) == false ) builder.status(Response.Status.NOT_FOUND);
-			else {
-				role = em.find(Role.class, role.getId());
-				em.remove(role);
-				builder.status(Response.Status.OK);
-			}
-		}
-		
-		return builder.build();
+		if ( roleNameExist(role.getName()) == false ) return returnResponse(404);
+
+		role = em.find(Role.class, role.getId());
+		em.remove(role);
+		return returnResponse(200);
 	}
 	
-	public Response updateRole(String userToken, List<String> actionsNeeded, Role role) {
+	public Response updateRole(Role role) {
 		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		if ( role == null || role.getId() == null ) return builder.build();
-		
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
-			builder.status(Response.Status.UNAUTHORIZED);
-		else {
-		if ( roleNameExist(role.getName()) == false ) builder.status(Response.Status.NOT_FOUND);
-			else {
-				Role updatedRole = em.merge(role);
-				builder.entity(updatedRole);
-				builder.status(Response.Status.OK);
-			}
-		}
-		
-		return builder.build();
+		if ( role == null || role.getId() == null ) return returnResponse(400);
+
+		if ( roleNameExist(role.getName()) == false ) return returnResponse(404);
+
+		Role updatedRole = em.merge(role);
+		RoleDto roleDtoUpdated = roleToRoleDto(updatedRole);
+		return returnResponseWithEntity(200, roleDtoUpdated);
+
 	}
 	
-	public Response getRole(String userToken, List<String> actionsNeeded, Role role) {
+	public Response getRole(Role role) {
 		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		if ( role == null || role.getId() == null ) return returnResponse(400);
 		
-		if ( role == null || role.getId() == null ) return builder.build();
+		if ( !roleNameExist(role.getName()) ) return returnResponse(404);
 		
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
-			builder.status(Response.Status.UNAUTHORIZED);
-		else {
-			if ( !roleNameExist(role.getName()) ) builder.status(Response.Status.NOT_FOUND);
-			else {
-				role = em.find(Role.class, role.getId());
-				builder.entity(role);
-				builder.status(Response.Status.OK);
-			}
-		}
+		role = em.find(Role.class, role.getId());
+		RoleDto fetchRole = roleToRoleDto(role);
+		return returnResponseWithEntity(200, fetchRole);
 		
-		return builder.build();
 	}
 	
-	public Response getAllRole(String userToken, List<String> actionsNeeded) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+	public Response getAllRole() {
 		
 		List<Role> loadedRoles = roleDao.getAllRoles();
 				
-		if ( loadedRoles == null ) builder.status(Response.Status.NOT_FOUND);		
-		else {
-			List<RoleDto> roleDtoList = roleListToRoleDtoList(loadedRoles);
-			builder.entity(roleDtoList);
-			builder.status(Response.Status.OK);
-		}
+		if ( loadedRoles == null ) return returnResponse(404);		
+
+		List<RoleDto> roleDtoList = roleListToRoleDtoList(loadedRoles);
+		return returnResponseWithEntity(200, roleDtoList);
 		
-		return builder.build();
 	}
 	
 	public boolean roleNameExist (String name) {
 		
-		if ( roleDao.get(name) == null ) return false;
+		if ( roleDao.getRoleByName(name) == null ) return false;
 		return true;
 	}
 	
@@ -171,5 +131,26 @@ public class RoleService {
 		}
 
 		return roleDtoList;
+	}
+	
+	public Response returnResponse (int status) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		builder.status(status);
+		
+		return builder.build();
+	}
+	
+	public Response returnResponseWithEntity (int status, Object entity) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		builder.status(status);
+		if (entity != null) builder.entity(entity);
+		
+		return builder.build();
 	}
 }

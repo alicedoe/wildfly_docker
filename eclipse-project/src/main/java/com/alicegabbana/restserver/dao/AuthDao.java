@@ -10,8 +10,8 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Action;
-import com.alicegabbana.restserver.modelDao.User;
+import com.alicegabbana.restserver.entity.Action;
+import com.alicegabbana.restserver.entity.User;
 
 @Stateless
 public class AuthDao {
@@ -24,7 +24,7 @@ public class AuthDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public boolean userCanDoAction( String token, Action action ) {		
+	public boolean userHasThisAction( String token, Action action ) {		
 		
 		User currentUser;
 		

@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Kidsclass;
+import com.alicegabbana.restserver.entity.Kidsclass;
 
 @Stateless
 public class ClasseDao {

@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.modelDao;
+package com.alicegabbana.restserver.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,13 +8,12 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Tag {
+public class Town {
 	
 	@Id
-	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Tag")
-	@SequenceGenerator(name = "SEQUENCE_Tag", sequenceName = "SEQUENCE_Tag", allocationSize=25)
-	private Long id;
-	
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Ville")
+	@SequenceGenerator(name = "SEQUENCE_Ville", sequenceName = "SEQUENCE_Ville", allocationSize=25)
+    private Long id;
 	@NotNull
 	private String nom;
 
@@ -36,8 +35,6 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [id=" + id + ", nom=" + nom + "]";
+		return "Ville [id=" + id + ", nom=" + nom + "]";
 	}
-	
-	
 }

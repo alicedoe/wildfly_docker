@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.modelDao;
+package com.alicegabbana.restserver.entity;
 
 import java.util.Date;
 import java.util.List;

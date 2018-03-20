@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Town;
+import com.alicegabbana.restserver.entity.Town;
 
 @Stateless
 public class VilleDao {

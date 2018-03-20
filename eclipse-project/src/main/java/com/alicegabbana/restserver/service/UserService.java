@@ -10,10 +10,10 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.UserDao;
-import com.alicegabbana.restserver.modelDao.Kidsclass;
-import com.alicegabbana.restserver.modelDao.Role;
-import com.alicegabbana.restserver.modelDao.User;
-import com.alicegabbana.restserver.modelDto.UserDto;
+import com.alicegabbana.restserver.dto.UserDto;
+import com.alicegabbana.restserver.entity.Kidsclass;
+import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 
@@ -49,7 +49,7 @@ public class UserService {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 			return builder.status(Response.Status.UNAUTHORIZED).build();
 		
 		if ( newUserIsComplete(user) == false ) return builder.status(Response.Status.BAD_REQUEST).build();
@@ -72,7 +72,7 @@ public class UserService {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
-		if ( authService.userIsAuthorized(userToken, actionsNeeded) == false && itsMyAccount(userToken, user.getId()) == false ) 
+		if ( authService.userHasActionList(userToken, actionsNeeded) == false && itsMyAccount(userToken, user.getId()) == false ) 
 			return builder.status(Response.Status.UNAUTHORIZED).build();
 		
 		if ( user == null || user.getId() == null ) return builder.status(Response.Status.BAD_REQUEST).build();
@@ -89,7 +89,7 @@ public class UserService {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 			return builder.status(Response.Status.UNAUTHORIZED).build();
 		
 		List<User> allUsers = userDao.fetchAllUserDao();	
@@ -107,7 +107,7 @@ public class UserService {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false ) 
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 			return builder.status(Response.Status.UNAUTHORIZED).build();
 		
 		if ( user == null || user.getId() == null ) return builder.status(Response.Status.BAD_REQUEST).build();
@@ -125,7 +125,7 @@ public class UserService {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		if (authService.userIsAuthorized(userToken, actionsNeeded) == false) 
+		if (authService.userHasActionList(userToken, actionsNeeded) == false) 
 			return builder.status(Response.Status.UNAUTHORIZED).build();
 		
 		if ( newUserProfil == null || newUserProfil.getId() == null ) return builder.status(Response.Status.BAD_REQUEST).build();
@@ -259,7 +259,7 @@ public class UserService {
 	
 	public String createTokenUser (User user) {
 		try {
-			String token = authService.createToken(user.getEmail());
+			String token = authService.createAndReturnToken(user.getEmail());
 			return token;
 		} catch (KeyLengthException e) {
 			e.printStackTrace();

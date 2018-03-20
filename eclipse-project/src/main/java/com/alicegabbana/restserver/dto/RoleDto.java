@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.modelDto;
+package com.alicegabbana.restserver.dto;
 
 public class RoleDto {
 

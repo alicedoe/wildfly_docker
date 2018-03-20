@@ -14,8 +14,8 @@ import com.alicegabbana.restserver.dao.ActionDao;
 import com.alicegabbana.restserver.dao.AdminDao;
 import com.alicegabbana.restserver.dao.AuthDao;
 import com.alicegabbana.restserver.dao.UserDao;
-import com.alicegabbana.restserver.modelDao.Action;
-import com.alicegabbana.restserver.modelDao.User;
+import com.alicegabbana.restserver.entity.Action;
+import com.alicegabbana.restserver.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -43,10 +43,10 @@ public class AuthService {
 	boolean userIsGranted;
 	Logger logger = Logger.getLogger(AuthService.class);
 
-	public String createToken(String email) throws KeyLengthException, JOSEException {
+	public String createAndReturnToken(String email) throws KeyLengthException, JOSEException {
 		
-		int tokenDelay = Integer.parseInt(adminDao.getParam("TOKEN_EXP").getParam());
-		String api_key = adminDao.getParam("API_KEY").getParam();
+		int tokenDelay = Integer.parseInt(adminDao.getSettingByName("TOKEN_EXP").getParam());
+		String api_key = adminDao.getSettingByName("API_KEY").getParam();
 		LocalDate currentDate = new LocalDate();
 		LocalDate expiration = currentDate.plus(Period.days(tokenDelay));
 		
@@ -67,14 +67,14 @@ public class AuthService {
 		
 	}
 	
-	public boolean userIsAuthorized (String token, List<String> actions) {		
+	public boolean userHasActionList (String token, List<String> actions) {		
 
 		final String currentUserToken = token;
 		
 		actions.forEach(new Consumer<String>() {
 			public void accept(String actionName) {
-				Action action = actionDao.getAction(actionName);
-				if ( !authDao.userCanDoAction(currentUserToken, action) ) {
+				Action action = actionDao.getActionByName(actionName);
+				if ( !authDao.userHasThisAction(currentUserToken, action) ) {
 					userIsGranted = false;
 				} else userIsGranted = true;
 			}
@@ -83,7 +83,7 @@ public class AuthService {
 		return userIsGranted;
 	}
 	
-	public boolean myUserAccount (String token, User user) {		
+	public boolean itsMyAccount (String token, User user) {		
 		
 		User currentUser = userDao.getByToken(token);
 		

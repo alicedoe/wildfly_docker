@@ -20,8 +20,8 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.modelDao.Role;
-import com.alicegabbana.restserver.modelDto.RoleDto;
+import com.alicegabbana.restserver.dto.RoleDto;
+import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.RoleService;
 
@@ -46,7 +46,12 @@ public class RoleEndpoint {
 	            Arrays.asList(
 	            		"create role"
 	            		));
-		Response addRoleServiceResponse = roleService.createRole(userToken, actionsNeeded, role);
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return roleService.returnResponse(401);
+		}
+		
+		Response addRoleServiceResponse = roleService.createRole(role);
 		return addRoleServiceResponse;
 	}
 	
@@ -60,7 +65,12 @@ public class RoleEndpoint {
 	            Arrays.asList(
 	            		"read role"
 	            		));		
-		Response getRoleServiceResponse = roleService.getRole(userToken, actionsNeeded, role);
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return roleService.returnResponse(401);
+		}
+		
+		Response getRoleServiceResponse = roleService.getRole(role);
 		return getRoleServiceResponse;
 	}
 	
@@ -73,7 +83,12 @@ public class RoleEndpoint {
 	            Arrays.asList(
 	            		"read role"
 	            		));
-		Response getAllRoleServiceResponse = roleService.getAllRole(userToken, actionsNeeded);
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return roleService.returnResponse(401);
+		}
+		
+		Response getAllRoleServiceResponse = roleService.getAllRole();
 		return getAllRoleServiceResponse;
 	}
 	
@@ -87,7 +102,12 @@ public class RoleEndpoint {
 	            Arrays.asList(
 	            		"delete role"
 	            		));
-		Response deleteRoleResponse = roleService.deleteRole(userToken, actionsNeeded, role);
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return roleService.returnResponse(401);
+		}
+		
+		Response deleteRoleResponse = roleService.deleteRole(role);
 		return deleteRoleResponse;
 	}
 	
@@ -101,7 +121,12 @@ public class RoleEndpoint {
 	            Arrays.asList(
 	            		"update role"
 	            		));
-		Response updateRoleServiceResponse = roleService.updateRole(userToken, actionsNeeded, role);
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return roleService.returnResponse(401);
+		}
+		
+		Response updateRoleServiceResponse = roleService.updateRole(role);
 		return updateRoleServiceResponse;
 	}
 
