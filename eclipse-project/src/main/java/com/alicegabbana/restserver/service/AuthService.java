@@ -1,10 +1,13 @@
 package com.alicegabbana.restserver.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 import org.joda.time.LocalDate;
@@ -92,6 +95,27 @@ public class AuthService {
 			
 		} else return false;
 		
+	}
+	
+	public Response returnResponse (int status) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		builder.status(status);
+		
+		return builder.build();
+	}
+	
+	public Response returnResponseWithEntity (int status, Object entity) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		builder.status(status);
+		if (entity != null) builder.entity(entity);
+		
+		return builder.build();
 	}
 	
 }

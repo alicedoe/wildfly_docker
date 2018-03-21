@@ -37,49 +37,49 @@ public class RoleService {
 	
 	public Response createRole(RoleDto roleDto) {		
 		
-		if (roleDto.getId() != null) return returnResponse(400);
+		if (roleDto.getId() != null) return authService.returnResponse(400);
 
-		if ( roleNameExist(roleDto.getName()) ) return returnResponse(409);
+		if ( roleNameExist(roleDto.getName()) ) return authService.returnResponse(409);
 		
 		Role role = roleDtoToRole(roleDto);
 		Role roleCreated = em.merge(role);
 		RoleDto roleDtoCreated = roleToRoleDto(roleCreated);
-		return returnResponseWithEntity(200, roleDtoCreated);
+		return authService.returnResponseWithEntity(200, roleDtoCreated);
 		
 	}
 	
 	public Response deleteRole(Role role) {
 		
-		if ( role == null || role.getId() == null ) return returnResponse(400);
+		if ( role == null || role.getId() == null ) return authService.returnResponse(400);
 		
-		if ( roleNameExist(role.getName()) == false ) return returnResponse(404);
+		if ( roleNameExist(role.getName()) == false ) return authService.returnResponse(404);
 
 		role = em.find(Role.class, role.getId());
 		em.remove(role);
-		return returnResponse(200);
+		return authService.returnResponse(200);
 	}
 	
 	public Response updateRole(Role role) {
 		
-		if ( role == null || role.getId() == null ) return returnResponse(400);
+		if ( role == null || role.getId() == null ) return authService.returnResponse(400);
 
-		if ( roleNameExist(role.getName()) == false ) return returnResponse(404);
+		if ( roleNameExist(role.getName()) == false ) return authService.returnResponse(404);
 
 		Role updatedRole = em.merge(role);
 		RoleDto roleDtoUpdated = roleToRoleDto(updatedRole);
-		return returnResponseWithEntity(200, roleDtoUpdated);
+		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 
 	}
 	
 	public Response getRole(Role role) {
 		
-		if ( role == null || role.getId() == null ) return returnResponse(400);
+		if ( role == null || role.getId() == null ) return authService.returnResponse(400);
 		
-		if ( !roleNameExist(role.getName()) ) return returnResponse(404);
+		if ( !roleNameExist(role.getName()) ) return authService.returnResponse(404);
 		
 		role = em.find(Role.class, role.getId());
 		RoleDto fetchRole = roleToRoleDto(role);
-		return returnResponseWithEntity(200, fetchRole);
+		return authService.returnResponseWithEntity(200, fetchRole);
 		
 	}
 	
@@ -87,10 +87,10 @@ public class RoleService {
 		
 		List<Role> loadedRoles = roleDao.getAllRoles();
 				
-		if ( loadedRoles == null ) return returnResponse(404);		
+		if ( loadedRoles == null ) return authService.returnResponse(404);		
 
 		List<RoleDto> roleDtoList = roleListToRoleDtoList(loadedRoles);
-		return returnResponseWithEntity(200, roleDtoList);
+		return authService.returnResponseWithEntity(200, roleDtoList);
 		
 	}
 	
@@ -133,24 +133,8 @@ public class RoleService {
 		return roleDtoList;
 	}
 	
-	public Response returnResponse (int status) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		builder.status(status);
-		
-		return builder.build();
+	public Role getRoleByName (String name) {
+		return roleDao.getRoleByName(name);
 	}
 	
-	public Response returnResponseWithEntity (int status, Object entity) {
-		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-		
-		builder.status(status);
-		if (entity != null) builder.entity(entity);
-		
-		return builder.build();
-	}
 }

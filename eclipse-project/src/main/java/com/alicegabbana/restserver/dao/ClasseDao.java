@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.entity.Kidsclass;
+import com.alicegabbana.restserver.entity.KidsClass;
 
 @Stateless
 public class ClasseDao {
@@ -19,7 +19,7 @@ public class ClasseDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Kidsclass create( Kidsclass classe ) {		
+	public KidsClass create( KidsClass classe ) {		
 		
 		if ( classe.getId() != null ) {
 			String message = "Id must be null for Role creation : " + classe;
@@ -31,16 +31,16 @@ public class ClasseDao {
 			return null;
 		}
 		
-		Kidsclass loadedClasse = em.merge(classe);
+		KidsClass loadedClasse = em.merge(classe);
 		return loadedClasse;
 		
 	}
 	
-	public boolean classeExist (Kidsclass classe) {
+	public boolean classeExist (KidsClass classe) {
 		
-		TypedQuery<Kidsclass> query_name = em.createQuery("SELECT classe FROM Role classe WHERE classe.nom = :name", Kidsclass.class)
+		TypedQuery<KidsClass> query_name = em.createQuery("SELECT classe FROM Role classe WHERE classe.nom = :name", KidsClass.class)
 				.setParameter("name", classe.getNom());
-		List<Kidsclass> loadedClasses = query_name.getResultList();
+		List<KidsClass> loadedClasses = query_name.getResultList();
 		
 		if ( loadedClasses.size() != 0 ) {
 			return true;

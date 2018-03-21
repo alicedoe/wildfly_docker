@@ -26,7 +26,7 @@ public class User {
 	@NotNull
 	private String email;
 	@ManyToOne
-	private Kidsclass kidsClass;
+	private KidsClass kidsClass;
 	@NotNull
 	private String pwd;
 	@NotNull
@@ -62,10 +62,10 @@ public class User {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public Kidsclass getKidsClass() {
+	public KidsClass getKidsClass() {
 		return kidsClass;
 	}
-	public void setKidsClass(Kidsclass kidsClass) {
+	public void setKidsClass(KidsClass kidsClass) {
 		this.kidsClass = kidsClass;
 	}
 	public String getPwd() {

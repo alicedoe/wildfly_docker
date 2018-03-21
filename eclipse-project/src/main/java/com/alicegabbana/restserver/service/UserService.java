@@ -5,20 +5,17 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.UserDao;
 import com.alicegabbana.restserver.dto.UserDto;
-import com.alicegabbana.restserver.entity.Kidsclass;
+import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,10 +27,13 @@ public class UserService {
 	AuthService authService;
 	
 	@EJB
+	RoleService roleService;
+	
+	@EJB
 	UserDao userDao;
 	
 	@EJB
-	RoleService roleService;
+	KidsClassService kidsClassService;
 	
 	Logger logger = Logger.getLogger(UserService.class);
 	
@@ -44,118 +44,105 @@ public class UserService {
 	private static Pattern pattern;
 	private Matcher matcher;
 	
-	public Response createUserService( String userToken, List<String> actionsNeeded, User user) {
+	public Response createUserService( UserDto userDto) {
 		
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		if (userDto.getId() != null || newUserIsComplete(userDto) == false) return authService.returnResponse(400);
 
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+		if ( userEmailExist(userDto.getEmail()) ) return authService.returnResponse(409);
 		
-		if ( newUserIsComplete(user) == false ) return builder.status(Response.Status.BAD_REQUEST).build();
+		String newToken = returnTokenUserByEmail(userDto.getEmail());
 		
-		if ( userEmailExist(user) ) return builder.status(Response.Status.CONFLICT).build();
+		if ( newToken == null ) return authService.returnResponse(400);
 		
-		String newToken = createTokenUser(user);
-		
-		if ( newToken == null ) return builder.status(Response.Status.BAD_REQUEST).build();
-
+		User user = userDtoToUser(userDto);
 		user.setToken(newToken);		
 		User newUser = em.merge(user);
-		builder.status(Response.Status.OK);
-		builder.entity(newUser);
-		
-		return builder.build();
+		UserDto newUserDto = userToUserDto(newUser);
+		return authService.returnResponseWithEntity(200, newUserDto);
 	}
 	
-	public Response getUserService ( String userToken, List<String> actionsNeeded, User user ) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+	public Response getUserService ( UserDto userDto ) {
 		
-		if ( authService.userHasActionList(userToken, actionsNeeded) == false && itsMyAccount(userToken, user.getId()) == false ) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+		if ( userDto == null || userDto.getId() == null ) return authService.returnResponse(400);
 		
-		if ( user == null || user.getId() == null ) return builder.status(Response.Status.BAD_REQUEST).build();
-		
-		if ( !userIdExistDao(user) ) return builder.status(Response.Status.NOT_FOUND).build();
+		if ( !userIdExistDao(userDto) ) return authService.returnResponse(404);
 
-		user = em.find(User.class, user.getId());
-		builder.entity(user);
-		builder.status(Response.Status.OK);
-		return builder.build();
+		User user = em.find(User.class, userDto.getId());
+		userDto = userToUserDto(user);
+		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
-	public Response getAllUserService( String userToken, List<String> actionsNeeded ) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+	public Response getAllUserService( ) {
 		
-		List<User> allUsers = userDao.fetchAllUserDao();	
-		logger.error("nombre d'users : "+allUsers.size());
+		List<User> allUsers = userDao.fetchAllUserDao();
 		
 		List<UserDto> userDtoList = userListToUserDtoList(allUsers);
 		
-		logger.error("nombre d'users dto : "+userDtoList.size());
-		builder.entity(userDtoList);
-		builder.status(Response.Status.OK);
-		return builder.build();
+		if ( userDtoList.size() == 0 ) return authService.returnResponse(404);
+		
+		return authService.returnResponseWithEntity(200, userDtoList);
 	}
 	
-	public Response deleteUserService( String userToken, List<String> actionsNeeded, User user ) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+	public Response deleteUserService( UserDto userDto ) {
 		
-		if ( user == null || user.getId() == null ) return builder.status(Response.Status.BAD_REQUEST).build();
+		if ( userDto == null || userDto.getId() == null ) return authService.returnResponse(400);
 		
-		if ( !userIdExistDao(user) ) return builder.status(Response.Status.NOT_FOUND).build();
+		if ( !userIdExistDao(userDto) ) return authService.returnResponse(404);
 
-		user = em.find(User.class, user.getId());
+		User user = em.find(User.class, userDto.getId());
 		em.remove(user);
-		builder.status(Response.Status.OK);
-		
-		return builder.build();
+		return authService.returnResponse(200);
 	}
 	
-	public Response updateUser( String userToken, List<String> actionsNeeded, User newUserProfil ) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		if (authService.userHasActionList(userToken, actionsNeeded) == false) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+	public Response updateUser( UserDto newUserDtoProfil ) {
 		
-		if ( newUserProfil == null || newUserProfil.getId() == null ) return builder.status(Response.Status.BAD_REQUEST).build();
+		if ( newUserDtoProfil == null || newUserDtoProfil.getId() == null ) return authService.returnResponse(400);
 		
-		if ( !userIdExistDao(newUserProfil) ) return builder.status(Response.Status.NOT_FOUND).build();
+		if ( !userIdExistDao(newUserDtoProfil) ) return authService.returnResponse(404);
 		
-		User oldUser = em.find(User.class, newUserProfil.getId());
-		newUserProfil = updateUserProfil(oldUser, newUserProfil);
+		User oldUser = em.find(User.class, newUserDtoProfil.getId());
+		User newUserProfil = updateUserProfil(oldUser, newUserDtoProfil);
 		em.merge(newUserProfil);
-		builder.status(Response.Status.OK);
-		
-		return builder.build();
+		UserDto userDto = userToUserDto(newUserProfil);
+		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
-	public Response askUpdateMyAcount( String userToken, List<String> actionsNeeded, UserDto myNewProfil ) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		if ( itsMyAccount(userToken, myNewProfil.getId()) == false ) 
-			return builder.status(Response.Status.UNAUTHORIZED).build();
+	public Response updateMyAcount( UserDto myNewProfil ) {
+		
+		if ( myNewProfil == null || myNewProfil.getId() == null ) return authService.returnResponse(400);
 		
 		User myCurrentProfil = em.find(User.class, myNewProfil.getId());
 		User oldUserUpdated = updateMyAccount(myCurrentProfil, myNewProfil);
 		em.merge(oldUserUpdated);
-		builder.status(Response.Status.OK);
-		
-		return builder.build();
+		UserDto userDto = userToUserDto(oldUserUpdated);
+		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
 //	Utilities
+	
+	public User userDtoToUser (UserDto userDto) {
+		
+		User user = new User();
+		if (userDto != null) {
+			user.setId(userDto.getId());
+			user.setEmail(userDto.getEmail());
+			
+			if (userDto.getKidsClassName() != null) {
+				KidsClass kidsClass = kidsClassService.getKidsClassByName(userDto.getKidsClassName());
+				user.setKidsClass(kidsClass);
+			}
+			
+			user.setNom(userDto.getNom());
+			user.setPrenom(userDto.getPrenom());
+			
+			if (userDto.getRoleName() != null) {
+				Role role = roleService.getRoleByName(userDto.getRoleName());
+				user.setRole(role);
+			}
+		}
+		
+		return user;
+	}
 	
 	public UserDto userToUserDto (User user) {
 		
@@ -205,13 +192,13 @@ public class UserService {
 		return user;
 	}
 	
-	public User updateUserProfil(User user, User newUserProfil) {
+	public User updateUserProfil(User user, UserDto newUserProfil) {
 		
-		Role role = newUserProfil.getRole();
+		Role role = roleService.getRoleByName(newUserProfil.getRoleName());
 		String prenom = newUserProfil.getPrenom();
 		String nom = newUserProfil.getNom();
 		String email = newUserProfil.getEmail();
-		Kidsclass kidsClass = newUserProfil.getKidsClass();
+		KidsClass kidsClass = kidsClassService.getKidsClassByName(newUserProfil.getKidsClassName());
 		String pwd = newUserProfil.getPwd();
 		
 		if (role != null) user.setRole(role);
@@ -232,9 +219,9 @@ public class UserService {
 		return matcher.matches();
 	}
 	
-	public boolean userEmailExist (User user) {
+	public boolean userEmailExist (String email) {
 		
-		if ( userDao.getByEmail(user.getEmail()) == null ) {
+		if ( userDao.getByEmail(email) == null ) {
 			return false;
 		}
 		
@@ -249,17 +236,17 @@ public class UserService {
 		else return false;
 	}
 	
-	public boolean userIdExistDao (User user) {
+	public boolean userIdExistDao (UserDto userDto) {
 		
-		User currentUser = userDao.get(user.getId());
+		User currentUser = userDao.get(userDto.getId());
 		
 		if ( currentUser != null ) return true;
 		else return false;
 	}
 	
-	public String createTokenUser (User user) {
+	public String returnTokenUserByEmail (String email) {
 		try {
-			String token = authService.createAndReturnToken(user.getEmail());
+			String token = authService.createAndReturnToken(email);
 			return token;
 		} catch (KeyLengthException e) {
 			e.printStackTrace();
@@ -270,21 +257,21 @@ public class UserService {
 		}
 	}
 	
-	public boolean newUserIsComplete (User user) {
-		if ( user.getEmail() == null ||  !emailFormatCorrect(user.getEmail()) ) 
+	public boolean newUserIsComplete (UserDto userDto) {
+		if ( userDto.getEmail() == null ||  !emailFormatCorrect(userDto.getEmail()) ) 
 		{	logger.info("invalid_null_email");
 			return false;
 			}
 		
-		else if ( user.getNom() == null || user.getPrenom() == null || user.getPwd() == null ) 
+		else if ( userDto.getNom() == null || userDto.getPrenom() == null || userDto.getPwd() == null ) 
 		{	logger.info("missing_attributes");
 			return false; }
 		
-		else if ( user.getId() != null || user.getEmail() == null )
+		else if ( userDto.getId() != null || userDto.getEmail() == null )
 		{	logger.info("forced_id");
 			return false; }
 		
-		else if ( !roleService.roleNameExist(user.getRole().getName()) )
+		else if ( roleService.getRoleByName( userDto.getRoleName() ) == null )
 		{	logger.info("role_doesnt_exist");
 			return false; }
 		

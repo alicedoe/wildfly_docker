@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Kidsclass {
+public class KidsClass {
 
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Kidsclass")

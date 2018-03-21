@@ -42,13 +42,17 @@ public class UserEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(User user, @HeaderParam("UserToken") String userToken) {
+	public Response addUser(UserDto userDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"create user"
 	            		));
-		Response addUserServiceResponse = userService.createUserService( userToken, actionsNeeded, user );
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response addUserServiceResponse = userService.createUserService( userDto );
 		return addUserServiceResponse;
 	}
 	
@@ -56,13 +60,17 @@ public class UserEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getUser(User user, @HeaderParam("UserToken") String userToken) {
+	public Response getUser(UserDto userDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"read user"
 	            		));
-		Response getUserServiceResponse = userService.getUserService( userToken, actionsNeeded, user );
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response getUserServiceResponse = userService.getUserService( userDto );
 		return getUserServiceResponse;
 	}
 	
@@ -75,7 +83,11 @@ public class UserEndpoint {
 	            Arrays.asList(
 	            		"read user"
 	            		));
-		Response getAllUserServiceResponse = userService.getAllUserService( userToken, actionsNeeded );
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response getAllUserServiceResponse = userService.getAllUserService( );
 		return getAllUserServiceResponse;
 	}
 	
@@ -83,13 +95,17 @@ public class UserEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteUser(User user, @HeaderParam("UserToken") String userToken) {
+	public Response deleteUser(UserDto userDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"delete user"
 	            		));
-		Response deleteUserResponse = userService.deleteUserService( userToken, actionsNeeded, user );
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response deleteUserResponse = userService.deleteUserService( userDto );
 		return deleteUserResponse;
 	}
 	
@@ -97,13 +113,17 @@ public class UserEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editUser(User user, @HeaderParam("UserToken") String userToken) {
+	public Response editUser(UserDto userDto, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
 	            		"update user"
 	            		));
-		Response updateUserServiceResponse = userService.updateUser( userToken, actionsNeeded, user );
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response updateUserServiceResponse = userService.updateUser( userDto );
 		return updateUserServiceResponse;
 	}
 	
@@ -117,7 +137,11 @@ public class UserEndpoint {
 	            Arrays.asList(
 	            		"update user"
 	            		));
-		Response updateUserServiceResponse = userService.askUpdateMyAcount( userToken, actionsNeeded, user );
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response updateUserServiceResponse = userService.updateMyAcount( user );
 		return updateUserServiceResponse;
 	}
 
