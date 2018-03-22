@@ -21,132 +21,115 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.RoleDto;
+import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.service.ActionService;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.RoleService;
 
-@Path("/role")
-public class RoleEndpoint {
+@Path("/action")
+public class ActionEndpoint {
 	
 	@EJB
-	RoleService roleService;
+	ActionService actionService;
 	
 	@EJB
 	AuthService authService;
 	
-	Logger logger = Logger.getLogger(RoleEndpoint.class);
+	Logger logger = Logger.getLogger(ActionEndpoint.class);
 
 	@POST
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addRole(RoleDto role, @HeaderParam("UserToken") String userToken) {
+	public Response addAction(Action action, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"create role"
+	            		"create action"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response addRoleServiceResponse = roleService.createRole(role);
-		return addRoleServiceResponse;
+		Response addActionServiceResponse = actionService.createAction(action);
+		return addActionServiceResponse;
 	}
 	
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Role role, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read role"
+	            		"read action"
 	            		));		
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleService.getRole(role);
-		return getRoleServiceResponse;
+		Response getActionServiceResponse = actionService.getAction(id);
+		return getActionServiceResponse;
 	}
 	
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllRole(@HeaderParam("UserToken") String userToken) {
+	public Response getAllAction(@HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read role"
+	            		"read action"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllRoleServiceResponse = roleService.getAllRole();
-		return getAllRoleServiceResponse;
+		Response getAllActionServiceResponse = actionService.getAllAction();
+		return getAllActionServiceResponse;
 	}
 	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteRole(Role role, @HeaderParam("UserToken") String userToken) {
+	public Response deleteAction(Action action, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"delete role"
+	            		"delete action"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteRoleResponse = roleService.deleteRole(role);
-		return deleteRoleResponse;
+		Response deleteActionResponse = actionService.deleteAction(action);
+		return deleteActionResponse;
 	}
 	
 	@PUT
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response editAction(Action action, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"update role"
+	            		"update action"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.updateRole(roleDto);
-		return updateRoleServiceResponse;
-	}
-	
-	@PUT
-	@Path("/edit")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(Long roleId, List<Long> actions, @HeaderParam("UserToken") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"update role"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
-		
-		Response updateRoleServiceResponse = roleService.addActionToRole(roleId, actions);
-		return updateRoleServiceResponse;
+		Response updateActionServiceResponse = actionService.updateAction(action);
+		return updateActionServiceResponse;
 	}
 
 }

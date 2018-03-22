@@ -58,7 +58,7 @@ public class UserService {
 		user.setToken(newToken);		
 		User newUser = em.merge(user);
 		UserDto newUserDto = userToUserDto(newUser);
-		return authService.returnResponseWithEntity(200, newUserDto);
+		return authService.returnResponseWithEntity(201, newUserDto);
 	}
 	
 	public Response getUserService ( UserDto userDto ) {

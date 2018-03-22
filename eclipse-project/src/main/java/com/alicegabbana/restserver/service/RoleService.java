@@ -3,6 +3,7 @@ package com.alicegabbana.restserver.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import org.jboss.resteasy.annotations.Status;
 import com.alicegabbana.restserver.dao.RoleDao;
 import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.dto.UserDto;
+import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 
@@ -29,6 +31,9 @@ public class RoleService {
 	
 	@EJB
 	AuthService authService;
+	
+	@EJB
+	ActionService actionService;
 	
 	@EJB
 	RoleDao roleDao;
@@ -44,7 +49,7 @@ public class RoleService {
 		Role role = roleDtoToRole(roleDto);
 		Role roleCreated = em.merge(role);
 		RoleDto roleDtoCreated = roleToRoleDto(roleCreated);
-		return authService.returnResponseWithEntity(200, roleDtoCreated);
+		return authService.returnResponseWithEntity(201, roleDtoCreated);
 		
 	}
 	
@@ -59,16 +64,39 @@ public class RoleService {
 		return authService.returnResponse(200);
 	}
 	
-	public Response updateRole(Role role) {
+	public Response updateRole(RoleDto roleDto) {
 		
-		if ( role == null || role.getId() == null ) return authService.returnResponse(400);
+		if ( roleDto == null || roleDto.getId() == null ) return authService.returnResponse(400);
 
-		if ( roleNameExist(role.getName()) == false ) return authService.returnResponse(404);
-
-		Role updatedRole = em.merge(role);
+		if ( roleNameExist(roleDto.getName()) == false ) return authService.returnResponse(404);
+		
+		Role roleToUpdate = getRoleById(roleDto.getId()); 
+		roleToUpdate.setName(roleDto.getName());
+		Role updatedRole = em.merge(roleToUpdate);
 		RoleDto roleDtoUpdated = roleToRoleDto(updatedRole);
 		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 
+	}
+	
+	public Response addActionToRole(Long roleId, List<Long> actionsIdList) {
+		
+		if ( roleId == null || actionsIdList == null || actionsIdList.size() == 0 ) 
+			return authService.returnResponse(400);
+		
+		if ( getRoleById(roleId) == null ) return authService.returnResponse(404);
+		
+		Role role = getRoleById(roleId);
+		final List<Action> actionsList = new ArrayList<Action>();
+		
+		actionsIdList.forEach(new Consumer<Long>() {
+			public void accept(Long actionID) {
+				actionsList.add(actionService.getActionById(actionID));
+			}
+		});
+		
+		role.setActions(actionsList);
+		em.merge(role);
+		return authService.returnResponseWithEntity(200, actionsList);
 	}
 	
 	public Response getRole(Role role) {
@@ -135,6 +163,10 @@ public class RoleService {
 	
 	public Role getRoleByName (String name) {
 		return roleDao.getRoleByName(name);
+	}
+	
+	public Role getRoleById (Long id) {
+		return roleDao.getRoleById(id);
 	}
 	
 }
