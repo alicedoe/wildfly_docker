@@ -13,9 +13,9 @@ public class Matiere {
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Matiere")
 	@SequenceGenerator(name = "SEQUENCE_Matiere", sequenceName = "SEQUENCE_Matiere", allocationSize=25)
-    protected Long id;	
+	private Long id;	
 	@NotNull
-    protected String nom;
+	private String nom;
  
     public Long getId() {
         return id;

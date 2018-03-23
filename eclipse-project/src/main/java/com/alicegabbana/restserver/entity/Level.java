@@ -13,9 +13,9 @@ public class Level {
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Level")
 	@SequenceGenerator(name = "SEQUENCE_Level", sequenceName = "SEQUENCE_Level", allocationSize=25)
-    protected Long id;	
+	private Long id;	
 	@NotNull
-    protected String nom;
+	private String nom;
  
     public Level() {
     }
