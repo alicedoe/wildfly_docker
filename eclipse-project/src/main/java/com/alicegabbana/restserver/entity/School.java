@@ -16,7 +16,7 @@ public class School {
 	@SequenceGenerator(name = "SEQUENCE_School", sequenceName = "SEQUENCE_School", allocationSize=25)
     private Long id;
 	@NotNull
-	private String nom;
+	private String name;
 	@NotNull
 	@ManyToOne
 	private Town town;
@@ -27,11 +27,11 @@ public class School {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public Town getTown() {
 		return town;
@@ -41,6 +41,6 @@ public class School {
 	}
 	@Override
 	public String toString() {
-		return "School [id=" + id + ", nom=" + nom + ", town=" + town + "]";
+		return "School [id=" + id + ", name=" + name + ", town=" + town + "]";
 	}
 }

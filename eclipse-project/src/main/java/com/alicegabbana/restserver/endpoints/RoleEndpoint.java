@@ -59,7 +59,7 @@ public class RoleEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Role role, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(Long roleId, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -70,7 +70,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleService.getRole(role);
+		Response getRoleServiceResponse = roleService.getRole(roleId);
 		return getRoleServiceResponse;
 	}
 	
@@ -149,7 +149,7 @@ public class RoleEndpoint {
 	}
 	
 	@PUT
-	@Path("/edit")
+	@Path("/addaction")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addAction(Long roleId, List<Long> actions, @HeaderParam("UserToken") String userToken) {

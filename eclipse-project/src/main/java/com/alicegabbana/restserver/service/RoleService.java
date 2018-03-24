@@ -99,15 +99,15 @@ public class RoleService {
 		return authService.returnResponseWithEntity(200, actionsList);
 	}
 	
-	public Response getRole(Role role) {
+	public Response getRole(Long roleId) {
 		
-		if ( role == null || role.getId() == null ) return authService.returnResponse(400);
+		if ( roleId == null ) return authService.returnResponse(400);
 		
-		if ( !roleNameExist(role.getName()) ) return authService.returnResponse(404);
+		if ( getRoleById(roleId) == null ) return authService.returnResponse(404);
 		
-		role = em.find(Role.class, role.getId());
-		RoleDto fetchRole = roleToRoleDto(role);
-		return authService.returnResponseWithEntity(200, fetchRole);
+		Role role = em.find(Role.class, roleId);
+		RoleDto roleDto = roleToRoleDto(role);
+		return authService.returnResponseWithEntity(200, roleDto);
 		
 	}
 	
