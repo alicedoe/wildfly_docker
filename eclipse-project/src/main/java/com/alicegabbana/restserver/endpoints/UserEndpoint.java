@@ -52,7 +52,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response addUserServiceResponse = userService.createUserService( userDto );
+		Response addUserServiceResponse = userService.createUser( userDto );
 		return addUserServiceResponse;
 	}
 	
@@ -60,7 +60,7 @@ public class UserEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getUser(UserDto userDto, @HeaderParam("UserToken") String userToken) {
+	public Response getUser(Long userId, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -70,7 +70,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserServiceResponse = userService.getUserService( userDto );
+		Response getUserServiceResponse = userService.getUser( userId );
 		return getUserServiceResponse;
 	}
 	

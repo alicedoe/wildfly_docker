@@ -44,7 +44,7 @@ public class UserService {
 	private static Pattern pattern;
 	private Matcher matcher;
 	
-	public Response createUserService( UserDto userDto) {
+	public Response createUser ( UserDto userDto) {
 		
 		if (userDto.getId() != null || newUserIsComplete(userDto) == false) return authService.returnResponse(400);
 
@@ -61,14 +61,14 @@ public class UserService {
 		return authService.returnResponseWithEntity(201, newUserDto);
 	}
 	
-	public Response getUserService ( UserDto userDto ) {
+	public Response getUser ( Long userId ) {
 		
-		if ( userDto == null || userDto.getId() == null ) return authService.returnResponse(400);
+		if ( userId == null ) return authService.returnResponse(400);
 		
-		if ( !userIdExistDao(userDto) ) return authService.returnResponse(404);
+		if ( getUserById(userId) == null ) return authService.returnResponse(404);
 
-		User user = em.find(User.class, userDto.getId());
-		userDto = userToUserDto(user);
+		User user = em.find(User.class, getUserById(userId));
+		UserDto userDto = userToUserDto(user);
 		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
@@ -276,6 +276,14 @@ public class UserService {
 			return false; }
 		
 		return true;
+	}
+	
+	public User getUserById (Long id) {
+		if ( userDao.get(id) != null ) {
+			return userDao.get(id);
+		}
+		
+		return null;
 	}
 	
 }
