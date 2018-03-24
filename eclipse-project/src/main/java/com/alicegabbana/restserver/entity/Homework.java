@@ -24,7 +24,7 @@ public class Homework {
 	private Long id;	
 	@NotNull
 	@ManyToOne
-	private Subject matiere;
+	private Subject subject;
 	@NotNull
 	@ManyToOne
 	private User creator;
@@ -44,11 +44,11 @@ public class Homework {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Subject getMatiere() {
-		return matiere;
+	public Subject getSubject() {
+		return subject;
 	}
-	public void setMatiere(Subject matiere) {
-		this.matiere = matiere;
+	public void setSubject(Subject subject) {
+		this.subject = subject;
 	}
 	public User getCreator() {
 		return creator;
@@ -82,7 +82,7 @@ public class Homework {
 	}
 	@Override
 	public String toString() {
-		return "Devoir [id=" + id + ", matiere=" + matiere + ", creator=" + creator + ", text=" + text + ", tag=" + tag
+		return "Devoir [id=" + id + ", subject=" + subject + ", creator=" + creator + ", text=" + text + ", tag=" + tag
 				+ ", creation=" + creation + ", end=" + end + "]";
 	}
  

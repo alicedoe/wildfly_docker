@@ -20,13 +20,13 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.entity.Subject;
 import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.MatiereService;
+import com.alicegabbana.restserver.service.SubjectService;
 
-@Path("/matiere")
+@Path("/subject")
 public class SubjectEndpoint {
 	
 	@EJB
-	MatiereService matiereService;
+	SubjectService subjectService;
 	
 	@EJB
 	AuthService authService;
@@ -37,19 +37,19 @@ public class SubjectEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addMatiere(Subject matiere, @HeaderParam("UserToken") String userToken) {
+	public Response addSubject(Subject subject, @HeaderParam("UserToken") String userToken) {
 		
-		List<String> matieresNeeded = new ArrayList<String>(
+		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"create matiere"
+	            		"create subject"
 	            		));
-		if (authService.userHasActionList(userToken, matieresNeeded) == false ) 
+		if (authService.userHasActionList(userToken, subjectsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response addMatiereServiceResponse = matiereService.createMatiere(matiere);
-		return addMatiereServiceResponse;
+		Response addSubjectServiceResponse = subjectService.createSubject(subject);
+		return addSubjectServiceResponse;
 	}
 	
 	@GET
@@ -58,73 +58,73 @@ public class SubjectEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
 
-		List<String> matieresNeeded = new ArrayList<String>(
+		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read matiere"
+	            		"read subject"
 	            		));		
-		if (authService.userHasActionList(userToken, matieresNeeded) == false ) 
+		if (authService.userHasActionList(userToken, subjectsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getMatiereServiceResponse = matiereService.getMatiere(id);
-		return getMatiereServiceResponse;
+		Response getSubjectServiceResponse = subjectService.getSubject(id);
+		return getSubjectServiceResponse;
 	}
 	
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllMatiere(@HeaderParam("UserToken") String userToken) {
+	public Response getAllSubject(@HeaderParam("UserToken") String userToken) {
 
-		List<String> matieresNeeded = new ArrayList<String>(
+		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read matiere"
+	            		"read subject"
 	            		));
-		if (authService.userHasActionList(userToken, matieresNeeded) == false ) 
+		if (authService.userHasActionList(userToken, subjectsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllMatiereServiceResponse = matiereService.getAllMatiere();
-		return getAllMatiereServiceResponse;
+		Response getAllSubjectServiceResponse = subjectService.getAllSubject();
+		return getAllSubjectServiceResponse;
 	}
 	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteMatiere(Subject matiere, @HeaderParam("UserToken") String userToken) {
+	public Response deleteSubject(Subject subject, @HeaderParam("UserToken") String userToken) {
 
-		List<String> matieresNeeded = new ArrayList<String>(
+		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"delete matiere"
+	            		"delete subject"
 	            		));
-		if (authService.userHasActionList(userToken, matieresNeeded) == false ) 
+		if (authService.userHasActionList(userToken, subjectsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteMatiereResponse = matiereService.deleteMatiere(matiere);
-		return deleteMatiereResponse;
+		Response deleteSubjectResponse = subjectService.deleteSubject(subject);
+		return deleteSubjectResponse;
 	}
 	
 	@PUT
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editMatiere(Subject matiere, @HeaderParam("UserToken") String userToken) {
+	public Response editSubject(Subject subject, @HeaderParam("UserToken") String userToken) {
 
-		List<String> matieresNeeded = new ArrayList<String>(
+		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"update matiere"
+	            		"update subject"
 	            		));
-		if (authService.userHasActionList(userToken, matieresNeeded) == false ) 
+		if (authService.userHasActionList(userToken, subjectsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response updateMatiereServiceResponse = matiereService.updateMatiere(matiere);
-		return updateMatiereServiceResponse;
+		Response updateSubjectServiceResponse = subjectService.updateSubject(subject);
+		return updateSubjectServiceResponse;
 	}
 
 }

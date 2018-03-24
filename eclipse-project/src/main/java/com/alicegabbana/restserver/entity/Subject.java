@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 public class Subject {
 	
 	@Id
-	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Matiere")
-	@SequenceGenerator(name = "SEQUENCE_Matiere", sequenceName = "SEQUENCE_Matiere", allocationSize=25)
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Subject")
+	@SequenceGenerator(name = "SEQUENCE_Subject", sequenceName = "SEQUENCE_Subject", allocationSize=25)
 	private Long id;	
 	@NotNull
 	private String name;
