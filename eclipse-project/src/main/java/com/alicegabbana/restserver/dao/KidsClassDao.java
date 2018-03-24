@@ -58,5 +58,12 @@ public class KidsClassDao {
 		logger.info("Dao get : there is no kidsClass");			
 		return null;
 	}
+	
+	public KidsClass create( KidsClass kidsClass ) {
+		
+		KidsClass loadedClasse = em.merge(kidsClass);
+		return loadedClasse;
+		
+	}
 
 }
