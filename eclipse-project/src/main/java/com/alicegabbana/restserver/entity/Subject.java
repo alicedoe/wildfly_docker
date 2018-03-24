@@ -8,14 +8,14 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Matiere {
+public class Subject {
 	
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Matiere")
 	@SequenceGenerator(name = "SEQUENCE_Matiere", sequenceName = "SEQUENCE_Matiere", allocationSize=25)
 	private Long id;	
 	@NotNull
-	private String nom;
+	private String name;
  
     public Long getId() {
         return id;
@@ -25,16 +25,16 @@ public class Matiere {
         this.id = id;
     }
  
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
  
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
 	@Override
 	public String toString() {
-		return "Matiere [id=" + id + ", nom=" + nom + "]";
+		return "Subject [id=" + id + ", name=" + name + "]";
 	}
 }

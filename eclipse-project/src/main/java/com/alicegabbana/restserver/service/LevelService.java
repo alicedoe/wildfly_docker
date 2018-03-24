@@ -29,9 +29,9 @@ public class LevelService {
 	
 	public Response createLevel(Level newLevel) {
 		
-		if ( newLevel == null || newLevel.getId() != null || newLevel.getNom() == "" ) return authService.returnResponse(400);
+		if ( newLevel == null || newLevel.getId() != null || newLevel.getName() == "" ) return authService.returnResponse(400);
 
-		if ( levelNameExist(newLevel.getNom()) == true ) return authService.returnResponse(409);
+		if ( levelNameExist(newLevel.getName()) == true ) return authService.returnResponse(409);
 		
 		Level levelCreated = em.merge(newLevel);
 		return authService.returnResponseWithEntity(201, levelCreated);
@@ -40,12 +40,12 @@ public class LevelService {
 	
 	public Response updateLevel(Level levelToUpdate) {
 		
-		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getNom() == "" ) return authService.returnResponse(400);
+		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getName() == "" ) return authService.returnResponse(400);
 
-		if ( levelNameExist(levelToUpdate.getNom()) == true ) return authService.returnResponse(409);
+		if ( levelNameExist(levelToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
 		Level level = getLevelById(levelToUpdate.getId());
-		if (level.getNom() == levelToUpdate.getNom()) return authService.returnResponse(200);
+		if (level.getName() == levelToUpdate.getName()) return authService.returnResponse(200);
 		
 		Level updatedLevel = em.merge(levelToUpdate);
 		return authService.returnResponseWithEntity(200, updatedLevel);
@@ -56,7 +56,7 @@ public class LevelService {
 
 		if ( level == null || level.getId() == null ) return authService.returnResponse(400);
 		
-		if ( levelNameExist(level.getNom()) == false ) return authService.returnResponse(404);
+		if ( levelNameExist(level.getName()) == false ) return authService.returnResponse(404);
 
 		level = em.find(Level.class, level.getId());
 		em.remove(level);

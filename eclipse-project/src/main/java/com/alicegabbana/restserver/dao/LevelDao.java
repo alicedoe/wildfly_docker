@@ -34,7 +34,7 @@ public class LevelDao {
 	
 	public Level getLevelByName (String name) {
 		
-		TypedQuery<Level> query_name = em.createQuery("SELECT level FROM Level level WHERE level.nom = :name", Level.class)
+		TypedQuery<Level> query_name = em.createQuery("SELECT level FROM Level level WHERE level.name = :name", Level.class)
 				.setParameter("name", name);
 		List<Level> loadedLevels = query_name.getResultList();
 		

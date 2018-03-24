@@ -18,12 +18,12 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.entity.Matiere;
+import com.alicegabbana.restserver.entity.Subject;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.MatiereService;
 
 @Path("/matiere")
-public class MatiereEndpoint {
+public class SubjectEndpoint {
 	
 	@EJB
 	MatiereService matiereService;
@@ -31,13 +31,13 @@ public class MatiereEndpoint {
 	@EJB
 	AuthService authService;
 	
-	Logger logger = Logger.getLogger(MatiereEndpoint.class);
+	Logger logger = Logger.getLogger(SubjectEndpoint.class);
 
 	@POST
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addMatiere(Matiere matiere, @HeaderParam("UserToken") String userToken) {
+	public Response addMatiere(Subject matiere, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> matieresNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -93,7 +93,7 @@ public class MatiereEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteMatiere(Matiere matiere, @HeaderParam("UserToken") String userToken) {
+	public Response deleteMatiere(Subject matiere, @HeaderParam("UserToken") String userToken) {
 
 		List<String> matieresNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -112,7 +112,7 @@ public class MatiereEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editMatiere(Matiere matiere, @HeaderParam("UserToken") String userToken) {
+	public Response editMatiere(Subject matiere, @HeaderParam("UserToken") String userToken) {
 
 		List<String> matieresNeeded = new ArrayList<String>(
 	            Arrays.asList(

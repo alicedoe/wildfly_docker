@@ -34,7 +34,7 @@ public class TownDao {
 	
 	public Town getTownByName (String name) {
 		
-		TypedQuery<Town> query_name = em.createQuery("SELECT town FROM Town town WHERE town.nom = :name", Town.class)
+		TypedQuery<Town> query_name = em.createQuery("SELECT town FROM Town town WHERE town.name = :name", Town.class)
 				.setParameter("name", name);
 		List<Town> loadedTowns = query_name.getResultList();
 		

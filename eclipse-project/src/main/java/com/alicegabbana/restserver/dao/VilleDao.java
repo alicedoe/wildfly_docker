@@ -38,8 +38,8 @@ public class VilleDao {
 	
 	public boolean villeExist (Town ville) {
 		
-		TypedQuery<Town> query_name = em.createQuery("SELECT ville FROM Role ville WHERE ville.nom = :name", Town.class)
-				.setParameter("name", ville.getNom());
+		TypedQuery<Town> query_name = em.createQuery("SELECT ville FROM Role ville WHERE ville.name = :name", Town.class)
+				.setParameter("name", ville.getName());
 		List<Town> loadedVilles = query_name.getResultList();
 		
 		if ( loadedVilles.size() != 0 ) {

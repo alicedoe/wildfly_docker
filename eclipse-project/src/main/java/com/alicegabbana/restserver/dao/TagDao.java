@@ -34,7 +34,7 @@ public class TagDao {
 	
 	public Tag getTagByName (String name) {
 		
-		TypedQuery<Tag> query_name = em.createQuery("SELECT tag FROM Tag tag WHERE tag.nom = :name", Tag.class)
+		TypedQuery<Tag> query_name = em.createQuery("SELECT tag FROM Tag tag WHERE tag.name = :name", Tag.class)
 				.setParameter("name", name);
 		List<Tag> loadedTags = query_name.getResultList();
 		

@@ -10,8 +10,8 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.dao.MatiereDao;
-import com.alicegabbana.restserver.entity.Matiere;
+import com.alicegabbana.restserver.dao.SubjectDao;
+import com.alicegabbana.restserver.entity.Subject;
 
 @Stateless
 public class MatiereService {
@@ -23,42 +23,42 @@ public class MatiereService {
 	AuthService authService;
 	
 	@EJB
-	MatiereDao matiereDao;
+	SubjectDao matiereDao;
 	
 	Logger logger = Logger.getLogger(MatiereService.class);
 	
-	public Response createMatiere(Matiere newMatiere) {
+	public Response createMatiere(Subject newMatiere) {
 		
-		if ( newMatiere == null || newMatiere.getId() != null || newMatiere.getNom() == "" ) return authService.returnResponse(400);
+		if ( newMatiere == null || newMatiere.getId() != null || newMatiere.getName() == "" ) return authService.returnResponse(400);
 
-		if ( matiereNameExist(newMatiere.getNom()) == true ) return authService.returnResponse(409);
+		if ( matiereNameExist(newMatiere.getName()) == true ) return authService.returnResponse(409);
 		
-		Matiere matiereCreated = em.merge(newMatiere);
+		Subject matiereCreated = em.merge(newMatiere);
 		return authService.returnResponseWithEntity(201, matiereCreated);
 
 	}
 	
-	public Response updateMatiere(Matiere matiereToUpdate) {
+	public Response updateMatiere(Subject matiereToUpdate) {
 		
-		if ( matiereToUpdate == null || matiereToUpdate.getId() == null || matiereToUpdate.getNom() == "" ) return authService.returnResponse(400);
+		if ( matiereToUpdate == null || matiereToUpdate.getId() == null || matiereToUpdate.getName() == "" ) return authService.returnResponse(400);
 
-		if ( matiereNameExist(matiereToUpdate.getNom()) == true ) return authService.returnResponse(409);
+		if ( matiereNameExist(matiereToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
-		Matiere matiere = getMatiereById(matiereToUpdate.getId());
-		if (matiere.getNom() == matiereToUpdate.getNom()) return authService.returnResponse(200);
+		Subject matiere = getMatiereById(matiereToUpdate.getId());
+		if (matiere.getName() == matiereToUpdate.getName()) return authService.returnResponse(200);
 		
-		Matiere updatedMatiere = em.merge(matiereToUpdate);
+		Subject updatedMatiere = em.merge(matiereToUpdate);
 		return authService.returnResponseWithEntity(200, updatedMatiere);
 
 	}
 	
-	public Response deleteMatiere (Matiere matiere) {
+	public Response deleteMatiere (Subject matiere) {
 
 		if ( matiere == null || matiere.getId() == null ) return authService.returnResponse(400);
 		
-		if ( matiereNameExist(matiere.getNom()) == false ) return authService.returnResponse(404);
+		if ( matiereNameExist(matiere.getName()) == false ) return authService.returnResponse(404);
 
-		matiere = em.find(Matiere.class, matiere.getId());
+		matiere = em.find(Subject.class, matiere.getId());
 		em.remove(matiere);
 		return authService.returnResponse(200);
 
@@ -66,14 +66,14 @@ public class MatiereService {
 	
 	public Response getMatiere ( Long id ) {
 
-		Matiere matiere = em.find(Matiere.class, id);
+		Subject matiere = em.find(Subject.class, id);
 		return authService.returnResponseWithEntity(200, matiere);
 
 	}
 	
 	public Response getAllMatiere ( ) {
 
-		List<Matiere> loadedMatieres = matiereDao.getAllMatieres();
+		List<Subject> loadedMatieres = matiereDao.getAllMatieres();
 		
 		if ( loadedMatieres == null ) return authService.returnResponse(404);		
 
@@ -90,11 +90,11 @@ public class MatiereService {
 		return true;
 	}
 	
-	public Matiere getMatiereById (Long id) {
+	public Subject getMatiereById (Long id) {
 		return matiereDao.getMatiereById(id);
 	}
 	
-	public Matiere getMatiereByName (String name) {
+	public Subject getMatiereByName (String name) {
 		return matiereDao.getMatiereByName(name);
 	}
 	

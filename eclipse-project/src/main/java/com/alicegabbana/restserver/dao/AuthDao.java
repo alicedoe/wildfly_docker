@@ -31,7 +31,7 @@ public class AuthDao {
 		currentUser = userDao.getByToken(token);
 		
 		if ( currentUser != null ) {
-			logger.info("userCanDoAction : user "+currentUser.getNom());
+			logger.info("userCanDoAction : user "+currentUser.getName());
 			if ( !currentUser.getRole().getActions().contains(action) ) {
 				return false;
 			}

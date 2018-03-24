@@ -20,9 +20,9 @@ public class User {
 	@NotNull
 	private Role role;
 	@NotNull
-	private String prenom;
+	private String firstname;
 	@NotNull
-	private String nom;
+	private String name;
 	@NotNull
 	private String email;
 	@ManyToOne
@@ -31,13 +31,6 @@ public class User {
 	private String pwd;
 	@NotNull
 	private String token;
-		
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -50,17 +43,23 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public String getPrenom() {
-		return prenom;
+	public String getFirstname() {
+		return firstname;
 	}
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public KidsClass getKidsClass() {
 		return kidsClass;
@@ -82,8 +81,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", role=" + role + ", prenom=" + prenom + ", nom=" + nom + ", email=" + email
+		return "User [id=" + id + ", role=" + role + ", firstname=" + firstname + ", name=" + name + ", email=" + email
 				+ ", kidsClass=" + kidsClass + ", pwd=" + pwd + ", token=" + token + "]";
 	}
-	
 }

@@ -22,7 +22,7 @@ public class KidsClass {
 	@ManyToOne
 	private School school;
 	@NotNull
-	private String nom;
+	private String name;
 	
 	public Long getId() {
 		return id;
@@ -42,15 +42,15 @@ public class KidsClass {
 	public void setSchool(School school) {
 		this.school = school;
 	}
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 	@Override
 	public String toString() {
-		return "Kidsclass [id=" + id + ", level=" + level + ", school=" + school + ", nom=" + nom + "]";
+		return "Kidsclass [id=" + id + ", level=" + level + ", school=" + school + ", name=" + name + "]";
 	}	
 	
 	

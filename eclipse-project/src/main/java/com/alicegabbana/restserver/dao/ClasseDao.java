@@ -38,8 +38,8 @@ public class ClasseDao {
 	
 	public boolean classeExist (KidsClass classe) {
 		
-		TypedQuery<KidsClass> query_name = em.createQuery("SELECT classe FROM Role classe WHERE classe.nom = :name", KidsClass.class)
-				.setParameter("name", classe.getNom());
+		TypedQuery<KidsClass> query_name = em.createQuery("SELECT classe FROM Role classe WHERE classe.name = :name", KidsClass.class)
+				.setParameter("name", classe.getName());
 		List<KidsClass> loadedClasses = query_name.getResultList();
 		
 		if ( loadedClasses.size() != 0 ) {

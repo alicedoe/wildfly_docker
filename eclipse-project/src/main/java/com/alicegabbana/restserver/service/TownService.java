@@ -29,9 +29,9 @@ public class TownService {
 	
 	public Response createTown(Town newTown) {
 		
-		if ( newTown == null || newTown.getId() != null || newTown.getNom() == "" ) return authService.returnResponse(400);
+		if ( newTown == null || newTown.getId() != null || newTown.getName() == "" ) return authService.returnResponse(400);
 
-		if ( townNameExist(newTown.getNom()) == true ) return authService.returnResponse(409);
+		if ( townNameExist(newTown.getName()) == true ) return authService.returnResponse(409);
 		
 		Town townCreated = em.merge(newTown);
 		return authService.returnResponseWithEntity(201, townCreated);
@@ -40,12 +40,12 @@ public class TownService {
 	
 	public Response updateTown(Town townToUpdate) {
 		
-		if ( townToUpdate == null || townToUpdate.getId() == null || townToUpdate.getNom() == "" ) return authService.returnResponse(400);
+		if ( townToUpdate == null || townToUpdate.getId() == null || townToUpdate.getName() == "" ) return authService.returnResponse(400);
 
-		if ( townNameExist(townToUpdate.getNom()) == true ) return authService.returnResponse(409);
+		if ( townNameExist(townToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
 		Town town = getTownById(townToUpdate.getId());
-		if (town.getNom() == townToUpdate.getNom()) return authService.returnResponse(200);
+		if (town.getName() == townToUpdate.getName()) return authService.returnResponse(200);
 		
 		Town updatedTown = em.merge(townToUpdate);
 		return authService.returnResponseWithEntity(200, updatedTown);
@@ -56,7 +56,7 @@ public class TownService {
 
 		if ( town == null || town.getId() == null ) return authService.returnResponse(400);
 		
-		if ( townNameExist(town.getNom()) == false ) return authService.returnResponse(404);
+		if ( townNameExist(town.getName()) == false ) return authService.returnResponse(404);
 
 		town = em.find(Town.class, town.getId());
 		em.remove(town);

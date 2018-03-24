@@ -35,7 +35,7 @@ public class ActionDao {
 	
 	public Action getActionByName (String name) {
 		
-		TypedQuery<Action> query_name = em.createQuery("SELECT action FROM Action action WHERE action.nom = :name", Action.class)
+		TypedQuery<Action> query_name = em.createQuery("SELECT action FROM Action action WHERE action.name = :name", Action.class)
 				.setParameter("name", name);
 		List<Action> loadedActions = query_name.getResultList();
 		

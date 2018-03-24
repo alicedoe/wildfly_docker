@@ -32,9 +32,9 @@ public class ActionService {
 	
 	public Response createAction(Action newAction) {
 		
-		if ( newAction == null || newAction.getId() != null || newAction.getNom() == "" ) return authService.returnResponse(400);
+		if ( newAction == null || newAction.getId() != null || newAction.getName() == "" ) return authService.returnResponse(400);
 
-		if ( actionNameExist(newAction.getNom()) == true ) return authService.returnResponse(409);
+		if ( actionNameExist(newAction.getName()) == true ) return authService.returnResponse(409);
 		
 		Action actionCreated = em.merge(newAction);
 		return authService.returnResponseWithEntity(201, actionCreated);
@@ -43,12 +43,12 @@ public class ActionService {
 	
 	public Response updateAction(Action actionToUpdate) {
 		
-		if ( actionToUpdate == null || actionToUpdate.getId() == null || actionToUpdate.getNom() == "" ) return authService.returnResponse(400);
+		if ( actionToUpdate == null || actionToUpdate.getId() == null || actionToUpdate.getName() == "" ) return authService.returnResponse(400);
 
-		if ( actionNameExist(actionToUpdate.getNom()) == true ) return authService.returnResponse(409);
+		if ( actionNameExist(actionToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
 		Action action = getActionById(actionToUpdate.getId());
-		if (action.getNom() == actionToUpdate.getNom()) return authService.returnResponse(200);
+		if (action.getName() == actionToUpdate.getName()) return authService.returnResponse(200);
 		
 		Action updatedAction = em.merge(actionToUpdate);
 		return authService.returnResponseWithEntity(200, updatedAction);
@@ -59,7 +59,7 @@ public class ActionService {
 
 		if ( action == null || action.getId() == null ) return authService.returnResponse(400);
 		
-		if ( actionNameExist(action.getNom()) == false ) return authService.returnResponse(404);
+		if ( actionNameExist(action.getName()) == false ) return authService.returnResponse(404);
 
 		action = em.find(Action.class, action.getId());
 		em.remove(action);

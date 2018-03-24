@@ -36,7 +36,7 @@ public class KidsClassDao {
 	
 	public KidsClass getKidsClassByName (String name) {
 		
-		TypedQuery<KidsClass> query_name = em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsClass.nom = :name", KidsClass.class)
+		TypedQuery<KidsClass> query_name = em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsClass.name = :name", KidsClass.class)
 				.setParameter("name", name);
 		List<KidsClass> loadedKidsClass = query_name.getResultList();
 

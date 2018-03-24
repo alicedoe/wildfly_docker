@@ -29,9 +29,9 @@ public class TagService {
 	
 	public Response createTag(Tag newTag) {
 		
-		if ( newTag == null || newTag.getId() != null || newTag.getNom() == "" ) return authService.returnResponse(400);
+		if ( newTag == null || newTag.getId() != null || newTag.getName() == "" ) return authService.returnResponse(400);
 
-		if ( tagNameExist(newTag.getNom()) == true ) return authService.returnResponse(409);
+		if ( tagNameExist(newTag.getName()) == true ) return authService.returnResponse(409);
 		
 		Tag tagCreated = em.merge(newTag);
 		return authService.returnResponseWithEntity(201, tagCreated);
@@ -40,12 +40,12 @@ public class TagService {
 	
 	public Response updateTag(Tag tagToUpdate) {
 		
-		if ( tagToUpdate == null || tagToUpdate.getId() == null || tagToUpdate.getNom() == "" ) return authService.returnResponse(400);
+		if ( tagToUpdate == null || tagToUpdate.getId() == null || tagToUpdate.getName() == "" ) return authService.returnResponse(400);
 
-		if ( tagNameExist(tagToUpdate.getNom()) == true ) return authService.returnResponse(409);
+		if ( tagNameExist(tagToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
 		Tag tag = getTagById(tagToUpdate.getId());
-		if (tag.getNom() == tagToUpdate.getNom()) return authService.returnResponse(200);
+		if (tag.getName() == tagToUpdate.getName()) return authService.returnResponse(200);
 		
 		Tag updatedTag = em.merge(tagToUpdate);
 		return authService.returnResponseWithEntity(200, updatedTag);
@@ -56,7 +56,7 @@ public class TagService {
 
 		if ( tag == null || tag.getId() == null ) return authService.returnResponse(400);
 		
-		if ( tagNameExist(tag.getNom()) == false ) return authService.returnResponse(404);
+		if ( tagNameExist(tag.getName()) == false ) return authService.returnResponse(404);
 
 		tag = em.find(Tag.class, tag.getId());
 		em.remove(tag);

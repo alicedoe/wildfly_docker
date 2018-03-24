@@ -24,7 +24,7 @@ public class Homework {
 	private Long id;	
 	@NotNull
 	@ManyToOne
-	private Matiere matiere;
+	private Subject matiere;
 	@NotNull
 	@ManyToOne
 	private User creator;
@@ -44,10 +44,10 @@ public class Homework {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Matiere getMatiere() {
+	public Subject getMatiere() {
 		return matiere;
 	}
-	public void setMatiere(Matiere matiere) {
+	public void setMatiere(Subject matiere) {
 		this.matiere = matiere;
 	}
 	public User getCreator() {

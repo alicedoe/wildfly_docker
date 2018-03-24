@@ -132,8 +132,8 @@ public class UserService {
 				user.setKidsClass(kidsClass);
 			}
 			
-			user.setNom(userDto.getNom());
-			user.setPrenom(userDto.getPrenom());
+			user.setName(userDto.getName());
+			user.setFirstname(userDto.getFirstname());
 			
 			if (userDto.getRoleName() != null) {
 				Role role = roleService.getRoleByName(userDto.getRoleName());
@@ -152,11 +152,11 @@ public class UserService {
 			userDto.setEmail(user.getEmail());
 			
 			if (user.getKidsClass() != null) {
-				userDto.setKidsClassName(user.getKidsClass().getNom());
+				userDto.setKidsClassName(user.getKidsClass().getName());
 			}
 			
-			userDto.setNom(user.getNom());
-			userDto.setPrenom(user.getPrenom());
+			userDto.setName(user.getName());
+			userDto.setFirstname(user.getFirstname());
 			
 			if (user.getRole() != null) {
 				userDto.setRoleName(user.getRole().getName());
@@ -179,13 +179,13 @@ public class UserService {
 	
 	public User updateMyAccount(User user, UserDto newUserProfil) {
 		
-		String prenom = newUserProfil.getPrenom();
-		String nom = newUserProfil.getNom();
+		String firstname = newUserProfil.getFirstname();
+		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
 		String pwd = newUserProfil.getPwd();
 		
-		if (prenom != null) user.setPrenom(prenom);
-		if (nom != null) user.setNom(nom);
+		if (firstname != null) user.setFirstname(firstname);
+		if (name != null) user.setName(name);
 		if (email != null && emailFormatCorrect(email)) user.setEmail(email);
 		if (pwd != null) user.setPwd(pwd);
 		
@@ -195,15 +195,15 @@ public class UserService {
 	public User updateUserProfil(User user, UserDto newUserProfil) {
 		
 		Role role = roleService.getRoleByName(newUserProfil.getRoleName());
-		String prenom = newUserProfil.getPrenom();
-		String nom = newUserProfil.getNom();
+		String firstname = newUserProfil.getFirstname();
+		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
 		KidsClass kidsClass = kidsClassService.getKidsClassByName(newUserProfil.getKidsClassName());
 		String pwd = newUserProfil.getPwd();
 		
 		if (role != null) user.setRole(role);
-		if (prenom != null) user.setPrenom(prenom);
-		if (nom != null) user.setNom(nom);
+		if (firstname != null) user.setFirstname(firstname);
+		if (name != null) user.setName(name);
 		if (email != null && emailFormatCorrect(email)) user.setEmail(email);
 		if (kidsClass != null) user.setKidsClass(kidsClass);
 		if (pwd != null) user.setPwd(pwd);
@@ -263,7 +263,7 @@ public class UserService {
 			return false;
 			}
 		
-		else if ( userDto.getNom() == null || userDto.getPrenom() == null || userDto.getPwd() == null ) 
+		else if ( userDto.getName() == null || userDto.getFirstname() == null || userDto.getPwd() == null ) 
 		{	logger.info("missing_attributes");
 			return false; }
 		

@@ -15,13 +15,13 @@ public class Level {
 	@SequenceGenerator(name = "SEQUENCE_Level", sequenceName = "SEQUENCE_Level", allocationSize=25)
 	private Long id;	
 	@NotNull
-	private String nom;
+	private String name;
  
     public Level() {
     }
  
-    public Level(String nom) {
-        this.nom = nom;
+    public Level(String name) {
+        this.name = name;
     }
  
     public Long getId() {
@@ -32,16 +32,16 @@ public class Level {
         this.id = id;
     }
  
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
  
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
 	@Override
 	public String toString() {
-		return "Niveau [id=" + id + ", nom=" + nom + "]";
+		return "Niveau [id=" + id + ", name=" + name + "]";
 	}
 }

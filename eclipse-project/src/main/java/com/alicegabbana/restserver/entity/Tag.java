@@ -16,7 +16,7 @@ public class Tag {
 	private Long id;
 	
 	@NotNull
-	private String nom;
+	private String name;
 
 	public Long getId() {
 		return id;
@@ -26,17 +26,17 @@ public class Tag {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return "Tag [id=" + id + ", nom=" + nom + "]";
+		return "Tag [id=" + id + ", name=" + name + "]";
 	}
 	
 	
