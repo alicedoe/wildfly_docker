@@ -9,6 +9,7 @@ public class UserDto {
 	private String email;
 	private String kidsClassName;
 	private String pwd;
+	
 	public Long getId() {
 		return id;
 	}

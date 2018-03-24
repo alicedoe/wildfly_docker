@@ -41,4 +41,7 @@ public class KidsClassService {
 		return kidsClassDao.getKidsClassByName(name);
 	}
 	
+	public KidsClass getKidsClassById (Long id) {
+		return kidsClassDao.getKidsClassById(id);
+	}
 }

@@ -118,6 +118,30 @@ public class UserService {
 		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
+	public Response getUserFromKidsClass ( Long id) {
+		
+		if ( id == null ) return authService.returnResponse(400);
+		
+		if ( kidsClassService.getKidsClassById(id) == null ) return authService.returnResponse(404);
+		
+		List<User> userList = userDao.getUserFromKidsClass(id);
+		List<UserDto> listUserDto = userListToUserDtoList(userList);
+		
+		return authService.returnResponseWithEntity(200, listUserDto);
+	}
+	
+	public Response getUserWithRole ( Long id) {
+		
+		if ( id == null ) return authService.returnResponse(400);
+		
+		if ( roleService.getRoleById(id) == null ) return authService.returnResponse(404);
+		
+		List<User> userList = userDao.getUserWithRole(id);
+		List<UserDto> listUserDto = userListToUserDtoList(userList);
+		
+		return authService.returnResponseWithEntity(200, listUserDto);
+	}
+	
 //	Utilities
 	
 	public User userDtoToUser (UserDto userDto) {

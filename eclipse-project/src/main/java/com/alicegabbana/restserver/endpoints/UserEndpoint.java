@@ -91,6 +91,40 @@ public class UserEndpoint {
 		return getAllUserServiceResponse;
 	}
 	
+	@GET
+	@Path("/withrole")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserFromKidsClass(Long id, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"read user"
+	            		));
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response getUserWithRoleServiceResponse = userService.getUserWithRole(id);
+		return getUserWithRoleServiceResponse;
+	}
+	
+	@GET
+	@Path("/fromkidsclass")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserWithRole(Long id, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"read user"
+	            		));
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		Response getUserFromKidsClassServiceResponse = userService.getUserFromKidsClass(id);
+		return getUserFromKidsClassServiceResponse;
+	}
+	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
