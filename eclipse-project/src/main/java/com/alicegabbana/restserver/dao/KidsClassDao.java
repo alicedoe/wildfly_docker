@@ -49,7 +49,7 @@ public class KidsClassDao {
 	
 	public List<KidsClass> getAllKidsClass () {
 		
-		TypedQuery<KidsClass> query_kidsClass = em.createQuery("SELECT action FROM Action action", KidsClass.class);
+		TypedQuery<KidsClass> query_kidsClass = em.createQuery("SELECT kidsClass FROM KidsClass kidsClass", KidsClass.class);
 		List<KidsClass> loadedActions = query_kidsClass.getResultList();
 		
 		if ( loadedActions.size() != 0 ) {
@@ -64,6 +64,44 @@ public class KidsClassDao {
 		KidsClass loadedClasse = em.merge(kidsClass);
 		return loadedClasse;
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<KidsClass> getKidsClassWithLevel (Long id) {
+
+		TypedQuery<List<KidsClass>> query_kidsclass = (TypedQuery<List<KidsClass>>) em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsclass.level.id = :id")
+				.setParameter("id", id);
+		List<List<KidsClass>> loadedAction = query_kidsclass.getResultList();
+		
+		if ( loadedAction.size() != 0 ) {
+			return (List<KidsClass>) query_kidsclass;
+		}
+		logger.info("Dao get : no kidsClass with this level");				
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<KidsClass> getKidsClassFromSchool (Long id) {
+		
+		TypedQuery<List<KidsClass>> query_kidsclass = (TypedQuery<List<KidsClass>>) em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsclass.school.id = :id")
+				.setParameter("id", id);
+		List<List<KidsClass>> loadedAction = query_kidsclass.getResultList();
+		
+		if ( loadedAction.size() != 0 ) {
+			return (List<KidsClass>) query_kidsclass;
+		}
+		logger.info("Dao get : no kidsClass in this school");				
+		return null;
+	}
+	
+	public boolean kidsClassNameFromLevelExist (String kidsClassName, String levelName) {
+		
+		KidsClass kidsClass = getKidsClassByName(kidsClassName);
+		if (kidsClass.getLevel().getName() == levelName) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }

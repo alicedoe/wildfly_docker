@@ -20,151 +20,151 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.dto.RoleDto;
-import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.RoleService;
+import com.alicegabbana.restserver.service.KidsClassService;
 
-@Path("/role")
-public class RoleEndpoint {
+@Path("/kidsclass")
+public class KidsClassEndpoint {
 	
 	@EJB
-	RoleService roleService;
+	KidsClassService kidsClassService;
 	
 	@EJB
 	AuthService authService;
 	
-	Logger logger = Logger.getLogger(RoleEndpoint.class);
+	Logger logger = Logger.getLogger(KidsClassEndpoint.class);
 
 	@POST
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response addKidsClass(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"create role"
+	            		"create kidsClass"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response addRoleServiceResponse = roleService.createRole(roleDto);
-		return addRoleServiceResponse;
+		Response addKidsClassServiceResponse = kidsClassService.createKidsClass(kidsClassDto);
+		return addKidsClassServiceResponse;
 	}
 	
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long roleId, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClass(Long kidsClassId, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read role"
+	            		"read kidsClass"
 	            		));		
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleService.getRole(roleId);
-		return getRoleServiceResponse;
+		Response getKidsClassServiceResponse = kidsClassService.getKidsClass(kidsClassId);
+		return getKidsClassServiceResponse;
 	}
 	
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllRole(@HeaderParam("UserToken") String userToken) {
+	public Response getAllKidsClass(@HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read role"
+	            		"read kidsClass"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllRoleServiceResponse = roleService.getAllRole();
-		return getAllRoleServiceResponse;
+		Response getAllKidsClassServiceResponse = kidsClassService.getAllKidsClass();
+		return getAllKidsClassServiceResponse;
 	}
 	
 	@GET
 	@Path("/getaction")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAction(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response getAction(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"read role"
+	            		"read kidsClass"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response getActionFromRoleServiceResponse = roleService.getActionFromRole(roleDto);
-		return getActionFromRoleServiceResponse;
+		Response getActionFromKidsClassServiceResponse = kidsClassService.getActionFromKidsClass(kidsClassDto);
+		return getActionFromKidsClassServiceResponse;
 	}
 	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteRole(Role role, @HeaderParam("UserToken") String userToken) {
+	public Response deleteKidsClass(KidsClass kidsClass, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"delete role"
+	            		"delete kidsClass"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteRoleResponse = roleService.deleteRole(role);
-		return deleteRoleResponse;
+		Response deleteKidsClassResponse = kidsClassService.deleteKidsClass(kidsClass);
+		return deleteKidsClassResponse;
 	}
 	
 	@PUT
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response editKidsClass(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"update role"
+	            		"update kidsClass"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.updateRole(roleDto);
-		return updateRoleServiceResponse;
+		Response updateKidsClassServiceResponse = kidsClassService.updateKidsClass(kidsClassDto);
+		return updateKidsClassServiceResponse;
 	}
 	
 	@PUT
 	@Path("/addaction")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(Long roleId, List<Long> actions, @HeaderParam("UserToken") String userToken) {
+	public Response addAction(Long kidsClassId, List<Long> actions, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
-	            		"update role"
+	            		"update kidsClass"
 	            		));
 		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
 		{
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.addActionToRole(roleId, actions);
-		return updateRoleServiceResponse;
+		Response updateKidsClassServiceResponse = kidsClassService.addActionToKidsClass(kidsClassId, actions);
+		return updateKidsClassServiceResponse;
 	}
 
 }
