@@ -122,6 +122,15 @@ public class RoleService {
 		
 	}
 	
+	public Response getActionFromRole(RoleDto roleDto) {
+		
+		List<Action> actionList = roleDao.getActionFromRole(roleDto.getId());
+		
+		if ( actionList == null ) return authService.returnResponse(404);		
+		
+		return authService.returnResponseWithEntity(200, actionList);
+	}
+	
 	public boolean roleNameExist (String name) {
 		
 		if ( roleDao.getRoleByName(name) == null ) return false;

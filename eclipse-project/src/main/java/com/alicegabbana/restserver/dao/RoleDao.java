@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 
@@ -50,4 +51,16 @@ public class RoleDao {
 		return loadedRoles;
 	}
 
+	public List<Action> getActionFromRole (Long id) {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Action> query_action = (TypedQuery<Action>) em.createQuery("SELECT role.actions FROM Role role WHERE role.id = :id")
+				.setParameter("id", id);
+		List<Action> loadedAction = query_action.getResultList();
+		
+		if ( loadedAction.size() != 0 ) {
+			return loadedAction;
+		}
+		logger.info("Dao get : no action for this role");				
+		return null;
+	}
 }

@@ -92,6 +92,24 @@ public class RoleEndpoint {
 		return getAllRoleServiceResponse;
 	}
 	
+	@GET
+	@Path("/getaction")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAction(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"read role"
+	            		));
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		
+		Response getActionFromRoleServiceResponse = roleService.getActionFromRole(roleDto);
+		return getActionFromRoleServiceResponse;
+	}
+	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
