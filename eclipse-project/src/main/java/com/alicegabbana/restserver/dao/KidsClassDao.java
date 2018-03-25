@@ -79,18 +79,17 @@ public class KidsClassDao {
 		logger.info("Dao get : no kidsClass with this level");				
 		return null;
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<KidsClass> getKidsClassFromSchool (Long id) {
+	
+	public List<KidsClass> getKidsClassFromSchool (Long schoolId) {
 		
-		TypedQuery<List<KidsClass>> query_kidsclass = (TypedQuery<List<KidsClass>>) em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsclass.school.id = :id")
-				.setParameter("id", id);
-		List<List<KidsClass>> loadedAction = query_kidsclass.getResultList();
+		TypedQuery<KidsClass> query_kidsClass = em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsClass.school.id = :id ", KidsClass.class)
+				.setParameter("id", schoolId);
+		List<KidsClass> loadedKidsClass = query_kidsClass.getResultList();
 		
-		if ( loadedAction.size() != 0 ) {
-			return (List<KidsClass>) query_kidsclass;
+		if ( loadedKidsClass.size() != 0 ) {
+			return loadedKidsClass;
 		}
-		logger.info("Dao get : no kidsClass in this school");				
+		logger.info("Dao get : KidsClass from this school doesn't exist");			
 		return null;
 	}
 	

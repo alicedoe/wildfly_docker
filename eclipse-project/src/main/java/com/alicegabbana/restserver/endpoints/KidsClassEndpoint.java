@@ -51,7 +51,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addKidsClassServiceResponse = kidsClassService.createKidsClass(kidsClassDto);
+		Response addKidsClassServiceResponse = kidsClassService.createResponse(kidsClassDto);
 		return addKidsClassServiceResponse;
 	}
 	
@@ -70,7 +70,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassService.getKidsClass(kidsClassId);
+		Response getKidsClassServiceResponse = kidsClassService.getResponse(kidsClassId);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -88,14 +88,14 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllKidsClassServiceResponse = kidsClassService.getAllKidsClass();
+		Response getAllKidsClassServiceResponse = kidsClassService.getAllResponse();
 		return getAllKidsClassServiceResponse;
 	}
 	
 	@GET
-	@Path("/getaction")
+	@Path("/fromschool")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAction(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClassFromSchool(Long schoolId, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -106,15 +106,15 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getActionFromKidsClassServiceResponse = kidsClassService.getActionFromKidsClass(kidsClassDto);
-		return getActionFromKidsClassServiceResponse;
+		Response getKidsClassServiceResponse = kidsClassService.getFromSchoolResponse(schoolId);
+		return getKidsClassServiceResponse;
 	}
 	
 	@DELETE
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteKidsClass(KidsClass kidsClass, @HeaderParam("UserToken") String userToken) {
+	public Response deleteKidsClass(Long kidsClassId, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -125,7 +125,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteKidsClassResponse = kidsClassService.deleteKidsClass(kidsClass);
+		Response deleteKidsClassResponse = kidsClassService.deleteResponse(kidsClassId);
 		return deleteKidsClassResponse;
 	}
 	
@@ -144,26 +144,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateKidsClassServiceResponse = kidsClassService.updateKidsClass(kidsClassDto);
-		return updateKidsClassServiceResponse;
-	}
-	
-	@PUT
-	@Path("/addaction")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(Long kidsClassId, List<Long> actions, @HeaderParam("UserToken") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"update kidsClass"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
-		
-		Response updateKidsClassServiceResponse = kidsClassService.addActionToKidsClass(kidsClassId, actions);
+		Response updateKidsClassServiceResponse = kidsClassService.updateResponse(kidsClassDto);
 		return updateKidsClassServiceResponse;
 	}
 

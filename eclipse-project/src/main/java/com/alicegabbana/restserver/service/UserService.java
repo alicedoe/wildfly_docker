@@ -122,7 +122,7 @@ public class UserService {
 		
 		if ( id == null ) return authService.returnResponse(400);
 		
-		if ( kidsClassService.getKidsClassById(id) == null ) return authService.returnResponse(404);
+		if ( kidsClassService.getById(id) == null ) return authService.returnResponse(404);
 		
 		List<User> userList = userDao.getUserFromKidsClass(id);
 		List<UserDto> listUserDto = userListToUserDtoList(userList);
@@ -134,7 +134,7 @@ public class UserService {
 		
 		if ( id == null ) return authService.returnResponse(400);
 		
-		if ( roleService.getRoleById(id) == null ) return authService.returnResponse(404);
+		if ( roleService.getById(id) == null ) return authService.returnResponse(404);
 		
 		List<User> userList = userDao.getUserWithRole(id);
 		List<UserDto> listUserDto = userListToUserDtoList(userList);
@@ -152,7 +152,7 @@ public class UserService {
 			user.setEmail(userDto.getEmail());
 			
 			if (userDto.getKidsClassName() != null) {
-				KidsClass kidsClass = kidsClassService.getKidsClassByName(userDto.getKidsClassName());
+				KidsClass kidsClass = kidsClassService.getByName(userDto.getKidsClassName());
 				user.setKidsClass(kidsClass);
 			}
 			
@@ -160,7 +160,7 @@ public class UserService {
 			user.setFirstname(userDto.getFirstname());
 			
 			if (userDto.getRoleName() != null) {
-				Role role = roleService.getRoleByName(userDto.getRoleName());
+				Role role = roleService.getByName(userDto.getRoleName());
 				user.setRole(role);
 			}
 		}
@@ -218,11 +218,11 @@ public class UserService {
 	
 	public User updateUserProfil(User user, UserDto newUserProfil) {
 		
-		Role role = roleService.getRoleByName(newUserProfil.getRoleName());
+		Role role = roleService.getByName(newUserProfil.getRoleName());
 		String firstname = newUserProfil.getFirstname();
 		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
-		KidsClass kidsClass = kidsClassService.getKidsClassByName(newUserProfil.getKidsClassName());
+		KidsClass kidsClass = kidsClassService.getByName(newUserProfil.getKidsClassName());
 		String pwd = newUserProfil.getPwd();
 		
 		if (role != null) user.setRole(role);
@@ -295,7 +295,7 @@ public class UserService {
 		{	logger.info("forced_id");
 			return false; }
 		
-		else if ( roleService.getRoleByName( userDto.getRoleName() ) == null )
+		else if ( roleService.getByName( userDto.getRoleName() ) == null )
 		{	logger.info("role_doesnt_exist");
 			return false; }
 		

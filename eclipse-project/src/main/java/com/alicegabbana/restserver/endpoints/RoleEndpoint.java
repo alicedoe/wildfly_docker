@@ -70,7 +70,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleService.getRole(roleId);
+		Response getRoleServiceResponse = roleService.getByIdResponse(roleId);
 		return getRoleServiceResponse;
 	}
 	
