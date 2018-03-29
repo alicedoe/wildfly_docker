@@ -2,7 +2,6 @@ package com.alicegabbana.restserver.endpoints;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,16 +15,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.dto.RoleDto;
+import com.alicegabbana.restserver.dto.ActionDto;
 import com.alicegabbana.restserver.entity.Action;
-import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.service.ActionService;
 import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.RoleService;
 
 @Path("/action")
 public class ActionEndpoint {
@@ -42,7 +38,7 @@ public class ActionEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(Action action, @HeaderParam("UserToken") String userToken) {
+	public Response addAction(ActionDto actionDto, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -53,7 +49,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addActionServiceResponse = actionService.createAction(action);
+		Response addActionServiceResponse = actionService.createResponse(actionDto);
 		return addActionServiceResponse;
 	}
 	
@@ -61,7 +57,7 @@ public class ActionEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(ActionDto actionDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -72,7 +68,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getActionServiceResponse = actionService.getAction(id);
+		Response getActionServiceResponse = actionService.getResponse(actionDto);
 		return getActionServiceResponse;
 	}
 	
@@ -90,7 +86,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllActionServiceResponse = actionService.getAllAction();
+		Response getAllActionServiceResponse = actionService.getAllResponse();
 		return getAllActionServiceResponse;
 	}
 	
@@ -98,7 +94,7 @@ public class ActionEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteAction(Action action, @HeaderParam("UserToken") String userToken) {
+	public Response deleteAction(ActionDto actionDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -109,7 +105,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteActionResponse = actionService.deleteAction(action);
+		Response deleteActionResponse = actionService.deleteResponse(actionDto);
 		return deleteActionResponse;
 	}
 	
@@ -117,7 +113,7 @@ public class ActionEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editAction(Action action, @HeaderParam("UserToken") String userToken) {
+	public Response editAction(ActionDto actionDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -128,7 +124,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateActionServiceResponse = actionService.updateAction(action);
+		Response updateActionServiceResponse = actionService.updateResponse(actionDto);
 		return updateActionServiceResponse;
 	}
 

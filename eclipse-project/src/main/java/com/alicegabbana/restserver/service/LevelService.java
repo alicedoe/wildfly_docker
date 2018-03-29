@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.LevelDao;
+import com.alicegabbana.restserver.dto.LevelDto;
 import com.alicegabbana.restserver.entity.Level;
 
 @Stateless
@@ -40,12 +41,9 @@ public class LevelService {
 	
 	public Response updateLevel(Level levelToUpdate) {
 		
-		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getName() == "" ) return authService.returnResponse(400);
-
-		if ( levelNameExist(levelToUpdate.getName()) == true ) return authService.returnResponse(409);
+		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getName() == "" || levelToUpdate.getName() == null ) return authService.returnResponse(400);
 		
-		Level level = getLevelById(levelToUpdate.getId());
-		if (level.getName() == levelToUpdate.getName()) return authService.returnResponse(200);
+		if ( levelNameExist(levelToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
 		Level updatedLevel = em.merge(levelToUpdate);
 		return authService.returnResponseWithEntity(200, updatedLevel);
@@ -56,17 +54,18 @@ public class LevelService {
 
 		if ( level == null || level.getId() == null ) return authService.returnResponse(400);
 		
-		if ( levelNameExist(level.getName()) == false ) return authService.returnResponse(404);
-
 		level = em.find(Level.class, level.getId());
+		
+		if ( level == null ) return authService.returnResponse(404);
+		
 		em.remove(level);
 		return authService.returnResponse(200);
 
 	}
 	
-	public Response getLevel ( Long id ) {
+	public Response getLevel ( LevelDto levelDto ) {
 
-		Level level = em.find(Level.class, id);
+		Level level = em.find(Level.class, levelDto.getId());
 		return authService.returnResponseWithEntity(200, level);
 
 	}

@@ -51,7 +51,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addRoleServiceResponse = roleService.createRole(roleDto);
+		Response addRoleServiceResponse = roleService.createResponse(roleDto);
 		return addRoleServiceResponse;
 	}
 	
@@ -114,7 +114,7 @@ public class RoleEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteRole(Role role, @HeaderParam("UserToken") String userToken) {
+	public Response deleteRole(Long roleId, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -125,7 +125,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteRoleResponse = roleService.deleteRole(role);
+		Response deleteRoleResponse = roleService.deleteResponse(roleId);
 		return deleteRoleResponse;
 	}
 	
@@ -144,7 +144,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.updateRole(roleDto);
+		Response updateRoleServiceResponse = roleService.updateResponse(roleDto);
 		return updateRoleServiceResponse;
 	}
 	
@@ -163,7 +163,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.addActionToRole(roleId, actions);
+		Response updateRoleServiceResponse = roleService.addActionResponse(roleId, actions);
 		return updateRoleServiceResponse;
 	}
 

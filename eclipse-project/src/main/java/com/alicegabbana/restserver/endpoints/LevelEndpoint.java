@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.dto.LevelDto;
 import com.alicegabbana.restserver.entity.Level;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.LevelService;
@@ -56,7 +57,7 @@ public class LevelEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(LevelDto levelDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> levelsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -67,7 +68,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getLevelServiceResponse = levelService.getLevel(id);
+		Response getLevelServiceResponse = levelService.getLevel(levelDto);
 		return getLevelServiceResponse;
 	}
 	

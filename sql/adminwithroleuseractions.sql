@@ -9,6 +9,9 @@ INSERT INTO `Role_Action` VALUES (1,5),(1,6),(1,7),(1,8);
 INSERT INTO `Action` VALUES (9,'create action'),(10,'delete action'),(11,'update action'),(12,'read action');
 INSERT INTO `Role_Action` VALUES (1,9),(1,10),(1,11),(1,12);
 
+INSERT INTO `Action` VALUES (13,'create level'),(14,'delete level'),(15,'update level'),(16,'read level');
+INSERT INTO `Role_Action` VALUES (1,13),(1,14),(1,15),(1,16);
+
 INSERT INTO `User` VALUES (1,'alice.gabbana@gmail.com','alice','gabbana','motdepasse','monsupertoken',NULL,1);
 
 INSERT INTO `Setting` VALUES ('API_KEY','e7a8d311-8e16-441b-9f0a-e78b62cb34b5'),('TOKEN_EXP','150');

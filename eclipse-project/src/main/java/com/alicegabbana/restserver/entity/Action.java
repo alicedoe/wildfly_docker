@@ -2,13 +2,17 @@ package com.alicegabbana.restserver.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Action {
 	
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_Action")
+	@SequenceGenerator(name = "SEQUENCE_Action", sequenceName = "SEQUENCE_Action", allocationSize=25)
 	private Long id;	
 	@NotNull
 	private String name;

@@ -134,7 +134,7 @@ public class UserService {
 		
 		if ( id == null ) return authService.returnResponse(400);
 		
-		if ( roleService.getById(id) == null ) return authService.returnResponse(404);
+		if ( roleService.getDaoByIdService(id) == null ) return authService.returnResponse(404);
 		
 		List<User> userList = userDao.getUserWithRole(id);
 		List<UserDto> listUserDto = userListToUserDtoList(userList);
@@ -160,7 +160,7 @@ public class UserService {
 			user.setFirstname(userDto.getFirstname());
 			
 			if (userDto.getRoleName() != null) {
-				Role role = roleService.getByName(userDto.getRoleName());
+				Role role = roleService.getDaoByName(userDto.getRoleName());
 				user.setRole(role);
 			}
 		}
@@ -218,7 +218,7 @@ public class UserService {
 	
 	public User updateUserProfil(User user, UserDto newUserProfil) {
 		
-		Role role = roleService.getByName(newUserProfil.getRoleName());
+		Role role = roleService.getDaoByName(newUserProfil.getRoleName());
 		String firstname = newUserProfil.getFirstname();
 		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
@@ -295,7 +295,7 @@ public class UserService {
 		{	logger.info("forced_id");
 			return false; }
 		
-		else if ( roleService.getByName( userDto.getRoleName() ) == null )
+		else if ( roleService.getDaoByName( userDto.getRoleName() ) == null )
 		{	logger.info("role_doesnt_exist");
 			return false; }
 		
