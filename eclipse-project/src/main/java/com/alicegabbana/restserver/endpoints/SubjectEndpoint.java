@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.dto.SubjectDto;
 import com.alicegabbana.restserver.entity.Subject;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.SubjectService;
@@ -56,7 +57,7 @@ public class SubjectEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(SubjectDto subjectDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -67,7 +68,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSubjectServiceResponse = subjectService.getSubject(id);
+		Response getSubjectServiceResponse = subjectService.getSubject(subjectDto);
 		return getSubjectServiceResponse;
 	}
 	

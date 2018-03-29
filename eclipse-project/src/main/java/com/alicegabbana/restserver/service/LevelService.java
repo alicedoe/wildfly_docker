@@ -66,6 +66,7 @@ public class LevelService {
 	public Response getLevel ( LevelDto levelDto ) {
 
 		Level level = em.find(Level.class, levelDto.getId());
+		if ( level == null ) return authService.returnResponse(404);
 		return authService.returnResponseWithEntity(200, level);
 
 	}

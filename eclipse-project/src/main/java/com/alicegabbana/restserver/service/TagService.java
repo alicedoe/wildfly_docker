@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.TagDao;
+import com.alicegabbana.restserver.dto.TagDto;
 import com.alicegabbana.restserver.entity.Tag;
 
 @Stateless
@@ -40,7 +41,7 @@ public class TagService {
 	
 	public Response updateTag(Tag tagToUpdate) {
 		
-		if ( tagToUpdate == null || tagToUpdate.getId() == null || tagToUpdate.getName() == "" ) return authService.returnResponse(400);
+		if ( tagToUpdate == null || tagToUpdate.getId() == null || tagToUpdate.getName() == "" || tagToUpdate.getName() == null) return authService.returnResponse(400);
 
 		if ( tagNameExist(tagToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
@@ -56,17 +57,19 @@ public class TagService {
 
 		if ( tag == null || tag.getId() == null ) return authService.returnResponse(400);
 		
-		if ( tagNameExist(tag.getName()) == false ) return authService.returnResponse(404);
-
 		tag = em.find(Tag.class, tag.getId());
+		
+		if ( tag == null ) return authService.returnResponse(404);
+		
 		em.remove(tag);
 		return authService.returnResponse(200);
 
 	}
 	
-	public Response getTag ( Long id ) {
+	public Response getTag ( TagDto tagDto ) {
 
-		Tag tag = em.find(Tag.class, id);
+		Tag tag = em.find(Tag.class, tagDto.getId());
+		if ( tag == null ) return authService.returnResponse(404);
 		return authService.returnResponseWithEntity(200, tag);
 
 	}

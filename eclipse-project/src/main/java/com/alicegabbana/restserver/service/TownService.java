@@ -57,9 +57,10 @@ public class TownService {
 
 		if ( town == null || town.getId() == null ) return authService.returnResponse(400);
 		
-		if ( townNameExist(town.getName()) == false ) return authService.returnResponse(404);
-
 		town = em.find(Town.class, town.getId());
+		
+		if ( town == null ) return authService.returnResponse(404);
+		
 		em.remove(town);
 		return authService.returnResponse(200);
 
@@ -68,6 +69,7 @@ public class TownService {
 	public Response getTown ( TownDto townDto ) {
 
 		Town town = em.find(Town.class, townDto.getId());
+		if ( town == null ) return authService.returnResponse(404);
 		return authService.returnResponseWithEntity(200, town);
 
 	}

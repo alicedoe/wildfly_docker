@@ -18,9 +18,10 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.dto.TagDto;
 import com.alicegabbana.restserver.entity.Tag;
-import com.alicegabbana.restserver.service.TagService;
 import com.alicegabbana.restserver.service.AuthService;
+import com.alicegabbana.restserver.service.TagService;
 
 @Path("/tag")
 public class TagEndpoint {
@@ -56,7 +57,7 @@ public class TagEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -67,7 +68,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getTagServiceResponse = tagService.getTag(id);
+		Response getTagServiceResponse = tagService.getTag(tagDto);
 		return getTagServiceResponse;
 	}
 	

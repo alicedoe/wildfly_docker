@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.SubjectDao;
+import com.alicegabbana.restserver.dto.SubjectDto;
 import com.alicegabbana.restserver.entity.Subject;
 
 @Stateless
@@ -56,17 +57,18 @@ public class SubjectService {
 
 		if ( subject == null || subject.getId() == null ) return authService.returnResponse(400);
 		
-		if ( subjectNameExist(subject.getName()) == false ) return authService.returnResponse(404);
-
 		subject = em.find(Subject.class, subject.getId());
+		
+		if ( subject == null ) return authService.returnResponse(404);
+		
 		em.remove(subject);
 		return authService.returnResponse(200);
 
 	}
 	
-	public Response getSubject ( Long id ) {
+	public Response getSubject ( SubjectDto subjectDto ) {
 
-		Subject subject = em.find(Subject.class, id);
+		Subject subject = em.find(Subject.class, subjectDto.getId());
 		return authService.returnResponseWithEntity(200, subject);
 
 	}
