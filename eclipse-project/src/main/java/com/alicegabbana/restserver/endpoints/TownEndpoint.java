@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.dto.TownDto;
 import com.alicegabbana.restserver.entity.Town;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.TownService;
@@ -56,7 +57,7 @@ public class TownEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long id, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(TownDto townDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -67,7 +68,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getTownServiceResponse = townService.getTown(id);
+		Response getTownServiceResponse = townService.getTown(townDto);
 		return getTownServiceResponse;
 	}
 	

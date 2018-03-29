@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.TownDao;
+import com.alicegabbana.restserver.dto.TownDto;
 import com.alicegabbana.restserver.entity.Town;
 
 @Stateless
@@ -40,7 +41,7 @@ public class TownService {
 	
 	public Response updateTown(Town townToUpdate) {
 		
-		if ( townToUpdate == null || townToUpdate.getId() == null || townToUpdate.getName() == "" ) return authService.returnResponse(400);
+		if ( townToUpdate == null || townToUpdate.getId() == null || townToUpdate.getName() == "" || townToUpdate.getName() == null ) return authService.returnResponse(400);
 
 		if ( townNameExist(townToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
@@ -64,9 +65,9 @@ public class TownService {
 
 	}
 	
-	public Response getTown ( Long id ) {
+	public Response getTown ( TownDto townDto ) {
 
-		Town town = em.find(Town.class, id);
+		Town town = em.find(Town.class, townDto.getId());
 		return authService.returnResponseWithEntity(200, town);
 
 	}
