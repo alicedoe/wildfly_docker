@@ -59,7 +59,7 @@ public class RoleEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(Long roleId, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -70,7 +70,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleService.getByIdResponse(roleId);
+		Response getRoleServiceResponse = roleService.getByIdResponse(roleDto);
 		return getRoleServiceResponse;
 	}
 	
@@ -114,7 +114,7 @@ public class RoleEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteRole(Long roleId, @HeaderParam("UserToken") String userToken) {
+	public Response deleteRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -125,7 +125,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteRoleResponse = roleService.deleteResponse(roleId);
+		Response deleteRoleResponse = roleService.deleteResponse(roleDto);
 		return deleteRoleResponse;
 	}
 	
@@ -152,7 +152,7 @@ public class RoleEndpoint {
 	@Path("/addaction")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(Long roleId, List<Long> actions, @HeaderParam("UserToken") String userToken) {
+	public Response addAction(RoleDto roleIdWithActionsToAdd, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -163,7 +163,26 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.addActionResponse(roleId, actions);
+		Response updateRoleServiceResponse = roleService.addActionResponse(roleIdWithActionsToAdd);
+		return updateRoleServiceResponse;
+	}
+	
+	@PUT
+	@Path("/removeaction")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response removeAction(RoleDto roleIdWithActionsToRemove, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"update role"
+	            		));
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		
+		Response updateRoleServiceResponse = roleService.removeActionResponse(roleIdWithActionsToRemove);
 		return updateRoleServiceResponse;
 	}
 

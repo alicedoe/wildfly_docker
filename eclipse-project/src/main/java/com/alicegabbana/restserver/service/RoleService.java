@@ -43,16 +43,17 @@ public class RoleService {
 		if (roleDto.getId() != null) return authService.returnResponse(400);
 		if ( nameExist(roleDto.getName()) ) return authService.returnResponse(409);		
 		
-		return authService.returnResponseWithEntity(201, createService(roleDto));
+		RoleDto roleCreated = createService(roleDto);
+		return authService.returnResponseWithEntity(201, roleCreated);
 		
 	}
 	
-	public Response deleteResponse(Long roleId) {
+	public Response deleteResponse(RoleDto roleDto) {
 		
-		if ( roleId == null ) return authService.returnResponse(400);		
-		if ( getDaoByIdService(roleId) == null ) return authService.returnResponse(404);
+		if ( roleDto.getId() == null ) return authService.returnResponse(400);		
+		if ( getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);
 
-		deleteService(roleId);
+		deleteService(roleDto.getId());
 		return authService.returnResponse(200);
 	}
 	
@@ -66,24 +67,35 @@ public class RoleService {
 
 	}
 	
-	public Response addActionResponse(Long roleId, List<Long> actionsIdList) {
+	public Response addActionResponse(RoleDto roleDto) {
 		
-		Role role = getDaoByIdService(roleId);
-		
-		if ( roleId == null || actionsIdList == null || actionsIdList.size() == 0 ) 
-			return authService.returnResponse(400);
-		if ( role == null ) return authService.returnResponse(404);		
+		Role role = getDaoByIdService(roleDto.getId());
+		if ( role == null ) return authService.returnResponse(404);
+		if ( role.getId() == null || roleDto.getActions() == null || roleDto.getActions().size() == 0 ) 
+			return authService.returnResponse(400);		
 				
-		RoleDto roleDto = addActionService(role.getId(), actionsIdList);		
-		return authService.returnResponseWithEntity(200, roleDto);
+		RoleDto roleDtoUpdated = addActionService(role.getId(), roleDto.getActions());		
+		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 	}
 	
-	public Response getByIdResponse(Long roleId) {
+	public Response removeActionResponse(RoleDto roleDto) {
 		
-		if ( roleId == null ) return authService.returnResponse(400);		
-		if ( getDaoByIdService(roleId) == null ) return authService.returnResponse(404);
+		Role role = getDaoByIdService(roleDto.getId());
 		
-		Role role = getDaoByIdService(roleId);
+		if ( role == null ) return authService.returnResponse(404);
+		if ( role.getId() == null || roleDto.getActions() == null || roleDto.getActions().size() == 0 ) 
+			return authService.returnResponse(400);				
+				
+		RoleDto roleDtoUpdated = removeActionService(role.getId(), roleDto.getActions());		
+		return authService.returnResponseWithEntity(200, roleDtoUpdated);
+	}
+	
+	public Response getByIdResponse(RoleDto roleDtoToGet) {
+		
+		if ( roleDtoToGet == null ) return authService.returnResponse(400);		
+		if ( getDaoByIdService(roleDtoToGet.getId()) == null ) return authService.returnResponse(404);
+		
+		Role role = getDaoByIdService(roleDtoToGet.getId());
 		RoleDto roleDto = daoToDto(role);
 		return authService.returnResponseWithEntity(200, roleDto);
 		
@@ -114,6 +126,13 @@ public class RoleService {
 		if (role != null) {
 			roleDto.setId(role.getId());
 			roleDto.setName(role.getName());
+			final List<Long> actionsList = new ArrayList<Long>();
+			role.getActions().forEach(new Consumer<Action>() {
+				public void accept(Action action) {
+					actionsList.add(action.getId());
+				}
+			});
+			roleDto.setActions(actionsList);			
 		}
 		
 		return roleDto;
@@ -161,18 +180,35 @@ public class RoleService {
 		return roleDtoUpdated;
 	}
 	
-	public RoleDto addActionService ( Long roleId, List<Long> actionsIdList ) {
+	public RoleDto addActionService ( Long roleId, List<Long> actionsIdToAdd ) {
 		Role role = getDaoByIdService(roleId);
-		final List<Action> actionsList = new ArrayList<Action>();
 		
-		actionsIdList.forEach(new Consumer<Long>() {
+		final List<Action> actionsList = role.getActions();
+		
+		actionsIdToAdd.forEach(new Consumer<Long>() {
 			public void accept(Long actionID) {
 				Action action = actionService.getByIdService(actionID);
-				actionsList.add(action);
+				if ( !actionsList.contains(action)) actionsList.add(action);
 			}
 		});
 		
 		role.setActions(actionsList);
+		Role roleUpdated = em.merge(role);
+		return daoToDto(roleUpdated);
+	}
+	
+	public RoleDto removeActionService ( Long roleId, List<Long> actionsIdToremove ) {
+		Role role = getDaoByIdService(roleId);
+		final List<Action> roleActionsList = role.getActions();
+		
+		actionsIdToremove.forEach(new Consumer<Long>() {
+			public void accept(Long actionID) {
+				Action action = actionService.getByIdService(actionID);
+				if ( roleActionsList.contains(action)) roleActionsList.remove(action);
+			}
+		});
+		
+		role.setActions(roleActionsList);
 		Role roleUpdated = em.merge(role);
 		return daoToDto(roleUpdated);
 	}
@@ -187,8 +223,7 @@ public class RoleService {
 	}
 	
 	public List<RoleDto> getAllService () {
-		List<Role> loadedRoles = roleDao.getAllRoles();	
-		
+		List<Role> loadedRoles = roleDao.getAllRoles();
 		List<RoleDto> roleDtoList = daoListToDtoList(loadedRoles);
 		
 		return roleDtoList;
