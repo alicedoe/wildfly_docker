@@ -39,6 +39,8 @@ public class SchoolService {
 
 		if ( schoolNameExist(schoolDto.getName()) ) return authService.returnResponse(409);
 		
+		if ( !townService.townNameExist(schoolDto.getTownName()) ) return authService.returnResponse(404);
+		
 		School school = schoolDtoToSchool(schoolDto);
 		School schoolCreated = em.merge(school);
 		SchoolDto schoolDtoCreated = schoolToSchoolDto(schoolCreated);
@@ -59,9 +61,11 @@ public class SchoolService {
 	
 	public Response updateSchool(SchoolDto schoolDto) {
 		
-		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
+		if ( schoolDto == null || schoolDto.getId() == null || schoolDto.getName() == null || schoolDto.getTownName() == null ) return authService.returnResponse(400);
 
-		if ( schoolNameExist(schoolDto.getName()) == false ) return authService.returnResponse(404);
+		if ( schoolNameExist(schoolDto.getName()) == true ) return authService.returnResponse(409);
+		
+		if ( townService.townNameExist(schoolDto.getTownName()) == false ) return authService.returnResponse(404);
 		
 		School schoolToUpdate = getSchoolById(schoolDto.getId()); 
 		schoolToUpdate.setName(schoolDto.getName());
@@ -87,13 +91,13 @@ public class SchoolService {
 		return authService.returnResponseWithEntity(200, schoolUpdated);
 	}
 	
-	public Response getSchool(Long schoolId) {
+	public Response getSchool(SchoolDto schoolDto) {
 		
-		if ( schoolId == null ) return authService.returnResponse(400);
+		if ( schoolDto.getId() == null ) return authService.returnResponse(400);
 		
-		if ( getSchoolById(schoolId) == null ) return authService.returnResponse(404);
+		if ( getSchoolById(schoolDto.getId()) == null ) return authService.returnResponse(404);
 		
-		School school = em.find(School.class, schoolId);
+		School school = em.find(School.class, schoolDto.getId());
 		SchoolDto schooldDto = schoolToSchoolDto(school);
 		return authService.returnResponseWithEntity(200, schooldDto);
 		

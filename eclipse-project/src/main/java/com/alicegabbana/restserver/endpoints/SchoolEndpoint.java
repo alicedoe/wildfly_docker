@@ -59,7 +59,7 @@ public class SchoolEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getSchool(Long schoolId, @HeaderParam("UserToken") String userToken) {
+	public Response getSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -70,7 +70,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSchoolServiceResponse = schoolService.getSchool(schoolId);
+		Response getSchoolServiceResponse = schoolService.getSchool(schoolDto);
 		return getSchoolServiceResponse;
 	}
 	
