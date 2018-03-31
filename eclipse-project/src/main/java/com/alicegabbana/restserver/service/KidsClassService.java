@@ -13,6 +13,8 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.KidsClassDao;
 import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.dto.LevelDto;
+import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Level;
 import com.alicegabbana.restserver.entity.School;
@@ -37,27 +39,24 @@ public class KidsClassService {
 	
 	Logger logger = Logger.getLogger(KidsClassService.class);
 	
-///////////////	
-//	Response //
-///////////////	
-	
 	public Response createResponse ( KidsClassDto kidsClassDto) {
 		
-		if (kidsClassDto.getId() != null || newKidsClassIsComplete(kidsClassDto) == false) return authService.returnResponse(400);
+		if ( kidsClassIsCorrect(kidsClassDto, false) == false) return authService.returnResponse(400);
 
-		if ( kidsClassDao.kidsClassNameFromLevelExist(kidsClassDto.getSchoolName(), kidsClassDto.getLevelName()))
+		if ( kidsClassDao.kidsClassNameFromLevelExist(kidsClassDto.getName(), kidsClassDto.getLevelName()))
 			return authService.returnResponse(409);
 		
-		return authService.returnResponseWithEntity(201, createService(kidsClassDto));
+		KidsClassDto kidsClassDtoCreated = createService(kidsClassDto);
+		return authService.returnResponseWithEntity(201, kidsClassDtoCreated);
 	}
 	
-	public Response getResponse ( Long kidsClassId ) {
+	public Response getResponse ( KidsClassDto kidsClassDto ) {
 		
-		if (kidsClassId == null ) return authService.returnResponse(400);
+		if (kidsClassDto.getId() == null ) return authService.returnResponse(400);
 
-		if ( getById(kidsClassId) == null ) return authService.returnResponse(404);		
+		if ( getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);		
 		
-		return authService.returnResponseWithEntity(200, getService(kidsClassId));
+		return authService.returnResponseWithEntity(200, getService(kidsClassDto.getId()));
 	}
 	
 	public Response getAllResponse ( ) {
@@ -78,7 +77,8 @@ public class KidsClassService {
 	
 	public Response updateResponse (KidsClassDto kidsClassDto) {
 		
-		if ( kidsClassDto == null || kidsClassDto.getId() == null ) return authService.returnResponse(400);
+		if ( kidsClassDto == null || kidsClassDto.getId() == null || !kidsClassIsCorrect(kidsClassDto, true) ) 
+			return authService.returnResponse(400);
 
 		if ( getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);
 		
@@ -88,13 +88,25 @@ public class KidsClassService {
 
 	}
 	
-	public Response getFromSchoolResponse (Long schoolId) {
+	public Response getFromSchoolResponse (SchoolDto schoolDto) {
 		
-		if ( schoolId == null ) return authService.returnResponse(400);
+		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
 		
-		if ( schoolService.getSchoolById(schoolId) == null ) return authService.returnResponse(404);		
+		if ( schoolService.getSchoolById(schoolDto.getId()) == null ) return authService.returnResponse(404);		
 		
-		return authService.returnResponseWithEntity(200, getFromSchoolService ( schoolId ));
+		List<KidsClassDto> kidsClassDtoList = getFromSchoolService(schoolDto.getId());
+		return authService.returnResponseWithEntity(200, kidsClassDtoList);
+		
+	}
+	
+	public Response getWithLevelResponse (LevelDto levelDto) {
+		
+		if ( levelDto == null || levelDto.getId() == null ) return authService.returnResponse(400);
+		
+		if ( levelService.getLevelById(levelDto.getId()) == null ) return authService.returnResponse(404);		
+		
+		List<KidsClassDto> kidsClassDtoList = getWithLevelService(levelDto.getId());
+		return authService.returnResponseWithEntity(200, kidsClassDtoList);
 		
 	}
 
@@ -124,9 +136,20 @@ public class KidsClassService {
 	public List<KidsClassDto> getFromSchoolService ( Long schoolId ) {
 		
 		List<KidsClass> kidsClassList = kidsClassDao.getKidsClassFromSchool(schoolId);
+		if (kidsClassList != null) {
+			List<KidsClassDto> kidsClassDtoList = kidsClassListToKidsClassDtoList(kidsClassList);
+			return kidsClassDtoList;
+		}	else return null;
+		
+	}
+	
+	public List<KidsClassDto> getWithLevelService ( Long levelId ) {
+		
+		List<KidsClass> kidsClassList = kidsClassDao.getKidsClassWithLevel(levelId);
+		if (kidsClassList != null) {
 		List<KidsClassDto> kidsClassDtoList = kidsClassListToKidsClassDtoList(kidsClassList);
 		return kidsClassDtoList;
-		
+		}	else return null;		
 	}
 	
 	public void deleteService (Long id) {
@@ -154,7 +177,11 @@ public class KidsClassService {
 		return kidsClassDao.getKidsClassById(id);
 	}
 	
-	public boolean newKidsClassIsComplete (KidsClassDto kidsClassDto) {
+	public boolean kidsClassIsCorrect (KidsClassDto kidsClassDto, boolean update) {
+		
+		if ( kidsClassDto.getSchoolName() == null || kidsClassDto.getLevelName() == null ) 
+		{	logger.info("missing_attributes");
+			return false; }
 		
 		if ( kidsClassDto.getSchoolName() == "" || kidsClassDto.getLevelName() == "" ) 
 		{	logger.info("missing_attributes");
@@ -164,7 +191,7 @@ public class KidsClassService {
 		{	logger.info("wrong attributes");
 			return false; }
 		
-		else if ( kidsClassDto.getId() != null )
+		else if ( update == false && kidsClassDto.getId() != null )
 		{	logger.info("forced_id");
 			return false; }
 		
@@ -189,10 +216,10 @@ public class KidsClassService {
 			kidsClass.setId(kidsClassDto.getId());
 			kidsClass.setName(kidsClassDto.getName());
 			
-			Level level = levelService.getLevelByName(kidsClass.getLevel().getName());
+			Level level = levelService.getLevelByName(kidsClassDto.getLevelName());
 			kidsClass.setLevel(level);
 			
-			School school = schoolService.getSchoolByName(kidsClass.getSchool().getName());
+			School school = schoolService.getSchoolByName(kidsClassDto.getSchoolName());
 			kidsClass.setSchool(school);
 		}
 		

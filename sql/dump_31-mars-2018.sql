@@ -35,7 +35,7 @@ CREATE TABLE `Action` (
 
 LOCK TABLES `Action` WRITE;
 /*!40000 ALTER TABLE `Action` DISABLE KEYS */;
-INSERT INTO `Action` VALUES (1,'create role'),(2,'delete role'),(3,'update role'),(4,'read role'),(5,'create user'),(6,'delete user'),(7,'update user'),(8,'read user'),(9,'create action'),(10,'delete action'),(11,'update action'),(12,'read action'),(13,'create level'),(14,'delete level'),(15,'update level'),(16,'read level'),(17,'create town'),(18,'delete town'),(19,'update town'),(20,'read town'),(21,'create tag'),(22,'delete tag'),(23,'update tag'),(24,'read tag'),(25,'create subject'),(26,'delete subject'),(27,'update subject'),(28,'read subject'),(77,'create school'),(78,'read school'),(79,'update school'),(80,'delete school');
+INSERT INTO `Action` VALUES (1,'create role'),(2,'delete role'),(3,'update role'),(4,'read role'),(5,'create user'),(6,'delete user'),(7,'update user'),(8,'read user'),(9,'create action'),(10,'delete action'),(11,'update action'),(12,'read action'),(13,'create level'),(14,'delete level'),(15,'update level'),(16,'read level'),(17,'create town'),(18,'delete town'),(19,'update town'),(20,'read town'),(21,'create tag'),(22,'delete tag'),(23,'update tag'),(24,'read tag'),(25,'create subject'),(26,'delete subject'),(27,'update subject'),(28,'read subject'),(77,'create school'),(78,'read school'),(79,'update school'),(80,'delete school'),(102,'create kidsClass'),(103,'read kidsClass'),(104,'update kidsClass'),(105,'delete kidsClass');
 /*!40000 ALTER TABLE `Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,6 +122,7 @@ CREATE TABLE `KidsClass` (
 
 LOCK TABLES `KidsClass` WRITE;
 /*!40000 ALTER TABLE `KidsClass` DISABLE KEYS */;
+INSERT INTO `KidsClass` VALUES (302,'6ème A',52,1),(327,'6ème B',52,1),(328,'5eme A',77,1),(329,'5eme B',77,1);
 /*!40000 ALTER TABLE `KidsClass` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +175,7 @@ CREATE TABLE `Level` (
 
 LOCK TABLES `Level` WRITE;
 /*!40000 ALTER TABLE `Level` DISABLE KEYS */;
-INSERT INTO `Level` VALUES (52,'6ème');
+INSERT INTO `Level` VALUES (52,'6ème'),(77,'5eme');
 /*!40000 ALTER TABLE `Level` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,7 +249,7 @@ CREATE TABLE `Role_Action` (
 
 LOCK TABLES `Role_Action` WRITE;
 /*!40000 ALTER TABLE `Role_Action` DISABLE KEYS */;
-INSERT INTO `Role_Action` VALUES (52,13),(52,14),(52,15),(52,16),(52,17),(52,18),(52,19),(52,20),(52,77),(52,78),(52,79),(52,80),(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,77),(1,78),(1,79),(1,80);
+INSERT INTO `Role_Action` VALUES (52,13),(52,14),(52,15),(52,16),(52,17),(52,18),(52,19),(52,20),(52,77),(52,78),(52,79),(52,80),(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,77),(1,78),(1,79),(1,80),(1,102),(1,103),(1,104),(1,105);
 /*!40000 ALTER TABLE `Role_Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +271,7 @@ CREATE TABLE `SEQUENCE_Action` (
 
 LOCK TABLES `SEQUENCE_Action` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Action` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Action` VALUES (126);
+INSERT INTO `SEQUENCE_Action` VALUES (151);
 /*!40000 ALTER TABLE `SEQUENCE_Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,7 +315,7 @@ CREATE TABLE `SEQUENCE_Kidsclass` (
 
 LOCK TABLES `SEQUENCE_Kidsclass` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Kidsclass` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Kidsclass` VALUES (1);
+INSERT INTO `SEQUENCE_Kidsclass` VALUES (376);
 /*!40000 ALTER TABLE `SEQUENCE_Kidsclass` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +337,7 @@ CREATE TABLE `SEQUENCE_Level` (
 
 LOCK TABLES `SEQUENCE_Level` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Level` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Level` VALUES (101);
+INSERT INTO `SEQUENCE_Level` VALUES (126);
 /*!40000 ALTER TABLE `SEQUENCE_Level` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -517,7 +518,7 @@ CREATE TABLE `School` (
 
 LOCK TABLES `School` WRITE;
 /*!40000 ALTER TABLE `School` DISABLE KEYS */;
-INSERT INTO `School` VALUES (1,'Clare de luna',1),(27,'Bof school',27);
+INSERT INTO `School` VALUES (1,'Ecole de Maraussan',1),(27,'Ecole de Narbonnes',27);
 /*!40000 ALTER TABLE `School` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -682,4 +683,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-31 13:39:17
+-- Dump completed on 2018-03-31 15:12:22

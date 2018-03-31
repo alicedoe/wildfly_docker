@@ -66,17 +66,16 @@ public class KidsClassDao {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<KidsClass> getKidsClassWithLevel (Long id) {
+	public List<KidsClass> getKidsClassWithLevel (Long levelId) {
 
-		TypedQuery<List<KidsClass>> query_kidsclass = (TypedQuery<List<KidsClass>>) em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsclass.level.id = :id")
-				.setParameter("id", id);
-		List<List<KidsClass>> loadedAction = query_kidsclass.getResultList();
+		TypedQuery<KidsClass> query_kidsClass = em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsClass.level.id = :id ", KidsClass.class)
+				.setParameter("id", levelId);
+		List<KidsClass> loadedKidsClass = query_kidsClass.getResultList();
 		
-		if ( loadedAction.size() != 0 ) {
-			return (List<KidsClass>) query_kidsclass;
+		if ( loadedKidsClass.size() != 0 ) {
+			return loadedKidsClass;
 		}
-		logger.info("Dao get : no kidsClass with this level");				
+		logger.info("Dao get : KidsClass from this school doesn't exist");			
 		return null;
 	}
 	
@@ -96,7 +95,9 @@ public class KidsClassDao {
 	public boolean kidsClassNameFromLevelExist (String kidsClassName, String levelName) {
 		
 		KidsClass kidsClass = getKidsClassByName(kidsClassName);
-		if (kidsClass.getLevel().getName() == levelName) {
+		
+		if ( kidsClass != null && kidsClass.getLevel().getName().equals(levelName)) {
+			logger.info("kidsClassName with this level already exist");
 			return true;
 		}
 		

@@ -21,6 +21,8 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.dto.LevelDto;
+import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.KidsClassService;
@@ -59,7 +61,7 @@ public class KidsClassEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getKidsClass(Long kidsClassId, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClass(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -70,7 +72,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassService.getResponse(kidsClassId);
+		Response getKidsClassServiceResponse = kidsClassService.getResponse(kidsClassDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -95,7 +97,7 @@ public class KidsClassEndpoint {
 	@GET
 	@Path("/fromschool")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getKidsClassFromSchool(Long schoolId, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClassFromSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -106,7 +108,25 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassService.getFromSchoolResponse(schoolId);
+		Response getKidsClassServiceResponse = kidsClassService.getFromSchoolResponse(schoolDto);
+		return getKidsClassServiceResponse;
+	}
+	
+	@GET
+	@Path("/withlevel")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getKidsClassFromLevel(LevelDto levelDto, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"read kidsClass"
+	            		));
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		
+		Response getKidsClassServiceResponse = kidsClassService.getWithLevelResponse(levelDto);
 		return getKidsClassServiceResponse;
 	}
 	
