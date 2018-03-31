@@ -3,6 +3,7 @@ package com.alicegabbana.restserver.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,14 +30,15 @@ public class Homework {
 	@ManyToOne
 	private User creator;
 	@NotNull
-	private String text;
-	@NotNull
+	@ManyToOne
+	private KidsClass kidsClass;
+	private String wording;
 	@ManyToMany
 	private List<Tag> tag;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date creation;
+	private Date creationDate;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date end;
+	private Date endDate;
 	
 	public Long getId() {
 		return id;
@@ -56,11 +58,17 @@ public class Homework {
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	public String getText() {
-		return text;
+	public KidsClass getKidsClass() {
+		return kidsClass;
 	}
-	public void setText(String text) {
-		this.text = text;
+	public void setKidsClass(KidsClass kidsClass) {
+		this.kidsClass = kidsClass;
+	}
+	public String getWording() {
+		return wording;
+	}
+	public void setWording(String wording) {
+		this.wording = wording;
 	}
 	public List<Tag> getTag() {
 		return tag;
@@ -68,22 +76,22 @@ public class Homework {
 	public void setTag(List<Tag> tag) {
 		this.tag = tag;
 	}
-	public Date getCreation() {
-		return creation;
+	public Date getCreationDate() {
+		return creationDate;
 	}
-	public void setCreation(Date creation) {
-		this.creation = creation;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
-	public Date getEnd() {
-		return end;
+	public Date getEndDate() {
+		return endDate;
 	}
-	public void setEnd(Date end) {
-		this.end = end;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	@Override
 	public String toString() {
-		return "Devoir [id=" + id + ", subject=" + subject + ", creator=" + creator + ", text=" + text + ", tag=" + tag
-				+ ", creation=" + creation + ", end=" + end + "]";
+		return "Homework [id=" + id + ", subject=" + subject + ", creator=" + creator + ", kidsClass=" + kidsClass
+				+ ", wording=" + wording + ", tag=" + tag + ", creationDate=" + creationDate + ", endDate=" + endDate + "]";
 	}
- 
+	
 }

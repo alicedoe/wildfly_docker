@@ -35,7 +35,7 @@ CREATE TABLE `Action` (
 
 LOCK TABLES `Action` WRITE;
 /*!40000 ALTER TABLE `Action` DISABLE KEYS */;
-INSERT INTO `Action` VALUES (1,'create role'),(2,'delete role'),(3,'update role'),(4,'read role'),(5,'create user'),(6,'delete user'),(7,'update user'),(8,'read user'),(9,'create action'),(10,'delete action'),(11,'update action'),(12,'read action'),(13,'create level'),(14,'delete level'),(15,'update level'),(16,'read level'),(17,'create town'),(18,'delete town'),(19,'update town'),(20,'read town'),(21,'create tag'),(22,'delete tag'),(23,'update tag'),(24,'read tag'),(25,'create subject'),(26,'delete subject'),(27,'update subject'),(28,'read subject'),(77,'create school'),(78,'read school'),(79,'update school'),(80,'delete school'),(102,'create kidsClass'),(103,'read kidsClass'),(104,'update kidsClass'),(105,'delete kidsClass');
+INSERT INTO `Action` VALUES (1,'create role'),(2,'delete role'),(3,'update role'),(4,'read role'),(5,'create user'),(6,'delete user'),(7,'update user'),(8,'read user'),(9,'create action'),(10,'delete action'),(11,'update action'),(12,'read action'),(13,'create level'),(14,'delete level'),(15,'update level'),(16,'read level'),(17,'create town'),(18,'delete town'),(19,'update town'),(20,'read town'),(21,'create tag'),(22,'delete tag'),(23,'update tag'),(24,'read tag'),(25,'create subject'),(26,'delete subject'),(27,'update subject'),(28,'read subject'),(77,'create homework'),(78,'read homework'),(79,'update homework'),(80,'delete homework'),(81,'create kidsClass'),(82,'read kidsClass'),(83,'update kidsClass'),(84,'delete kidsClass'),(102,'create school'),(103,'read school'),(104,'update school'),(105,'delete school');
 /*!40000 ALTER TABLE `Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -48,14 +48,17 @@ DROP TABLE IF EXISTS `Homework`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Homework` (
   `id` bigint(20) NOT NULL,
-  `creation` datetime DEFAULT NULL,
-  `end` datetime DEFAULT NULL,
-  `text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `creationDate` datetime DEFAULT NULL,
+  `endDate` datetime DEFAULT NULL,
+  `text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `creator_id` bigint(20) NOT NULL,
+  `kidsClass_id` bigint(20) NOT NULL,
   `subject_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKoy6t8ejyy2v1vde6dd97abhew` (`creator_id`),
+  KEY `FKcwtstbly5x8dy56osl5yorvxk` (`kidsClass_id`),
   KEY `FKd9e4wevt26ljden56xl34blrl` (`subject_id`),
+  CONSTRAINT `FKcwtstbly5x8dy56osl5yorvxk` FOREIGN KEY (`kidsClass_id`) REFERENCES `KidsClass` (`id`),
   CONSTRAINT `FKd9e4wevt26ljden56xl34blrl` FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`),
   CONSTRAINT `FKoy6t8ejyy2v1vde6dd97abhew` FOREIGN KEY (`creator_id`) REFERENCES `User` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -67,6 +70,7 @@ CREATE TABLE `Homework` (
 
 LOCK TABLES `Homework` WRITE;
 /*!40000 ALTER TABLE `Homework` DISABLE KEYS */;
+INSERT INTO `Homework` VALUES (27,'2018-03-31 20:14:20','1970-01-18 14:55:23',NULL,1,1,2);
 /*!40000 ALTER TABLE `Homework` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,37 +126,8 @@ CREATE TABLE `KidsClass` (
 
 LOCK TABLES `KidsClass` WRITE;
 /*!40000 ALTER TABLE `KidsClass` DISABLE KEYS */;
-INSERT INTO `KidsClass` VALUES (302,'6ème A',52,1),(327,'6ème B',52,1),(328,'5eme A',77,1),(329,'5eme B',77,1);
+INSERT INTO `KidsClass` VALUES (1,'6ème A',52,2),(2,'6ème B',52,2),(3,'5eme A',77,2),(4,'5eme B',77,2);
 /*!40000 ALTER TABLE `KidsClass` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Kidsclass`
---
-
-DROP TABLE IF EXISTS `Kidsclass`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Kidsclass` (
-  `id` bigint(20) NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level_id` bigint(20) NOT NULL,
-  `school_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKfsj2c4np63m7t398hjofq9fde` (`level_id`),
-  KEY `FKfob986k1ew6j2f5sc8k2jf4bp` (`school_id`),
-  CONSTRAINT `FKfob986k1ew6j2f5sc8k2jf4bp` FOREIGN KEY (`school_id`) REFERENCES `School` (`id`),
-  CONSTRAINT `FKfsj2c4np63m7t398hjofq9fde` FOREIGN KEY (`level_id`) REFERENCES `Level` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Kidsclass`
---
-
-LOCK TABLES `Kidsclass` WRITE;
-/*!40000 ALTER TABLE `Kidsclass` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Kidsclass` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -164,7 +139,7 @@ DROP TABLE IF EXISTS `Level`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Level` (
   `id` bigint(20) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -177,29 +152,6 @@ LOCK TABLES `Level` WRITE;
 /*!40000 ALTER TABLE `Level` DISABLE KEYS */;
 INSERT INTO `Level` VALUES (52,'6ème'),(77,'5eme');
 /*!40000 ALTER TABLE `Level` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Matiere`
---
-
-DROP TABLE IF EXISTS `Matiere`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Matiere` (
-  `id` bigint(20) NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Matiere`
---
-
-LOCK TABLES `Matiere` WRITE;
-/*!40000 ALTER TABLE `Matiere` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Matiere` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -249,7 +201,7 @@ CREATE TABLE `Role_Action` (
 
 LOCK TABLES `Role_Action` WRITE;
 /*!40000 ALTER TABLE `Role_Action` DISABLE KEYS */;
-INSERT INTO `Role_Action` VALUES (52,13),(52,14),(52,15),(52,16),(52,17),(52,18),(52,19),(52,20),(52,77),(52,78),(52,79),(52,80),(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,77),(1,78),(1,79),(1,80),(1,102),(1,103),(1,104),(1,105);
+INSERT INTO `Role_Action` VALUES (52,13),(52,14),(52,15),(52,16),(52,17),(52,18),(52,19),(52,20),(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,77),(1,78),(1,79),(1,80),(1,81),(1,82),(1,83),(1,84),(1,102),(1,103),(1,104),(1,105);
 /*!40000 ALTER TABLE `Role_Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +223,7 @@ CREATE TABLE `SEQUENCE_Action` (
 
 LOCK TABLES `SEQUENCE_Action` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Action` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Action` VALUES (151);
+INSERT INTO `SEQUENCE_Action` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +245,7 @@ CREATE TABLE `SEQUENCE_Homework` (
 
 LOCK TABLES `SEQUENCE_Homework` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Homework` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Homework` VALUES (1);
+INSERT INTO `SEQUENCE_Homework` VALUES (76);
 /*!40000 ALTER TABLE `SEQUENCE_Homework` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,7 +267,7 @@ CREATE TABLE `SEQUENCE_Kidsclass` (
 
 LOCK TABLES `SEQUENCE_Kidsclass` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Kidsclass` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Kidsclass` VALUES (376);
+INSERT INTO `SEQUENCE_Kidsclass` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Kidsclass` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,30 +289,8 @@ CREATE TABLE `SEQUENCE_Level` (
 
 LOCK TABLES `SEQUENCE_Level` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Level` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Level` VALUES (126);
+INSERT INTO `SEQUENCE_Level` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Level` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `SEQUENCE_Matiere`
---
-
-DROP TABLE IF EXISTS `SEQUENCE_Matiere`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SEQUENCE_Matiere` (
-  `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `SEQUENCE_Matiere`
---
-
-LOCK TABLES `SEQUENCE_Matiere` WRITE;
-/*!40000 ALTER TABLE `SEQUENCE_Matiere` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Matiere` VALUES (1);
-/*!40000 ALTER TABLE `SEQUENCE_Matiere` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -381,7 +311,7 @@ CREATE TABLE `SEQUENCE_Role` (
 
 LOCK TABLES `SEQUENCE_Role` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Role` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Role` VALUES (101);
+INSERT INTO `SEQUENCE_Role` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -403,7 +333,7 @@ CREATE TABLE `SEQUENCE_School` (
 
 LOCK TABLES `SEQUENCE_School` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_School` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_School` VALUES (76);
+INSERT INTO `SEQUENCE_School` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_School` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,7 +355,7 @@ CREATE TABLE `SEQUENCE_Subject` (
 
 LOCK TABLES `SEQUENCE_Subject` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Subject` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Subject` VALUES (51);
+INSERT INTO `SEQUENCE_Subject` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,7 +377,7 @@ CREATE TABLE `SEQUENCE_Tag` (
 
 LOCK TABLES `SEQUENCE_Tag` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Tag` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Tag` VALUES (76);
+INSERT INTO `SEQUENCE_Tag` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -469,7 +399,7 @@ CREATE TABLE `SEQUENCE_User` (
 
 LOCK TABLES `SEQUENCE_User` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_User` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_User` VALUES (151);
+INSERT INTO `SEQUENCE_User` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -491,7 +421,7 @@ CREATE TABLE `SEQUENCE_Ville` (
 
 LOCK TABLES `SEQUENCE_Ville` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_Ville` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_Ville` VALUES (101);
+INSERT INTO `SEQUENCE_Ville` VALUES (1);
 /*!40000 ALTER TABLE `SEQUENCE_Ville` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,7 +434,7 @@ DROP TABLE IF EXISTS `School`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `School` (
   `id` bigint(20) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `town_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FKmchcql760yl5q3igw858bnjgs` (`town_id`),
@@ -518,7 +448,7 @@ CREATE TABLE `School` (
 
 LOCK TABLES `School` WRITE;
 /*!40000 ALTER TABLE `School` DISABLE KEYS */;
-INSERT INTO `School` VALUES (1,'Ecole de Maraussan',1),(27,'Ecole de Narbonnes',27);
+INSERT INTO `School` VALUES (1,'Ecole de Narbonnes',27),(2,'Ecole de Maraussan',1);
 /*!40000 ALTER TABLE `School` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -648,30 +578,8 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'alice.gabbana@gmail.com','alice','gabbana','motdepasse','monsupertoken',NULL,1),(52,'unautreadmin@monecole.com','Elah','Danloss','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bmF1dHJlYWRtaW5AbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.-iEF5MENEac3Ub6y7yLO86CtXsnzWcGLChCoKZckokI',NULL,1),(77,'unprof@monecole.com','Edmond','fils','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bnByb2ZAbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.lg-otCXbYJwTs5-9TknH7REZfx-n7EOk9LT1BoK61jU',329,52),(78,'unautreprof@monecole.com','Jacques','Ouzi','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bmF1dHJlcHJvZkBtb25lY29sZS5jb20iLCJleHAiOjE1MzU0MTQ0MDB9.76ZSvd1vWHzPPxJggFhjS8QaMyVDkdyyS0hvF9WSR9s',327,52),(102,'encoreunprof@monecole.com','Jerry','Kan','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbmNvcmV1bnByb2ZAbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.fJC4tMxg2b4nhcUpbGhc6Mj5k8P5Wz1m1Z-XhD4N_4o',327,52);
+INSERT INTO `User` VALUES (1,'alice.gabbana@gmail.com','alice','gabbana','motdepasse','monsupertoken',NULL,1),(2,'encoreunprof@monecole.com','Jerry','Kan','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbmNvcmV1bnByb2ZAbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.fJC4tMxg2b4nhcUpbGhc6Mj5k8P5Wz1m1Z-XhD4N_4o',2,52);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `hibernate_sequence`
---
-
-DROP TABLE IF EXISTS `hibernate_sequence`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hibernate_sequence` (
-  `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hibernate_sequence`
---
-
-LOCK TABLES `hibernate_sequence` WRITE;
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (4);
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -683,4 +591,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-31 17:06:50
+-- Dump completed on 2018-03-31 22:20:19

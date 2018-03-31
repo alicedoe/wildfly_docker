@@ -116,7 +116,7 @@ public class KidsClassService {
 
 	public List<KidsClassDto> getAllService () {
 		List<KidsClass> kidsClassList = kidsClassDao.getAllKidsClass();
-		List<KidsClassDto> kidsClassDtoList = kidsClassListToKidsClassDtoList(kidsClassList);
+		List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
 		return kidsClassDtoList;
 	}
 	
@@ -137,7 +137,7 @@ public class KidsClassService {
 		
 		List<KidsClass> kidsClassList = kidsClassDao.getKidsClassFromSchool(schoolId);
 		if (kidsClassList != null) {
-			List<KidsClassDto> kidsClassDtoList = kidsClassListToKidsClassDtoList(kidsClassList);
+			List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
 			return kidsClassDtoList;
 		}	else return null;
 		
@@ -147,7 +147,7 @@ public class KidsClassService {
 		
 		List<KidsClass> kidsClassList = kidsClassDao.getKidsClassWithLevel(levelId);
 		if (kidsClassList != null) {
-		List<KidsClassDto> kidsClassDtoList = kidsClassListToKidsClassDtoList(kidsClassList);
+		List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
 		return kidsClassDtoList;
 		}	else return null;		
 	}
@@ -198,14 +198,15 @@ public class KidsClassService {
 		return true;
 	}
 	
-	public List<KidsClassDto> kidsClassListToKidsClassDtoList (List<KidsClass> kidsClassList) {
+	public List<KidsClassDto> daoListToDtoList (List<KidsClass> kidsClassList) {
 
 		List<KidsClassDto> kidsClassDtoList = new ArrayList<KidsClassDto>();
-		for (KidsClass kidsClass : kidsClassList) {
-			KidsClassDto kidsClassDto = kidsClassToKidsClassDto(kidsClass);
-			kidsClassDtoList.add(kidsClassDto);
+		if (kidsClassList != null) {
+			for (KidsClass kidsClass : kidsClassList) {
+				KidsClassDto kidsClassDto = kidsClassToKidsClassDto(kidsClass);
+				kidsClassDtoList.add(kidsClassDto);
+			}
 		}
-
 		return kidsClassDtoList;
 	}
 	

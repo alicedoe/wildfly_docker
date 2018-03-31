@@ -148,11 +148,12 @@ public class SchoolService {
 	public List<SchoolDto> schoolListToSchoolDtoList (List<School> schoolList) {
 
 		List<SchoolDto> schoolDtoList = new ArrayList<SchoolDto>();
-		for (School school : schoolList) {
-			SchoolDto schoolDto = schoolToSchoolDto(school);
-			schoolDtoList.add(schoolDto);
+		if (schoolList!=null) {
+			for (School school : schoolList) {
+				SchoolDto schoolDto = schoolToSchoolDto(school);
+				schoolDtoList.add(schoolDto);
+			}
 		}
-
 		return schoolDtoList;
 	}
 	

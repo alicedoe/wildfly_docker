@@ -6,15 +6,29 @@ public class HomeworkDto {
 
 	private Long id;
 	private String subjectName;
-	private String creatorName;
-	private String text;
-	private Date beginDate;
+	private Long creatorId;
+	private Long kidsClassId;
+	private String wording;
+	private Date creationDate;
 	private Date endDate;
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getWording() {
+		return wording;
+	}
+	public void setWording(String wording) {
+		this.wording = wording;
+	}
+	public Long getKidsClassId() {
+		return kidsClassId;
+	}
+	public void setKidsClassId(Long kidsClassId) {
+		this.kidsClassId = kidsClassId;
 	}
 	public String getSubjectName() {
 		return subjectName;
@@ -22,23 +36,17 @@ public class HomeworkDto {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
-	public String getCreatorName() {
-		return creatorName;
+	public Long getCreatorId() {
+		return creatorId;
 	}
-	public void setCreatorName(String creatorName) {
-		this.creatorName = creatorName;
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
 	}
-	public String getText() {
-		return text;
+	public Date getCreationDate() {
+		return creationDate;
 	}
-	public void setText(String text) {
-		this.text = text;
-	}
-	public Date getBeginDate() {
-		return beginDate;
-	}
-	public void setBeginDate(Date beginDate) {
-		this.beginDate = beginDate;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 	public Date getEndDate() {
 		return endDate;
@@ -48,8 +56,10 @@ public class HomeworkDto {
 	}
 	@Override
 	public String toString() {
-		return "HomeworkDto [id=" + id + ", subjectName=" + subjectName + ", creatorName=" + creatorName + ", text="
-				+ text + ", beginDate=" + beginDate + ", endDate=" + endDate + "]";
+		return "HomeworkDto [id=" + id + ", subjectName=" + subjectName + ", creatorId=" + creatorId + ", kidsClassId="
+				+ kidsClassId + ", wording=" + wording + ", creationDate=" + creationDate + ", endDate=" + endDate + "]";
 	}
+	
+	
 	
 }
