@@ -1,0 +1,1678 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2018-03-31T13:13:17.459Z",
+	"__export_source": "insomnia.desktop.app:v5.12.3",
+	"resources": [
+		{
+			"_id": "wrk_a226975e2118433c8f5ec5576175e284",
+			"created": 1512293861266,
+			"description": "",
+			"modified": 1512293861266,
+			"name": "Insomnia",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_4d99ce0fb2144a768b04a4f6d6e5f365",
+			"color": null,
+			"created": 1512293861309,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1512293861309,
+			"name": "New Environment",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_76c770433a6d4156a2da3ac7f3d63ccf",
+			"cookies": [],
+			"created": 1512293861370,
+			"modified": 1512293861370,
+			"name": "Default Jar",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"created": 1521229328613,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328314,
+			"modified": 1522495068035,
+			"name": "User",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"created": 1521290278633,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328439,
+			"modified": 1522495085258,
+			"name": "Role",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_35864587ad164a6abfbb70e44facc913",
+			"created": 1522002245241,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328564,
+			"modified": 1522002253624,
+			"name": "Action",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_0ace3785091e4156b1953f150081e185",
+			"created": 1522346907168,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328514,
+			"modified": 1522346918681,
+			"name": "Level",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_600ec21125d641a092da67d37abc276d",
+			"created": 1522349448994,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328326.5,
+			"modified": 1522495078944,
+			"name": "Town",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
+			"created": 1522350287214,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328339,
+			"modified": 1522495071630,
+			"name": "Tag",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_beb42923e4bc4fbe8550aa89ba52abdb",
+			"created": 1522351496194,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328364,
+			"modified": 1522351506739,
+			"name": "Subject",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_5037b52065024b76a80f0d06e26ba509",
+			"created": 1522495187932,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328401.5,
+			"modified": 1522496397947,
+			"name": "School",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_859dbc4950d94731b1da626ca160e62b",
+			"created": 1522496446139,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328539,
+			"modified": 1522496458787,
+			"name": "KidsClass",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_6c57f2f099194a0196ee66244f4bb90c",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"email\": \"toto@toto.com\",\n\"nom\": \"nom\",\n\"prenom\": \"prenom\",\n\"pwd\": \"motdepasse\",\n\t\"role\" :  \n\t\t{\n\t\t\t\"id\": \"1\"\n\t\t}\n\t\n}"
+			},
+			"created": 1521224049256,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1521377926124,
+			"name": "Create User",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/create",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b8bb211cfb8e443cb3b7b3ca1091542e",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"1\"\t\n}"
+			},
+			"created": 1521229358962,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521004522147.25,
+			"method": "GET",
+			"modified": 1521371934261,
+			"name": "Get User",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_bb1db55a5bdf45e28db8f240be216836",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": ""
+			},
+			"created": 1521294103086,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520892118907.625,
+			"method": "GET",
+			"modified": 1521373122676,
+			"name": "Get All User",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_1d48524e52c343248f3762c44f5812e7",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\":\"1\",\n\"nom\":\"nouveaunom\",\n\t\"prenom\":\"nouveauprenom\",\n\t\"pwd\":\"nouveaupwd\"\n}"
+			},
+			"created": 1521373126958,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521116925386.875,
+			"method": "PUT",
+			"modified": 1521374290600,
+			"name": "Update User",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6df13c420674451ebc8ff17df02360b4",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"name\": \"professeur\"\n\t}"
+			},
+			"created": 1512503021102,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_05ee768d4d844b83a33530561647e741",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021102,
+			"method": "POST",
+			"modified": 1522434116390,
+			"name": "Create role",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_94d03015e3fb4798a1ed91103afe2697",
+			"authentication": {},
+			"body": {},
+			"created": 1521296348504,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1512503021052,
+			"method": "GET",
+			"modified": 1521296373167,
+			"name": "Get all",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_06b8a4f2d57a4c01a8b7a12b543df6b9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\" : \"52\"\n}"
+			},
+			"created": 1521894182729,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_72c5a07ca0fe4b7384660ae034fbf169",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021002,
+			"method": "GET",
+			"modified": 1522434285464,
+			"name": "Get actions",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/getaction",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e65baf1db98049d48ca29b2bb4ce04be",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"id\": \"27\"\n\t}"
+			},
+			"created": 1522432280274,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_05ee768d4d844b83a33530561647e741",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021077,
+			"method": "DELETE",
+			"modified": 1522432300227,
+			"name": "Delete role",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/delete",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cdf9a0229f304c4fa2d2e9e4769d869b",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"id\":\"52\",\n\t\t\"name\":\"professeur\"\n}"
+			},
+			"created": 1522434059049,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_05ee768d4d844b83a33530561647e741",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021089.5,
+			"method": "PUT",
+			"modified": 1522434355234,
+			"name": "Update role",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3f6ef37cc0844d22995fe8ed73461c18",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"id\":\"1\",\n\t\t\"actions\": [ 102,103,104,105 ]\n\t}"
+			},
+			"created": 1522434203465,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_05ee768d4d844b83a33530561647e741",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021083.25,
+			"method": "PUT",
+			"modified": 1522496755201,
+			"name": "Add actions",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/addaction",
+			"_type": "request"
+		},
+		{
+			"_id": "req_361d33d8c86d40a59423a2edbf14f767",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"id\":\"52\",\n\t\t\"actions\": [ 170 ]\n\t}"
+			},
+			"created": 1522436029806,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_05ee768d4d844b83a33530561647e741",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021080.125,
+			"method": "PUT",
+			"modified": 1522437474784,
+			"name": "Remove actions",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/removeaction",
+			"_type": "request"
+		},
+		{
+			"_id": "req_8ce0080e73ed4e189346dec919dbc7ab",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"52\"\n}"
+			},
+			"created": 1522436182033,
+			"description": "",
+			"headers": [
+				{
+					"disabled": false,
+					"id": "pair_ff7c4d749ee041eda06dd9d148a3b818",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_3d79b7861a744baabe65af48eedaba4f",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1512503021027,
+			"method": "GET",
+			"modified": 1522436209497,
+			"name": "Get role",
+			"parameters": [],
+			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/role/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_9108f664e492434bb7462fba6fd6ba8a",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n \"name\":\"delete kidsClass\"\n}"
+			},
+			"created": 1522002245276,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522496728690,
+			"name": "Create Action",
+			"parameters": [],
+			"parentId": "fld_35864587ad164a6abfbb70e44facc913",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/action/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_2ca1cd8366564bd3bf8a40c8d1bc3197",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"27\",\n \"name\":\"testaction\"\n}"
+			},
+			"created": 1522003301866,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521173127006.6875,
+			"method": "PUT",
+			"modified": 1522003474113,
+			"name": "Update Action",
+			"parameters": [],
+			"parentId": "fld_35864587ad164a6abfbb70e44facc913",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/action/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_151476b8399e4cb9aac98b30edb7cfeb",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"27\"\n}"
+			},
+			"created": 1522003602949,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521145026196.7812,
+			"method": "GET",
+			"modified": 1522004001121,
+			"name": "Get Action",
+			"parameters": [],
+			"parentId": "fld_35864587ad164a6abfbb70e44facc913",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/action/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_61f84f084ba349e4b8b817bff8290840",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"52\"\n}"
+			},
+			"created": 1522004007182,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521130975791.8281,
+			"method": "DELETE",
+			"modified": 1522004302130,
+			"name": "Delete Action",
+			"parameters": [],
+			"parentId": "fld_35864587ad164a6abfbb70e44facc913",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/action/delete",
+			"_type": "request"
+		},
+		{
+			"_id": "req_82db59c6b972460faabfbfeabbaaee59",
+			"authentication": {},
+			"body": {},
+			"created": 1522004366293,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1521138000994.3047,
+			"method": "GET",
+			"modified": 1522004384639,
+			"name": "GetAll Action",
+			"parameters": [],
+			"parentId": "fld_35864587ad164a6abfbb70e44facc913",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/action/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_2469ca0d4c1e4b359516fa23cff9c387",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n \"name\":\"5eme\"\n}"
+			},
+			"created": 1522346907191,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522498345825,
+			"name": "Create level",
+			"parameters": [],
+			"parentId": "fld_0ace3785091e4156b1953f150081e185",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/level/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_fd53688f55804290a9704aab62d4dd13",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\"\n}"
+			},
+			"created": 1522346907212,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521173127006.6875,
+			"method": "PUT",
+			"modified": 1522348241625,
+			"name": "Update Level",
+			"parameters": [],
+			"parentId": "fld_0ace3785091e4156b1953f150081e185",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/level/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b0af82d61df94c6bacc3b8f5e9a32da5",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\"\n}"
+			},
+			"created": 1522346907216,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521145026196.7812,
+			"method": "GET",
+			"modified": 1522348227618,
+			"name": "Get Level",
+			"parameters": [],
+			"parentId": "fld_0ace3785091e4156b1953f150081e185",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/level/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ca6e4c1c32f64025a68105bd3c6e5984",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\"\n}"
+			},
+			"created": 1522346907219,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521130975791.8281,
+			"method": "DELETE",
+			"modified": 1522348387992,
+			"name": "Delete Level",
+			"parameters": [],
+			"parentId": "fld_0ace3785091e4156b1953f150081e185",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/level/delete",
+			"_type": "request"
+		},
+		{
+			"_id": "req_4d9fdd0d41ad431988244c3b6b4b0d17",
+			"authentication": {},
+			"body": {},
+			"created": 1522346907223,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1521138000994.3047,
+			"method": "GET",
+			"modified": 1522348249063,
+			"name": "GetAll Level",
+			"parameters": [],
+			"parentId": "fld_0ace3785091e4156b1953f150081e185",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/level/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_1f02df2b0786499baaf366c7184c79ce",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n \"name\":\"6ème\"\n}"
+			},
+			"created": 1522349449021,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522350706308,
+			"name": "Create town",
+			"parameters": [],
+			"parentId": "fld_600ec21125d641a092da67d37abc276d",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/town/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_26cf54e256cf4f51a51866bc8901d837",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\",\n\t\"name\":\"Maraussan\"\n}"
+			},
+			"created": 1522349449031,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521173127006.6875,
+			"method": "PUT",
+			"modified": 1522495367010,
+			"name": "Update town",
+			"parameters": [],
+			"parentId": "fld_600ec21125d641a092da67d37abc276d",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/town/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a4b8f85992724be4ad2eef84e28e6104",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"22\"\n}"
+			},
+			"created": 1522349449041,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521145026196.7812,
+			"method": "GET",
+			"modified": 1522350814071,
+			"name": "Get town",
+			"parameters": [],
+			"parentId": "fld_600ec21125d641a092da67d37abc276d",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/town/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3d7a886437aa4971b8da331db9f29708",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"52\"\n}"
+			},
+			"created": 1522349449046,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521130975791.8281,
+			"method": "DELETE",
+			"modified": 1522350755071,
+			"name": "Delete town",
+			"parameters": [],
+			"parentId": "fld_600ec21125d641a092da67d37abc276d",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/town/delete",
+			"_type": "request"
+		},
+		{
+			"_id": "req_0a91b1b2f21c42bbb5d312ec9654141a",
+			"authentication": {},
+			"body": {},
+			"created": 1522349449050,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1521138000994.3047,
+			"method": "GET",
+			"modified": 1522350724611,
+			"name": "GetAll town",
+			"parameters": [],
+			"parentId": "fld_600ec21125d641a092da67d37abc276d",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/town/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_88fedc8b11494168bf06f7de4bba8c6c",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n \"name\":\"urgent\"\n}"
+			},
+			"created": 1522350287241,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522351150996,
+			"name": "Create Tag",
+			"parameters": [],
+			"parentId": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/tag/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e2d1d9aa15654ae19374a3fa6ac089a2",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\",\n\t\"name\":\"megaurgent\"\n}"
+			},
+			"created": 1522350287260,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521173127006.6875,
+			"method": "PUT",
+			"modified": 1522351180902,
+			"name": "Update Tag",
+			"parameters": [],
+			"parentId": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/tag/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_c727dec7c5a94be4bf1d33271dd42d79",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\"\n}"
+			},
+			"created": 1522350287266,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521145026196.7812,
+			"method": "GET",
+			"modified": 1522351140567,
+			"name": "Get Tag",
+			"parameters": [],
+			"parentId": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/tag/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_14fd3bdc36f24bf09264a2bebf4647ae",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"27\"\n}"
+			},
+			"created": 1522350287269,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521130975791.8281,
+			"method": "DELETE",
+			"modified": 1522351157933,
+			"name": "Delete Tag",
+			"parameters": [],
+			"parentId": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/tag/delete",
+			"_type": "request"
+		},
+		{
+			"_id": "req_7b3881951b0143fcba0537d64ca46eb9",
+			"authentication": {},
+			"body": {},
+			"created": 1522350287271,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1521138000994.3047,
+			"method": "GET",
+			"modified": 1522351163752,
+			"name": "GetAll Tag",
+			"parameters": [],
+			"parentId": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/tag/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6897b93d29bc49f49d0f118049c22d38",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n \"name\":\"Mathématique\"\n}"
+			},
+			"created": 1522351496209,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522351572204,
+			"name": "Create subject",
+			"parameters": [],
+			"parentId": "fld_beb42923e4bc4fbe8550aa89ba52abdb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/subject/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_966d8895f257477ea7c92a8bc70d1bbe",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\",\n\t\"name\":\"Physique Chimie\"\n}"
+			},
+			"created": 1522351496216,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521173127006.6875,
+			"method": "PUT",
+			"modified": 1522351598431,
+			"name": "Update subject",
+			"parameters": [],
+			"parentId": "fld_beb42923e4bc4fbe8550aa89ba52abdb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/subject/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_0210472d6fc643f4a482f9a6a222a5cc",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\"\n}"
+			},
+			"created": 1522351496220,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521145026196.7812,
+			"method": "GET",
+			"modified": 1522351544201,
+			"name": "Get subject",
+			"parameters": [],
+			"parentId": "fld_beb42923e4bc4fbe8550aa89ba52abdb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/subject/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_34b71499cf524e9ab0f400221be9fe39",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"id\":\"1\"\n}"
+			},
+			"created": 1522351496223,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521130975791.8281,
+			"method": "DELETE",
+			"modified": 1522351618514,
+			"name": "Delete subject",
+			"parameters": [],
+			"parentId": "fld_beb42923e4bc4fbe8550aa89ba52abdb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/subject/delete",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f578f86f9aa6469588d42ceee51c5cc0",
+			"authentication": {},
+			"body": {},
+			"created": 1522351496226,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1521138000994.3047,
+			"method": "GET",
+			"modified": 1522351547369,
+			"name": "GetAll subject",
+			"parameters": [],
+			"parentId": "fld_beb42923e4bc4fbe8550aa89ba52abdb",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/subject/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_92e2ccf3b61b4b2d89db014a7b3d937b",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"name\": \"Super school\",\n\"townName\": \"Maraussan\"\t\n}"
+			},
+			"created": 1522495187952,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522495912151,
+			"name": "Create School",
+			"parameters": [],
+			"parentId": "fld_5037b52065024b76a80f0d06e26ba509",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/school/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_c0ae552fb086407fb6b1c6667fb0e5eb",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"20\"\t\n}"
+			},
+			"created": 1522495187958,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521004522147.25,
+			"method": "GET",
+			"modified": 1522496317045,
+			"name": "Get School",
+			"parameters": [],
+			"parentId": "fld_5037b52065024b76a80f0d06e26ba509",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/school/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_9fb6ae7e028c41dcb6b1186907269814",
+			"authentication": {},
+			"body": {},
+			"created": 1522495187968,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1520892118907.625,
+			"method": "GET",
+			"modified": 1522496328907,
+			"name": "Get All School",
+			"parameters": [],
+			"parentId": "fld_5037b52065024b76a80f0d06e26ba509",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/school/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_bfd98457eb1448f2bf3635193e762e44",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"id\": 1,\n\t\t\"name\": \"Ecole de Maraussan\",\n\t\t\"townName\": \"Maraussan\"\n\t}"
+			},
+			"created": 1522495187974,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521116925386.875,
+			"method": "PUT",
+			"modified": 1522501752358,
+			"name": "Update School",
+			"parameters": [],
+			"parentId": "fld_5037b52065024b76a80f0d06e26ba509",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/school/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_de9ce7ad1ab44205bc1161297eeb5b95",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"name\": \"5eme B\",\n\t\t\"levelName\": \"5eme\",\n\t\t\"schoolName\": \"Ecole de Maraussan\"\n\t}"
+			},
+			"created": 1522496446161,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522501919411,
+			"name": "Create KidsClass",
+			"parameters": [],
+			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/kidsclass/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ad547df946a34f3e873e1eeb629198d7",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"302\"\t\n}"
+			},
+			"created": 1522496446168,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521004522147.25,
+			"method": "GET",
+			"modified": 1522500233656,
+			"name": "Get KidsClass",
+			"parameters": [],
+			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/kidsclass/get",
+			"_type": "request"
+		},
+		{
+			"_id": "req_82793da7ac86419dadd2d495c7b2f3ea",
+			"authentication": {},
+			"body": {},
+			"created": 1522496446179,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1520892118907.625,
+			"method": "GET",
+			"modified": 1522500240599,
+			"name": "Get All KidsClass",
+			"parameters": [],
+			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/kidsclass/getall",
+			"_type": "request"
+		},
+		{
+			"_id": "req_94c76da3d5b446579363108999ed0a3b",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"id\": 302,\n\t\t\"name\": \"6ème A\",\n\t\t\"levelName\": \"6ème\",\n\t\t\"schoolName\": \"Ecole de Maraussan\"\n\t}"
+			},
+			"created": 1522496446184,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521116925386.875,
+			"method": "PUT",
+			"modified": 1522501865933,
+			"name": "Update KidsClass",
+			"parameters": [],
+			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/kidsclass/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_8bb0225c725b48f08849a202a726ae99",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"1\"\t\n}"
+			},
+			"created": 1522500883594,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520948320527.4375,
+			"method": "GET",
+			"modified": 1522501112616,
+			"name": "Get KidsClass fromschool",
+			"parameters": [],
+			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/kidsclass/fromschool",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a9a129c2c6654eaf8ee0501e673fa2dc",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"73\"\t\n}"
+			},
+			"created": 1522501120809,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520920219717.5312,
+			"method": "GET",
+			"modified": 1522501687672,
+			"name": "Get KidsClass withlevel",
+			"parameters": [],
+			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/kidsclass/withlevel",
+			"_type": "request"
+		}
+	]
+}

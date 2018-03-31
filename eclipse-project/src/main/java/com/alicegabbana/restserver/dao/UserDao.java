@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.entity.Action;
+import com.alicegabbana.restserver.entity.KidsClass;
+import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 
 @Stateless
@@ -62,27 +64,49 @@ public class UserDao {
 		return userDetailsList;
 	}
 	
-	public List<User> getUserFromKidsClass ( Long id ) {
-		@SuppressWarnings("unchecked")
-		TypedQuery<User> query_user = (TypedQuery<User>) em.createQuery("SELECT user.kidsClass FROM User user WHERE user.kidsClass.id = :id")
+	public List<User> getUserFromKidsClass ( Long id ) {		
+		TypedQuery<User> query_user = em.createQuery("SELECT user FROM User user WHERE user.kidsClass.id = :id ", User.class)
 				.setParameter("id", id);
-		List<User> loadedAction = query_user.getResultList();
+		List<User> loadedUsers = query_user.getResultList();
 		
-		if ( loadedAction.size() != 0 ) {
-			return loadedAction;
+		if ( loadedUsers.size() != 0 ) {
+			return loadedUsers;
 		}
 		logger.info("Dao get : no user from kidsclass");				
 		return null;
 	}
 	
-	public List<User> getUserWithRole ( Long id ) {
-		@SuppressWarnings("unchecked")
-		TypedQuery<User> query_user = (TypedQuery<User>) em.createQuery("SELECT user.role FROM User user WHERE user.roel.id = :id")
-				.setParameter("id", id);
-		List<User> loadedAction = query_user.getResultList();
+	//TODO requête pourrie à revoir
+	public List<Action> getActionFromUser ( Long id ) {
 		
-		if ( loadedAction.size() != 0 ) {
-			return loadedAction;
+		logger.error("user id : "+id);
+		TypedQuery<Role> query_role = em.createQuery("SELECT user.role FROM User user WHERE user.id = :id ", Role.class)
+				.setParameter("id", id);
+		List<Role> loadedRole = query_role.getResultList();
+		
+		if (loadedRole != null) {
+			
+			TypedQuery<Action> query_action = (TypedQuery<Action>) em.createQuery("SELECT role.actions FROM Role role WHERE role.id = :id")
+					.setParameter("id", id);
+			List<Action> loadedActions = query_action.getResultList();
+			logger.error("quantité action : "+ loadedActions.size());
+			if ( loadedActions.size() != 0 ) {
+				return loadedActions;
+			}
+			logger.info("Dao get : no action from this user");				
+			return null;
+		}
+		
+		return null;
+	}
+	
+	public List<User> getUserWithRole ( Long id ) {		
+		TypedQuery<User> query_user = em.createQuery("SELECT user FROM User user WHERE user.role.id = :id ", User.class)
+				.setParameter("id", id);
+		List<User> loadedUsers = query_user.getResultList();
+		
+		if ( loadedUsers.size() != 0 ) {
+			return loadedUsers;
 		}
 		logger.info("Dao get : no user with this role");				
 		return null;

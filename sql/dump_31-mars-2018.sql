@@ -469,7 +469,7 @@ CREATE TABLE `SEQUENCE_User` (
 
 LOCK TABLES `SEQUENCE_User` WRITE;
 /*!40000 ALTER TABLE `SEQUENCE_User` DISABLE KEYS */;
-INSERT INTO `SEQUENCE_User` VALUES (1);
+INSERT INTO `SEQUENCE_User` VALUES (151);
 /*!40000 ALTER TABLE `SEQUENCE_User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -648,7 +648,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'alice.gabbana@gmail.com','alice','gabbana','motdepasse','monsupertoken',NULL,1);
+INSERT INTO `User` VALUES (1,'alice.gabbana@gmail.com','alice','gabbana','motdepasse','monsupertoken',NULL,1),(52,'unautreadmin@monecole.com','Elah','Danloss','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bmF1dHJlYWRtaW5AbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.-iEF5MENEac3Ub6y7yLO86CtXsnzWcGLChCoKZckokI',NULL,1),(77,'unprof@monecole.com','Edmond','fils','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bnByb2ZAbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.lg-otCXbYJwTs5-9TknH7REZfx-n7EOk9LT1BoK61jU',329,52),(78,'unautreprof@monecole.com','Jacques','Ouzi','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bmF1dHJlcHJvZkBtb25lY29sZS5jb20iLCJleHAiOjE1MzU0MTQ0MDB9.76ZSvd1vWHzPPxJggFhjS8QaMyVDkdyyS0hvF9WSR9s',327,52),(102,'encoreunprof@monecole.com','Jerry','Kan','motdepasse','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbmNvcmV1bnByb2ZAbW9uZWNvbGUuY29tIiwiZXhwIjoxNTM1NDE0NDAwfQ.fJC4tMxg2b4nhcUpbGhc6Mj5k8P5Wz1m1Z-XhD4N_4o',327,52);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -683,4 +683,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-31 15:12:22
+-- Dump completed on 2018-03-31 17:06:50

@@ -34,10 +34,6 @@ public class RoleService {
 	
 	Logger logger = Logger.getLogger(RoleService.class);
 	
-///////////////	
-//Response //
-///////////////	
-	
 	public Response createResponse(RoleDto roleDto) {		
 		
 		if (roleDto.getId() != null) return authService.returnResponse(400);

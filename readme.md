@@ -14,7 +14,8 @@ No screenshot for now
 
 * Mariadb container with a simple database and a user
 * Create a wildfly container with mariadb drivers and connect it to the database already created
-* Setup Rest Api and one endpoint : http://ipadresswildflycontainer:8080/application/hello/toto
+* Setup Rest Api and all endpoints
+* Setup Hibernate
 
 ## License
 

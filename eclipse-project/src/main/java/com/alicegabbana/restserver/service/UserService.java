@@ -1,24 +1,30 @@
 package com.alicegabbana.restserver.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
+
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.UserDao;
+import com.alicegabbana.restserver.dto.ActionDto;
+import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.dto.RoleDto;
+import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.dto.UserDto;
+import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Stateless
 public class UserService {
@@ -34,6 +40,12 @@ public class UserService {
 	
 	@EJB
 	KidsClassService kidsClassService;
+	
+	@EJB
+	ActionService actionService;
+	
+	@EJB
+	SchoolService schoolService;
 	
 	Logger logger = Logger.getLogger(UserService.class);
 	
@@ -56,21 +68,58 @@ public class UserService {
 		
 		User user = userDtoToUser(userDto);
 		user.setToken(newToken);		
+		logger.error(user.toString());
 		User newUser = em.merge(user);
 		UserDto newUserDto = userToUserDto(newUser);
 		return authService.returnResponseWithEntity(201, newUserDto);
 	}
 	
-	public Response getUser ( Long userId ) {
+	public Response getUser ( UserDto userDtoToFind ) {
 		
-		if ( userId == null ) return authService.returnResponse(400);
+		if ( userDtoToFind.getId() == null ) return authService.returnResponse(400);
 		
-		if ( getUserById(userId) == null ) return authService.returnResponse(404);
+		if ( getUserById(userDtoToFind.getId()) == null ) return authService.returnResponse(404);
 
-		User user = em.find(User.class, getUserById(userId));
+		User user = em.find(User.class, getUserById(userDtoToFind.getId()));
 		UserDto userDto = userToUserDto(user);
 		return authService.returnResponseWithEntity(200, userDto);
 	}
+	
+	public Response getUserWithRole ( RoleDto roleDto ) {
+		
+		if ( roleDto.getId() == null ) return authService.returnResponse(400);
+		
+		if ( roleService.getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);		
+		
+		List<User> userList = userDao.getUserWithRole(roleDto.getId());
+		List<UserDto> listUserDto = userListToUserDtoList(userList);
+		
+		return authService.returnResponseWithEntity(200, listUserDto);
+	}
+	
+	public Response getUserFromKidsClass ( KidsClassDto kidsClassDto ) {
+		
+		if ( kidsClassDto.getId() == null ) return authService.returnResponse(400);
+		
+		if ( kidsClassService.getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);
+
+		List<User> userList = userDao.getUserFromKidsClass(kidsClassDto.getId());
+		List<UserDto> listUserDto = userListToUserDtoList(userList);
+		
+		return authService.returnResponseWithEntity(200, listUserDto);
+	}
+	
+	public Response getActionListFromUser ( UserDto userDto ) {
+		
+		if ( userDto.getId() == null ) return authService.returnResponse(400);
+		
+		if ( getUserById(userDto.getId()) == null ) return authService.returnResponse(404);
+
+		List<Action> actionList = userDao.getActionFromUser(userDto.getId());
+		List<ActionDto> listActionDto = actionService.daoListToDtoList(actionList);
+		
+		return authService.returnResponseWithEntity(200, listActionDto);
+	}	
 	
 	public Response getAllUserService( ) {
 		
@@ -130,18 +179,6 @@ public class UserService {
 		return authService.returnResponseWithEntity(200, listUserDto);
 	}
 	
-	public Response getUserWithRole ( Long id) {
-		
-		if ( id == null ) return authService.returnResponse(400);
-		
-		if ( roleService.getDaoByIdService(id) == null ) return authService.returnResponse(404);
-		
-		List<User> userList = userDao.getUserWithRole(id);
-		List<UserDto> listUserDto = userListToUserDtoList(userList);
-		
-		return authService.returnResponseWithEntity(200, listUserDto);
-	}
-	
 //	Utilities
 	
 	public User userDtoToUser (UserDto userDto) {
@@ -162,6 +199,10 @@ public class UserService {
 			if (userDto.getRoleName() != null) {
 				Role role = roleService.getDaoByName(userDto.getRoleName());
 				user.setRole(role);
+			}
+			
+			if (userDto.getPwd() != null) {
+				user.setPwd(userDto.getPwd());
 			}
 		}
 		
