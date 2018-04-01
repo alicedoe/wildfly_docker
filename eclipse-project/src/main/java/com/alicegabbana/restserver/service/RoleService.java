@@ -220,9 +220,11 @@ public class RoleService {
 	
 	public List<RoleDto> getAllService () {
 		List<Role> loadedRoles = roleDao.getAllRoles();
-		List<RoleDto> roleDtoList = daoListToDtoList(loadedRoles);
-		
-		return roleDtoList;
+		if ( loadedRoles != null) {
+			List<RoleDto> roleDtoList = daoListToDtoList(loadedRoles);
+			return roleDtoList;
+		}
+		return null;
 	}
 	
 	public List<Action> getActionService ( RoleDto roleDto) {

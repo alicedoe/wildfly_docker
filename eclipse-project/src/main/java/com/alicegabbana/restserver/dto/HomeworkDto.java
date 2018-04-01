@@ -8,7 +8,7 @@ public class HomeworkDto {
 	private String subjectName;
 	private Long creatorId;
 	private Long kidsClassId;
-	private String wording;
+	private String content;
 	private Date creationDate;
 	private Date endDate;
 	
@@ -18,11 +18,11 @@ public class HomeworkDto {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getWording() {
-		return wording;
+	public String getContent() {
+		return content;
 	}
-	public void setWording(String wording) {
-		this.wording = wording;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public Long getKidsClassId() {
 		return kidsClassId;
@@ -57,7 +57,7 @@ public class HomeworkDto {
 	@Override
 	public String toString() {
 		return "HomeworkDto [id=" + id + ", subjectName=" + subjectName + ", creatorId=" + creatorId + ", kidsClassId="
-				+ kidsClassId + ", wording=" + wording + ", creationDate=" + creationDate + ", endDate=" + endDate + "]";
+				+ kidsClassId + ", content=" + content + ", creationDate=" + creationDate + ", endDate=" + endDate + "]";
 	}
 	
 	

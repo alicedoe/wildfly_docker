@@ -20,7 +20,6 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.KidsClassDto;
 import com.alicegabbana.restserver.dto.RoleDto;
-import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.UserService;
@@ -50,7 +49,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response addUserServiceResponse = userService.createUser( userDto );
+		Response addUserServiceResponse = userService.createResponse( userDto );
 		return addUserServiceResponse;
 	}
 	
@@ -68,7 +67,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserServiceResponse = userService.getUser( userDto );
+		Response getUserServiceResponse = userService.getResponse( userDto );
 		return getUserServiceResponse;
 	}
 	
@@ -85,7 +84,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getAllUserServiceResponse = userService.getAllUserService( );
+		Response getAllUserServiceResponse = userService.getAllResponse( );
 		return getAllUserServiceResponse;
 	}
 	
@@ -102,7 +101,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserWithRoleServiceResponse = userService.getUserWithRole(roleDto);
+		Response getUserWithRoleServiceResponse = userService.getWithRoleResponse(roleDto);
 		return getUserWithRoleServiceResponse;
 	}
 	
@@ -119,7 +118,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserFromKidsClassServiceResponse = userService.getUserFromKidsClass(kidsClassDto);
+		Response getUserFromKidsClassServiceResponse = userService.getFromKidsClassResponse(kidsClassDto);
 		return getUserFromKidsClassServiceResponse;
 	}
 	
@@ -136,7 +135,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserFromKidsClassServiceResponse = userService.getActionListFromUser(userDto);
+		Response getUserFromKidsClassServiceResponse = userService.getActionListResponse(userDto);
 		return getUserFromKidsClassServiceResponse;
 	}
 	
@@ -154,7 +153,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response deleteUserResponse = userService.deleteUserService( userDto );
+		Response deleteUserResponse = userService.deleteResponse( userDto );
 		return deleteUserResponse;
 	}
 	
@@ -172,7 +171,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response updateUserServiceResponse = userService.updateUser( userDto );
+		Response updateUserServiceResponse = userService.updateResponse( userDto );
 		return updateUserServiceResponse;
 	}
 	
@@ -190,7 +189,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response updateUserServiceResponse = userService.updateMyAcount( user );
+		Response updateUserServiceResponse = userService.updateMyAccountResponse( user );
 		return updateUserServiceResponse;
 	}
 

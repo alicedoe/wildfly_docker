@@ -6,11 +6,9 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -19,7 +17,7 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.HomeworkDto;
-import com.alicegabbana.restserver.dto.RoleDto;
+import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.HomeworkService;
 
@@ -71,24 +69,43 @@ public class HomeworkEndpoint {
 		return getAllHomeworkServiceResponse;
 	}
 	
-//	@GET
-//	@Path("/get")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response getRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
-//
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"read role"
-//	            		));		
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-//		
-//		Response getRoleServiceResponse = roleService.getByIdResponse(roleDto);
-//		return getRoleServiceResponse;
-//	}
+	@GET
+	@Path("/get")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getRole(HomeworkDto homeworkDto, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"read homework"
+	            		));		
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		
+		Response getHomeworkServiceResponse = homeService.getResponse(homeworkDto);
+		return getHomeworkServiceResponse;
+	}
+	
+	@GET
+	@Path("/getforkidsclass")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getRole(KidsClass kidsClass, @HeaderParam("UserToken") String userToken) {
+
+		List<String> actionsNeeded = new ArrayList<String>(
+	            Arrays.asList(
+	            		"read homework"
+	            		));		
+		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+		{
+			return authService.returnResponse(401);
+		}
+		
+		Response getHomeworkServiceResponse = homeService.getForKidsClassResponse(kidsClass);
+		return getHomeworkServiceResponse;
+	}
 //	
 //	
 //	@GET

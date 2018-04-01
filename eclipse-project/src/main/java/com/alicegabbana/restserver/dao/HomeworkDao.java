@@ -21,7 +21,7 @@ public class HomeworkDao {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
-	public Homework getHomeworkById ( Long id ) {		
+	public Homework getById ( Long id ) {		
 		
 		Homework homework = em.find(Homework.class, id);
 		if (homework != null) return homework;
@@ -30,7 +30,7 @@ public class HomeworkDao {
 		
 	}
 	
-	public List<Homework> getHomeworkByCreator ( Long id ) {		
+	public List<Homework> getByCreator ( Long id ) {		
 		
 		TypedQuery<Homework> query_homework = em.createQuery("SELECT homework FROM Homework homework WHERE homework.creator.id = :id", Homework.class)
 				.setParameter("id", id);
@@ -44,7 +44,7 @@ public class HomeworkDao {
 		
 	}
 	
-	public List<Homework> getHomeworkListForKidsClass ( Long id ) {		
+	public List<Homework> getForKidsClass ( Long id ) {		
 		
 		TypedQuery<Homework> query_homework = em.createQuery("SELECT homework FROM Homework homework WHERE homework.kidsClass.id = :id", Homework.class)
 				.setParameter("id", id);
@@ -58,27 +58,7 @@ public class HomeworkDao {
 		
 	}
 	
-	public List<Homework> filterHomeworkListForWeek ( List<Homework> homeworkList, int weekNumber ) {		
-		
-		//TODO
-		TypedQuery<Homework> query_homeworks = em.createQuery("SELECT homework FROM Homework homework", Homework.class);
-		List<Homework> loadedHomeworks = query_homeworks.getResultList();
-		
-		return loadedHomeworks;
-		
-	}
-	
-	public List<Homework> filterHomeworkListForMonth ( List<Homework> homeworkList, int monthNumber ) {		
-		
-		//TODO
-		TypedQuery<Homework> query_homeworks = em.createQuery("SELECT homework FROM Homework homework", Homework.class);
-		List<Homework> loadedHomeworks = query_homeworks.getResultList();
-		
-		return loadedHomeworks;
-		
-	}
-	
-	public List<Homework> getAllHomeworks () {
+	public List<Homework> getAll () {
 		TypedQuery<Homework> query_homeworks = em.createQuery("SELECT homework FROM Homework homework", Homework.class);
 		List<Homework> loadedHomeworks = query_homeworks.getResultList();
 		

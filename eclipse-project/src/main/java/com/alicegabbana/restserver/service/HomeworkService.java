@@ -11,10 +11,10 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
+import org.joda.time.DateTime;
 
 import com.alicegabbana.restserver.dao.HomeworkDao;
 import com.alicegabbana.restserver.dto.HomeworkDto;
-import com.alicegabbana.restserver.dto.KidsClassDto;
 import com.alicegabbana.restserver.entity.Homework;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Subject;
@@ -56,16 +56,56 @@ public class HomeworkService {
 		return authService.returnResponseWithEntity(200, getAllService());
 	}
 	
+	public Response getResponse ( HomeworkDto homeworkDto ) {	
+		
+		if ( getService(homeworkDto.getId()) == null ) return authService.returnResponse(404);
+		
+		HomeworkDto homeworkDtoFound = getService(homeworkDto.getId());
+		return authService.returnResponseWithEntity(200, homeworkDtoFound);
+	}
+	
+	public Response getForKidsClassResponse ( KidsClass kidsClass ) {	
+		
+		if ( kidsClassService.getById(kidsClass.getId()) == null ) return authService.returnResponse(404);
+		
+		List<HomeworkDto> homeworkDtoList = getForKidsClassService(kidsClass.getId());
+		return authService.returnResponseWithEntity(200, homeworkDtoList);
+	}
+	
+	public HomeworkDto getService (Long id) {
+		Homework homework = homeworkDao.getById(id);
+		HomeworkDto homeworkDto = daoToDto(homework);
+		return homeworkDto;
+	}
+	
+	public List<HomeworkDto>  getForKidsClassService (Long id) {
+		
+		List<Homework> homeworkList = homeworkDao.getForKidsClass(id);
+		if ( homeworkList != null ) {
+			List<HomeworkDto> homeworkDtoList = daoListToDtoList(homeworkList);
+			return homeworkDtoList;
+		}
+		return null;
+	}
+	
 	public List<HomeworkDto> getAllService () {
-		List<Homework> kidsClassList = homeworkDao.getAllHomeworks();
-		List<HomeworkDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
-		return kidsClassDtoList;
+		List<Homework> homeworkList = homeworkDao.getAll();
+		if ( homeworkList != null ) {
+			List<HomeworkDto> homeworkDtoList = daoListToDtoList(homeworkList);
+			return homeworkDtoList;
+		}
+		return null;
 	}
 	
 	public HomeworkDto createService (HomeworkDto homeworkDto) {
 		Homework homework = dtoToDao(homeworkDto);
-		logger.error(homework.toString());
-		homework.setWording("pitièjeveuxcetexte");
+		
+		//TODO grab real endDate actually it's everytime tomorrow
+		DateTime today = new DateTime();
+		DateTime tomorrow = today.plusDays(1);
+		homework.setCreationDate(today.toDate());
+		homework.setEndDate(tomorrow.toDate());
+		
 		Homework homeworkCreated = em.merge(homework);
 		HomeworkDto homeworkDtoCreated = daoToDto(homeworkCreated);
 		return homeworkDtoCreated;
@@ -99,11 +139,9 @@ public class HomeworkService {
 				KidsClass kidsClass = kidsClassService.getById(homeworkDto.getKidsClassId());
 				homework.setKidsClass(kidsClass);
 			}
-			if (homeworkDto.getWording() != null) {
-				homework.setWording(homeworkDto.getWording());
+			if (homeworkDto.getContent() != null) {
+				homework.setContent(homeworkDto.getContent());
 			}
-			Date now = new Date();
-			homework.setCreationDate(now);
 			if (homeworkDto.getEndDate() != null) {
 				homework.setEndDate(homeworkDto.getEndDate());
 			}
@@ -116,7 +154,7 @@ public class HomeworkService {
 		
 		HomeworkDto homeworkDto = new HomeworkDto();
 		if (homework != null) {
-			if (homework.getId() != null) homeworkDto.setId(homeworkDto.getId());
+			if (homework.getId() != null) homeworkDto.setId(homework.getId());
 			if (homework.getSubject() != null) {
 				homeworkDto.setSubjectName(homework.getSubject().getName());
 			}
@@ -126,8 +164,8 @@ public class HomeworkService {
 			if (homework.getKidsClass() != null) {
 				homeworkDto.setKidsClassId(homework.getKidsClass().getId());
 			}
-			if (homework.getWording() != null) {
-				homework.setWording(homeworkDto.getWording());
+			if (homework.getContent() != null) {
+				homeworkDto.setContent(homework.getContent());
 			}
 			if (homework.getCreationDate() != null) {
 				homeworkDto.setCreationDate(homework.getCreationDate());
@@ -136,14 +174,13 @@ public class HomeworkService {
 				homeworkDto.setEndDate(homework.getEndDate());
 			}
 		}
-		
 		return homeworkDto;
 	}
 
 	public boolean homeworkDtoIsComplete(HomeworkDto homeworkDto, boolean update) {
 		
 		if ( homeworkDto.getSubjectName() == null || homeworkDto.getCreatorId() == null
-				|| homeworkDto.getKidsClassId() == null || homeworkDto.getWording() == null
+				|| homeworkDto.getKidsClassId() == null || homeworkDto.getContent() == null
 				|| homeworkDto.getEndDate() == null )
 		{	logger.info("missing_attributes");
 			return false; }
@@ -153,11 +190,24 @@ public class HomeworkService {
 		{	logger.info("wrong attributes");
 			return false; }
 		
+		else if ( validateDate(homeworkDto.getEndDate()) )
+		{	logger.info("wrong date");
+			return false; }
 		//TODO check date
 		
 		else if ( update == false && homeworkDto.getId() != null )
 		{	logger.info("forced_id");
 			return false; }
+		
+		return true;
+	}
+	
+	public static boolean validateDate(Date date){
+		DateTime today = new DateTime();
+		
+		if (date.before(today.toDate())) {
+			return false;
+		}
 		
 		return true;
 	}

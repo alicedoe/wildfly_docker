@@ -14,9 +14,7 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.ActionDao;
 import com.alicegabbana.restserver.dto.ActionDto;
-import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.entity.Action;
-import com.alicegabbana.restserver.entity.Role;
 
 @Stateless
 public class ActionService {

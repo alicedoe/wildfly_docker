@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.ActionDto;
-import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.service.ActionService;
 import com.alicegabbana.restserver.service.AuthService;
 

@@ -3,7 +3,6 @@ package com.alicegabbana.restserver.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,19 +26,19 @@ public class Homework {
 	@ManyToOne
 	private Subject subject;
 	@NotNull
+	private String content;
+	@NotNull
 	@ManyToOne
 	private User creator;
 	@NotNull
 	@ManyToOne
 	private KidsClass kidsClass;
-	private String wording;
 	@ManyToMany
 	private List<Tag> tag;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creationDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
-	
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +51,12 @@ public class Homework {
 	public void setSubject(Subject subject) {
 		this.subject = subject;
 	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public User getCreator() {
 		return creator;
 	}
@@ -63,12 +68,6 @@ public class Homework {
 	}
 	public void setKidsClass(KidsClass kidsClass) {
 		this.kidsClass = kidsClass;
-	}
-	public String getWording() {
-		return wording;
-	}
-	public void setWording(String wording) {
-		this.wording = wording;
 	}
 	public List<Tag> getTag() {
 		return tag;
@@ -90,8 +89,9 @@ public class Homework {
 	}
 	@Override
 	public String toString() {
-		return "Homework [id=" + id + ", subject=" + subject + ", creator=" + creator + ", kidsClass=" + kidsClass
-				+ ", wording=" + wording + ", tag=" + tag + ", creationDate=" + creationDate + ", endDate=" + endDate + "]";
+		return "Homework [id=" + id + ", subject=" + subject + ", content=" + content + ", creator=" + creator + ", kidsClass=" + kidsClass + ", tag=" + tag + ", creationDate="
+				+ creationDate + ", endDate=" + endDate + "]";
 	}
+	
 	
 }

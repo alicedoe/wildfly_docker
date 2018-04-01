@@ -92,7 +92,7 @@ public class KidsClassService {
 		
 		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
 		
-		if ( schoolService.getSchoolById(schoolDto.getId()) == null ) return authService.returnResponse(404);		
+		if ( schoolService.getDtoByIdService(schoolDto.getId()) == null ) return authService.returnResponse(404);		
 		
 		List<KidsClassDto> kidsClassDtoList = getFromSchoolService(schoolDto.getId());
 		return authService.returnResponseWithEntity(200, kidsClassDtoList);
@@ -116,8 +116,11 @@ public class KidsClassService {
 
 	public List<KidsClassDto> getAllService () {
 		List<KidsClass> kidsClassList = kidsClassDao.getAllKidsClass();
-		List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
-		return kidsClassDtoList;
+		if (kidsClassList!= null) {
+			List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
+			return kidsClassDtoList;
+		}
+		return null;
 	}
 	
 	public KidsClassDto getService (Long kidsClassId) {
@@ -147,8 +150,8 @@ public class KidsClassService {
 		
 		List<KidsClass> kidsClassList = kidsClassDao.getKidsClassWithLevel(levelId);
 		if (kidsClassList != null) {
-		List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
-		return kidsClassDtoList;
+			List<KidsClassDto> kidsClassDtoList = daoListToDtoList(kidsClassList);
+			return kidsClassDtoList;
 		}	else return null;		
 	}
 	

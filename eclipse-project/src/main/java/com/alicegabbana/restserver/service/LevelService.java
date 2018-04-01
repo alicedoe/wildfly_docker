@@ -74,9 +74,6 @@ public class LevelService {
 	public Response getAllLevel ( ) {
 
 		List<Level> loadedLevels = levelDao.getAllLevels();
-		
-		if ( loadedLevels == null ) return authService.returnResponse(404);		
-
 		return authService.returnResponseWithEntity(200, loadedLevels);
 
 	}

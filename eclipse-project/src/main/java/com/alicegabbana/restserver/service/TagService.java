@@ -76,9 +76,7 @@ public class TagService {
 	
 	public Response getAllTag ( ) {
 
-		List<Tag> loadedTags = tagDao.getAllTags();
-		
-		if ( loadedTags == null ) return authService.returnResponse(404);		
+		List<Tag> loadedTags = tagDao.getAllTags();		
 
 		return authService.returnResponseWithEntity(200, loadedTags);
 

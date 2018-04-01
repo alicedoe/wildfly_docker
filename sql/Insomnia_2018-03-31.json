@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-03-31T13:13:17.459Z",
+	"__export_date": "2018-03-31T20:34:10.255Z",
 	"__export_source": "insomnia.desktop.app:v5.12.3",
 	"resources": [
 		{
@@ -133,11 +133,22 @@
 			"_type": "request_group"
 		},
 		{
+			"_id": "fld_d3c71202f8e34c3bad6860396718adc5",
+			"created": 1522521670261,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1521229328551.5,
+			"modified": 1522521685537,
+			"name": "Homework",
+			"parentId": "wrk_a226975e2118433c8f5ec5576175e284",
+			"_type": "request_group"
+		},
+		{
 			"_id": "req_6c57f2f099194a0196ee66244f4bb90c",
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\"email\": \"toto@toto.com\",\n\"nom\": \"nom\",\n\"prenom\": \"prenom\",\n\"pwd\": \"motdepasse\",\n\t\"role\" :  \n\t\t{\n\t\t\t\"id\": \"1\"\n\t\t}\n\t\n}"
+				"text": "\t{\n\t\t\"roleName\": \"admin\",\n\t\t\"firstname\": \"Elah\",\n\t\t\"name\": \"Danloss\",\n\t\t\"email\": \"unautreadmin@monecole.com\",\n\t\t\"kidsClassName\": null,\n\t\t\"pwd\": null\n\t}"
 			},
 			"created": 1521224049256,
 			"description": "",
@@ -155,7 +166,7 @@
 			],
 			"metaSortKey": -1521229328626.5,
 			"method": "POST",
-			"modified": 1521377926124,
+			"modified": 1522525048564,
 			"name": "Create User",
 			"parameters": [],
 			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
@@ -163,7 +174,7 @@
 			"settingEncodeUrl": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "http://172.17.0.3:8080/application/v1/user/create",
+			"url": "http://172.17.0.3:8080/application/v1/user/add",
 			"_type": "request"
 		},
 		{
@@ -223,7 +234,7 @@
 			],
 			"metaSortKey": -1520892118907.625,
 			"method": "GET",
-			"modified": 1521373122676,
+			"modified": 1522524981660,
 			"name": "Get All User",
 			"parameters": [],
 			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
@@ -266,6 +277,108 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "http://172.17.0.3:8080/application/v1/user/edit",
+			"_type": "request"
+		},
+		{
+			"_id": "req_116fc8303ca24cc3b71c415e35301f6d",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"1\"\t\n}"
+			},
+			"created": 1522503963970,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520976421337.3438,
+			"method": "GET",
+			"modified": 1522503976762,
+			"name": "Get User withrole",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/withrole",
+			"_type": "request"
+		},
+		{
+			"_id": "req_50563f0aa3954d6897eee9734913672a",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"1\"\t\n}"
+			},
+			"created": 1522504010332,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520955345729.914,
+			"method": "GET",
+			"modified": 1522505598010,
+			"name": "Get actions from User",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/getactionsfromuser",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b305387b066a4d698cb50f3e43bfd402",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\"id\": \"327\"\t\n}"
+			},
+			"created": 1522504111329,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1520958858331.1523,
+			"method": "GET",
+			"modified": 1522508731198,
+			"name": "Get User fromkidsclass",
+			"parameters": [],
+			"parentId": "fld_d68a5ab3ba364255a2c7849f9b22520b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/user/fromkidsclass",
 			"_type": "request"
 		},
 		{
@@ -335,7 +448,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"id\" : \"52\"\n}"
+				"text": "{\n\t\"id\" : \"1\"\n}"
 			},
 			"created": 1521894182729,
 			"description": "",
@@ -354,7 +467,7 @@
 			],
 			"metaSortKey": -1512503021002,
 			"method": "GET",
-			"modified": 1522434285464,
+			"modified": 1522522394896,
 			"name": "Get actions",
 			"parameters": [],
 			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
@@ -459,7 +572,7 @@
 			],
 			"metaSortKey": -1512503021083.25,
 			"method": "PUT",
-			"modified": 1522496755201,
+			"modified": 1522522867919,
 			"name": "Add actions",
 			"parameters": [],
 			"parentId": "fld_73ca1b7084414ee7b2518d663fd7ca3e",
@@ -545,7 +658,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n \"name\":\"delete kidsClass\"\n}"
+				"text": "{\n \"name\":\"delete school\"\n}"
 			},
 			"created": 1522002245276,
 			"description": "",
@@ -563,7 +676,7 @@
 			],
 			"metaSortKey": -1521229328626.5,
 			"method": "POST",
-			"modified": 1522496728690,
+			"modified": 1522522848212,
 			"name": "Create Action",
 			"parameters": [],
 			"parentId": "fld_35864587ad164a6abfbb70e44facc913",
@@ -1031,7 +1144,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n \"name\":\"urgent\"\n}"
+				"text": "{\n \"name\":\"bonus\"\n}"
 			},
 			"created": 1522350287241,
 			"description": "",
@@ -1049,7 +1162,7 @@
 			],
 			"metaSortKey": -1521229328626.5,
 			"method": "POST",
-			"modified": 1522351150996,
+			"modified": 1522524181660,
 			"name": "Create Tag",
 			"parameters": [],
 			"parentId": "fld_4fd6212b71e24fffbd2c4b7fb3edfdfe",
@@ -1355,7 +1468,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\"name\": \"Super school\",\n\"townName\": \"Maraussan\"\t\n}"
+				"text": "\t{\n\t\t\"name\": \"Ecole de Maraussan\",\n\t\t\"townName\": \"Maraussan\"\n\t}"
 			},
 			"created": 1522495187952,
 			"description": "",
@@ -1373,7 +1486,7 @@
 			],
 			"metaSortKey": -1521229328626.5,
 			"method": "POST",
-			"modified": 1522495912151,
+			"modified": 1522523209630,
 			"name": "Create School",
 			"parameters": [],
 			"parentId": "fld_5037b52065024b76a80f0d06e26ba509",
@@ -1433,7 +1546,7 @@
 			],
 			"metaSortKey": -1520892118907.625,
 			"method": "GET",
-			"modified": 1522496328907,
+			"modified": 1522522878907,
 			"name": "Get All School",
 			"parameters": [],
 			"parentId": "fld_5037b52065024b76a80f0d06e26ba509",
@@ -1501,7 +1614,7 @@
 			],
 			"metaSortKey": -1521229328626.5,
 			"method": "POST",
-			"modified": 1522501919411,
+			"modified": 1522523373466,
 			"name": "Create KidsClass",
 			"parameters": [],
 			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
@@ -1561,7 +1674,7 @@
 			],
 			"metaSortKey": -1520892118907.625,
 			"method": "GET",
-			"modified": 1522500240599,
+			"modified": 1522522538230,
 			"name": "Get All KidsClass",
 			"parameters": [],
 			"parentId": "fld_859dbc4950d94731b1da626ca160e62b",
@@ -1672,6 +1785,66 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "http://172.17.0.3:8080/application/v1/kidsclass/withlevel",
+			"_type": "request"
+		},
+		{
+			"_id": "req_7c3df465dbfb4f539ec246a7fcf7d3cb",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"subjectName\": \"Français\",\n\t\t\"creatorId\": \"1\",\n\t\t\"kidsClassId\": \"1\",\n\t\t\"wording\": \"sdfsdfdsfdssdfdsfdfdsfsdfdfsdf\",\n\t\t\"endDate\": \"1522523841\"\n\t}"
+			},
+			"created": 1522521670296,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				},
+				{
+					"id": "pair_afcf327814914dafab2d547a4fd845e0",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1521229328626.5,
+			"method": "POST",
+			"modified": 1522527989897,
+			"name": "Create Homework",
+			"parameters": [],
+			"parentId": "fld_d3c71202f8e34c3bad6860396718adc5",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/homework/add",
+			"_type": "request"
+		},
+		{
+			"_id": "req_fb2810be26024720a642381e15b3c9dd",
+			"authentication": {},
+			"body": {},
+			"created": 1522521670319,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_d8f5a0b3ff0946d196f8233800d7e854",
+					"name": "UserToken",
+					"value": "monsupertoken"
+				}
+			],
+			"metaSortKey": -1520892118907.625,
+			"method": "GET",
+			"modified": 1522528311954,
+			"name": "Get All Homework",
+			"parameters": [],
+			"parentId": "fld_d3c71202f8e34c3bad6860396718adc5",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://172.17.0.3:8080/application/v1/homework/getall",
 			"_type": "request"
 		}
 	]

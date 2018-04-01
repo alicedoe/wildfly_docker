@@ -56,7 +56,7 @@ public class UserService {
 	private static Pattern pattern;
 	private Matcher matcher;
 	
-	public Response createUser ( UserDto userDto) {
+	public Response createResponse ( UserDto userDto) {
 		
 		if (userDto.getId() != null || newUserIsComplete(userDto) == false) return authService.returnResponse(400);
 
@@ -67,14 +67,13 @@ public class UserService {
 		if ( newToken == null ) return authService.returnResponse(400);
 		
 		User user = userDtoToUser(userDto);
-		user.setToken(newToken);		
-		logger.error(user.toString());
+		user.setToken(newToken);
 		User newUser = em.merge(user);
 		UserDto newUserDto = userToUserDto(newUser);
 		return authService.returnResponseWithEntity(201, newUserDto);
 	}
 	
-	public Response getUser ( UserDto userDtoToFind ) {
+	public Response getResponse ( UserDto userDtoToFind ) {
 		
 		if ( userDtoToFind.getId() == null ) return authService.returnResponse(400);
 		
@@ -85,101 +84,133 @@ public class UserService {
 		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
-	public Response getUserWithRole ( RoleDto roleDto ) {
+	public Response getWithRoleResponse ( RoleDto roleDto ) {
 		
 		if ( roleDto.getId() == null ) return authService.returnResponse(400);
 		
 		if ( roleService.getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);		
 		
-		List<User> userList = userDao.getUserWithRole(roleDto.getId());
-		List<UserDto> listUserDto = userListToUserDtoList(userList);
+		List<UserDto> listUserDto = getWithRoleService(roleDto.getId());
 		
 		return authService.returnResponseWithEntity(200, listUserDto);
 	}
 	
-	public Response getUserFromKidsClass ( KidsClassDto kidsClassDto ) {
+	public Response getFromKidsClassResponse ( KidsClassDto kidsClassDto ) {
 		
 		if ( kidsClassDto.getId() == null ) return authService.returnResponse(400);
 		
 		if ( kidsClassService.getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);
 
-		List<User> userList = userDao.getUserFromKidsClass(kidsClassDto.getId());
-		List<UserDto> listUserDto = userListToUserDtoList(userList);
+		List<UserDto> listUserDto = getFromKidsClassService(kidsClassDto.getId());
 		
 		return authService.returnResponseWithEntity(200, listUserDto);
 	}
 	
-	public Response getActionListFromUser ( UserDto userDto ) {
+	public Response getActionListResponse ( UserDto userDto ) {
 		
 		if ( userDto.getId() == null ) return authService.returnResponse(400);
 		
 		if ( getUserById(userDto.getId()) == null ) return authService.returnResponse(404);
 
-		List<Action> actionList = userDao.getActionFromUser(userDto.getId());
-		List<ActionDto> listActionDto = actionService.daoListToDtoList(actionList);
+		List<ActionDto> listActionDto = getActionService(userDto.getId());
 		
 		return authService.returnResponseWithEntity(200, listActionDto);
 	}	
 	
-	public Response getAllUserService( ) {
-		
-		List<User> allUsers = userDao.fetchAllUserDao();
-		
-		List<UserDto> userDtoList = userListToUserDtoList(allUsers);
-		
-		if ( userDtoList.size() == 0 ) return authService.returnResponse(404);
-		
-		return authService.returnResponseWithEntity(200, userDtoList);
+	public Response getAllResponse( ) {		
+		return authService.returnResponseWithEntity(200, getAllService ());
 	}
 	
-	public Response deleteUserService( UserDto userDto ) {
+	public List<UserDto> getWithRoleService (Long id) {
+		List<User> userList = userDao.getUserWithRole(id);
+		if (userList != null) {
+			List<UserDto> listUserDto = userListToUserDtoList(userList);
+			return listUserDto;
+		}
+		
+		return null;		
+	}
+	
+	public List<UserDto> getAllService () {
+		List<User> users = userDao.fetchAllUserDao();
+		if ( users != null) {
+			List<UserDto> userDtoList = userListToUserDtoList(users);
+			return userDtoList;
+		}		
+		return null;		
+	}
+	
+	
+	public Response deleteResponse( UserDto userDto ) {
 		
 		if ( userDto == null || userDto.getId() == null ) return authService.returnResponse(400);
 		
 		if ( !userIdExistDao(userDto) ) return authService.returnResponse(404);
 
-		User user = em.find(User.class, userDto.getId());
-		em.remove(user);
+		deleteService(userDto.getId());
 		return authService.returnResponse(200);
 	}
 	
-	public Response updateUser( UserDto newUserDtoProfil ) {
+	public Response updateResponse( UserDto newUserDtoProfil ) {
 		
 		if ( newUserDtoProfil == null || newUserDtoProfil.getId() == null ) return authService.returnResponse(400);
 		
 		if ( !userIdExistDao(newUserDtoProfil) ) return authService.returnResponse(404);
 		
-		User oldUser = em.find(User.class, newUserDtoProfil.getId());
-		User newUserProfil = updateUserProfil(oldUser, newUserDtoProfil);
-		em.merge(newUserProfil);
-		UserDto userDto = userToUserDto(newUserProfil);
+		UserDto userDto = updateService(newUserDtoProfil);
 		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
-	public Response updateMyAcount( UserDto myNewProfil ) {
+	public Response updateMyAccountResponse( UserDto myNewProfil ) {
 		
 		if ( myNewProfil == null || myNewProfil.getId() == null ) return authService.returnResponse(400);
 		
+		UserDto userDto = updateMyAccountService(myNewProfil);
+		return authService.returnResponseWithEntity(200, userDto);
+	}
+	
+//	Services & utilities
+	
+	public UserDto updateMyAccountService (UserDto myNewProfil) {
 		User myCurrentProfil = em.find(User.class, myNewProfil.getId());
 		User oldUserUpdated = updateMyAccount(myCurrentProfil, myNewProfil);
 		em.merge(oldUserUpdated);
 		UserDto userDto = userToUserDto(oldUserUpdated);
-		return authService.returnResponseWithEntity(200, userDto);
+		return userDto;
 	}
 	
-	public Response getUserFromKidsClass ( Long id) {
-		
-		if ( id == null ) return authService.returnResponse(400);
-		
-		if ( kidsClassService.getById(id) == null ) return authService.returnResponse(404);
-		
-		List<User> userList = userDao.getUserFromKidsClass(id);
-		List<UserDto> listUserDto = userListToUserDtoList(userList);
-		
-		return authService.returnResponseWithEntity(200, listUserDto);
+	public UserDto updateService (UserDto newUserDtoProfil) {
+		User oldUser = em.find(User.class, newUserDtoProfil.getId());
+		User newUserProfil = updateUserProfil(oldUser, newUserDtoProfil);
+		em.merge(newUserProfil);
+		UserDto userDto = userToUserDto(newUserProfil);
+		return userDto;
 	}
 	
-//	Utilities
+	public void deleteService (Long id) {
+		User user = em.find(User.class, id);
+		em.remove(user);
+	}
+	
+	public List<ActionDto> getActionService (Long id) {
+		List<Action> actionList = userDao.getActionFromUser(id);				
+		if (actionList != null) {
+			List<ActionDto> listActionDto = actionService.daoListToDtoList(actionList);
+			return listActionDto;
+		}
+		
+		return null;		
+	}
+	
+	public List<UserDto> getFromKidsClassService (Long id) {
+		List<User> userList = userDao.getUserFromKidsClass(id);		
+		if (userList != null) {
+			List<UserDto> listUserDto = userListToUserDtoList(userList);
+			return listUserDto;
+		}
+		
+		return null;		
+	}
 	
 	public User userDtoToUser (UserDto userDto) {
 		

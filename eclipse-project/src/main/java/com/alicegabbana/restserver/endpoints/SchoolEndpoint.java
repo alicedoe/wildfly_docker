@@ -2,7 +2,6 @@ package com.alicegabbana.restserver.endpoints;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,12 +15,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.SchoolDto;
-import com.alicegabbana.restserver.entity.School;
 import com.alicegabbana.restserver.service.AuthService;
 import com.alicegabbana.restserver.service.SchoolService;
 
@@ -51,7 +48,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addSchoolServiceResponse = schoolService.createSchool(schoolDto);
+		Response addSchoolServiceResponse = schoolService.createResponse(schoolDto);
 		return addSchoolServiceResponse;
 	}
 	
@@ -70,7 +67,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSchoolServiceResponse = schoolService.getSchool(schoolDto);
+		Response getSchoolServiceResponse = schoolService.getResponse(schoolDto);
 		return getSchoolServiceResponse;
 	}
 	
@@ -88,7 +85,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllSchoolServiceResponse = schoolService.getAllSchool();
+		Response getAllSchoolServiceResponse = schoolService.getAllResponse();
 		return getAllSchoolServiceResponse;
 	}
 	
@@ -96,7 +93,7 @@ public class SchoolEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteSchool(School school, @HeaderParam("UserToken") String userToken) {
+	public Response deleteSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -107,7 +104,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteSchoolResponse = schoolService.deleteSchool(school);
+		Response deleteSchoolResponse = schoolService.deleteResponse(schoolDto);
 		return deleteSchoolResponse;
 	}
 	
@@ -126,7 +123,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateSchoolServiceResponse = schoolService.updateSchool(schoolDto);
+		Response updateSchoolServiceResponse = schoolService.updateResponse(schoolDto);
 		return updateSchoolServiceResponse;
 	}
 

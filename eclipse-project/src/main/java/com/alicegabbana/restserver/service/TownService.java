@@ -76,9 +76,7 @@ public class TownService {
 	
 	public Response getAllTown ( ) {
 
-		List<Town> loadedTowns = townDao.getAllTowns();
-		
-		if ( loadedTowns == null ) return authService.returnResponse(404);		
+		List<Town> loadedTowns = townDao.getAllTowns();	
 
 		return authService.returnResponseWithEntity(200, loadedTowns);
 
