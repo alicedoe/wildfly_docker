@@ -19,15 +19,14 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.TagDto;
-import com.alicegabbana.restserver.entity.Tag;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.TagService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.tag.TagResponse;
 
 @Path("/tag")
 public class TagEndpoint {
 	
 	@EJB
-	TagService tagService;
+	TagResponse tagResponse;
 	
 	@EJB
 	AuthService authService;
@@ -38,7 +37,7 @@ public class TagEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addTag(Tag tag, @HeaderParam("UserToken") String userToken) {
+	public Response addTag(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -49,7 +48,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addTagServiceResponse = tagService.createTag(tag);
+		Response addTagServiceResponse = tagResponse.createResponse(tagDto);
 		return addTagServiceResponse;
 	}
 	
@@ -68,7 +67,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getTagServiceResponse = tagService.getTag(tagDto);
+		Response getTagServiceResponse = tagResponse.getTag(tagDto);
 		return getTagServiceResponse;
 	}
 	
@@ -86,7 +85,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllTagServiceResponse = tagService.getAllTag();
+		Response getAllTagServiceResponse = tagResponse.getAllTag();
 		return getAllTagServiceResponse;
 	}
 	
@@ -94,7 +93,7 @@ public class TagEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteTag(Tag tag, @HeaderParam("UserToken") String userToken) {
+	public Response deleteTag(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -105,7 +104,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteTagResponse = tagService.deleteTag(tag);
+		Response deleteTagResponse = tagResponse.deleteTag(tagDto);
 		return deleteTagResponse;
 	}
 	
@@ -113,7 +112,7 @@ public class TagEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editTag(Tag tag, @HeaderParam("UserToken") String userToken) {
+	public Response editTag(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -124,7 +123,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateTagServiceResponse = tagService.updateTag(tag);
+		Response updateTagServiceResponse = tagResponse.updateResponse(tagDto);
 		return updateTagServiceResponse;
 	}
 

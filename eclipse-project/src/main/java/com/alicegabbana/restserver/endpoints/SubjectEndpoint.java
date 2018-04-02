@@ -20,14 +20,14 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.SubjectDto;
 import com.alicegabbana.restserver.entity.Subject;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.SubjectService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.subject.SubjectResponse;
 
 @Path("/subject")
 public class SubjectEndpoint {
 	
 	@EJB
-	SubjectService subjectService;
+	SubjectResponse subjectResponse;
 	
 	@EJB
 	AuthService authService;
@@ -49,7 +49,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addSubjectServiceResponse = subjectService.createSubject(subject);
+		Response addSubjectServiceResponse = subjectResponse.createResponse(subject);
 		return addSubjectServiceResponse;
 	}
 	
@@ -68,7 +68,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSubjectServiceResponse = subjectService.getSubject(subjectDto);
+		Response getSubjectServiceResponse = subjectResponse.getResponse(subjectDto);
 		return getSubjectServiceResponse;
 	}
 	
@@ -86,7 +86,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllSubjectServiceResponse = subjectService.getAllSubject();
+		Response getAllSubjectServiceResponse = subjectResponse.getAllResponse();
 		return getAllSubjectServiceResponse;
 	}
 	
@@ -94,7 +94,7 @@ public class SubjectEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteSubject(Subject subject, @HeaderParam("UserToken") String userToken) {
+	public Response deleteSubject(SubjectDto subjectDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -105,7 +105,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteSubjectResponse = subjectService.deleteSubject(subject);
+		Response deleteSubjectResponse = subjectResponse.deleteResponse(subjectDto);
 		return deleteSubjectResponse;
 	}
 	
@@ -113,7 +113,7 @@ public class SubjectEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editSubject(Subject subject, @HeaderParam("UserToken") String userToken) {
+	public Response editSubject(SubjectDto subjectDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -124,7 +124,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateSubjectServiceResponse = subjectService.updateSubject(subject);
+		Response updateSubjectServiceResponse = subjectResponse.updateResponse(subjectDto);
 		return updateSubjectServiceResponse;
 	}
 

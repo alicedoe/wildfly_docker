@@ -18,14 +18,14 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.HomeworkDto;
 import com.alicegabbana.restserver.entity.KidsClass;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.HomeworkService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.homework.HomeworkResponse;
 
 @Path("/homework")
 public class HomeworkEndpoint {
 	
 	@EJB
-	HomeworkService homeService;
+	HomeworkResponse homeResponse;
 	
 	@EJB
 	AuthService authService;
@@ -47,7 +47,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addHomeworkServiceResponse = homeService.createResponse(homeworkDto);
+		Response addHomeworkServiceResponse = homeResponse.createResponse(homeworkDto);
 		return addHomeworkServiceResponse;
 	}
 	
@@ -65,7 +65,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllHomeworkServiceResponse = homeService.getAllResponse();
+		Response getAllHomeworkServiceResponse = homeResponse.getAllResponse();
 		return getAllHomeworkServiceResponse;
 	}
 	
@@ -84,7 +84,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getHomeworkServiceResponse = homeService.getResponse(homeworkDto);
+		Response getHomeworkServiceResponse = homeResponse.getResponse(homeworkDto);
 		return getHomeworkServiceResponse;
 	}
 	
@@ -103,103 +103,8 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getHomeworkServiceResponse = homeService.getForKidsClassResponse(kidsClass);
+		Response getHomeworkServiceResponse = homeResponse.getForKidsClassResponse(kidsClass);
 		return getHomeworkServiceResponse;
 	}
-//	
-//	
-//	@GET
-//	@Path("/getaction")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response getAction(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
-//
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"read role"
-//	            		));
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-//		
-//		Response getActionFromRoleServiceResponse = roleService.getActionFromRole(roleDto);
-//		return getActionFromRoleServiceResponse;
-//	}
-//	
-//	@DELETE
-//	@Path("/delete")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response deleteRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
-//
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"delete role"
-//	            		));
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-//		
-//		Response deleteRoleResponse = roleService.deleteResponse(roleDto);
-//		return deleteRoleResponse;
-//	}
-//	
-//	@PUT
-//	@Path("/edit")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response editRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
-//
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"update role"
-//	            		));
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-//		
-//		Response updateRoleServiceResponse = roleService.updateResponse(roleDto);
-//		return updateRoleServiceResponse;
-//	}
-//	
-//	@PUT
-//	@Path("/addaction")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response addAction(RoleDto roleIdWithActionsToAdd, @HeaderParam("UserToken") String userToken) {
-//
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"update role"
-//	            		));
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-//		
-//		Response updateRoleServiceResponse = roleService.addActionResponse(roleIdWithActionsToAdd);
-//		return updateRoleServiceResponse;
-//	}
-//	
-//	@PUT
-//	@Path("/removeaction")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response removeAction(RoleDto roleIdWithActionsToRemove, @HeaderParam("UserToken") String userToken) {
-//
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"update role"
-//	            		));
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-//		
-//		Response updateRoleServiceResponse = roleService.removeActionResponse(roleIdWithActionsToRemove);
-//		return updateRoleServiceResponse;
-//	}
 
 }

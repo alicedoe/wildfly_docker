@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.service;
+package com.alicegabbana.restserver.services.level;
 
 import java.util.List;
 
@@ -13,9 +13,10 @@ import org.jboss.logging.Logger;
 import com.alicegabbana.restserver.dao.LevelDao;
 import com.alicegabbana.restserver.dto.LevelDto;
 import com.alicegabbana.restserver.entity.Level;
+import com.alicegabbana.restserver.services.AuthService;
 
 @Stateless
-public class LevelService {
+public class LevelResponse {
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
@@ -24,15 +25,18 @@ public class LevelService {
 	AuthService authService;
 	
 	@EJB
+	LevelService levelService;
+	
+	@EJB
 	LevelDao levelDao;
 	
-	Logger logger = Logger.getLogger(LevelService.class);
+	Logger logger = Logger.getLogger(LevelResponse.class);
 	
 	public Response createLevel(Level newLevel) {
 		
-		if ( newLevel == null || newLevel.getId() != null || newLevel.getName() == "" ) return authService.returnResponse(400);
+		if ( newLevel == null || newLevel.getId() != null || newLevel.getName().equals("") ) return authService.returnResponse(400);
 
-		if ( levelNameExist(newLevel.getName()) == true ) return authService.returnResponse(409);
+		if ( levelService.levelNameExist(newLevel.getName()) == true ) return authService.returnResponse(409);
 		
 		Level levelCreated = em.merge(newLevel);
 		return authService.returnResponseWithEntity(201, levelCreated);
@@ -41,9 +45,9 @@ public class LevelService {
 	
 	public Response updateLevel(Level levelToUpdate) {
 		
-		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getName() == "" || levelToUpdate.getName() == null ) return authService.returnResponse(400);
+		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getName().equals("") || levelToUpdate.getName() == null ) return authService.returnResponse(400);
 		
-		if ( levelNameExist(levelToUpdate.getName()) == true ) return authService.returnResponse(409);
+		if ( levelService.levelNameExist(levelToUpdate.getName()) == true ) return authService.returnResponse(409);
 		
 		Level updatedLevel = em.merge(levelToUpdate);
 		return authService.returnResponseWithEntity(200, updatedLevel);
@@ -54,45 +58,28 @@ public class LevelService {
 
 		if ( level == null || level.getId() == null ) return authService.returnResponse(400);
 		
-		level = em.find(Level.class, level.getId());
+		if ( levelService.getLevelById(level.getId()) == null ) return authService.returnResponse(404);
 		
-		if ( level == null ) return authService.returnResponse(404);
-		
-		em.remove(level);
+		levelService.delete(level.getId());
 		return authService.returnResponse(200);
 
 	}
 	
 	public Response getLevel ( LevelDto levelDto ) {
 
-		Level level = em.find(Level.class, levelDto.getId());
-		if ( level == null ) return authService.returnResponse(404);
+		
+		if ( levelDto == null || levelDto.getId() == null ) return authService.returnResponse(404);
+		
+		Level level = levelService.getLevelById(levelDto.getId());
 		return authService.returnResponseWithEntity(200, level);
 
 	}
 	
 	public Response getAllLevel ( ) {
 
-		List<Level> loadedLevels = levelDao.getAllLevels();
+		List<Level> loadedLevels = levelService.getAll();
 		return authService.returnResponseWithEntity(200, loadedLevels);
 
-	}
-	
-	public boolean levelNameExist(String name) {
-		
-		if (levelDao.getLevelByName(name) == null) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public Level getLevelById (Long id) {
-		return levelDao.getLevelById(id);
-	}
-	
-	public Level getLevelByName (String name) {
-		return levelDao.getLevelByName(name);
 	}
 	
 }

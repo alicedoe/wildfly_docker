@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.service;
+package com.alicegabbana.restserver.services.homework;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +8,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 import org.joda.time.DateTime;
@@ -19,6 +18,10 @@ import com.alicegabbana.restserver.entity.Homework;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Subject;
 import com.alicegabbana.restserver.entity.User;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
+import com.alicegabbana.restserver.services.subject.SubjectService;
+import com.alicegabbana.restserver.services.user.UserService;
 
 @Stateless
 public class HomeworkService {
@@ -42,35 +45,6 @@ public class HomeworkService {
 	HomeworkDao homeworkDao;
 	
 	Logger logger = Logger.getLogger(HomeworkService.class);
-	
-	public Response createResponse(HomeworkDto homeworkDto) {		
-		
-		if (homeworkDto.getId() != null || !homeworkDtoIsComplete(homeworkDto, false) ) return authService.returnResponse(400);
-		
-		HomeworkDto homeworkCreated = createService(homeworkDto);
-		return authService.returnResponseWithEntity(201, homeworkCreated);
-		
-	}
-	
-	public Response getAllResponse ( ) {		
-		return authService.returnResponseWithEntity(200, getAllService());
-	}
-	
-	public Response getResponse ( HomeworkDto homeworkDto ) {	
-		
-		if ( getService(homeworkDto.getId()) == null ) return authService.returnResponse(404);
-		
-		HomeworkDto homeworkDtoFound = getService(homeworkDto.getId());
-		return authService.returnResponseWithEntity(200, homeworkDtoFound);
-	}
-	
-	public Response getForKidsClassResponse ( KidsClass kidsClass ) {	
-		
-		if ( kidsClassService.getById(kidsClass.getId()) == null ) return authService.returnResponse(404);
-		
-		List<HomeworkDto> homeworkDtoList = getForKidsClassService(kidsClass.getId());
-		return authService.returnResponseWithEntity(200, homeworkDtoList);
-	}
 	
 	public HomeworkDto getService (Long id) {
 		Homework homework = homeworkDao.getById(id);
@@ -132,7 +106,7 @@ public class HomeworkService {
 				homework.setSubject(subject);
 			}
 			if (homeworkDto.getCreatorId() != null) {
-				User user = userService.getUserById(homeworkDto.getCreatorId());
+				User user = userService.getDaoById(homeworkDto.getCreatorId());
 				homework.setCreator(user);
 			}
 			if (homeworkDto.getKidsClassId() != null) {
@@ -186,7 +160,7 @@ public class HomeworkService {
 			return false; }
 		
 		else if ( kidsClassService.getById(homeworkDto.getKidsClassId()) == null 
-				|| userService.getUserById(homeworkDto.getCreatorId()) == null )
+				|| userService.getDaoById(homeworkDto.getCreatorId()) == null )
 		{	logger.info("wrong attributes");
 			return false; }
 		

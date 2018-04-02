@@ -19,14 +19,14 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.ActionDto;
-import com.alicegabbana.restserver.service.ActionService;
-import com.alicegabbana.restserver.service.AuthService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.action.ActionResponse;
 
 @Path("/action")
 public class ActionEndpoint {
 	
 	@EJB
-	ActionService actionService;
+	ActionResponse actionResponse;
 	
 	@EJB
 	AuthService authService;
@@ -48,7 +48,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addActionServiceResponse = actionService.createResponse(actionDto);
+		Response addActionServiceResponse = actionResponse.createResponse(actionDto);
 		return addActionServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getActionServiceResponse = actionService.getResponse(actionDto);
+		Response getActionServiceResponse = actionResponse.getResponse(actionDto);
 		return getActionServiceResponse;
 	}
 	
@@ -85,7 +85,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllActionServiceResponse = actionService.getAllResponse();
+		Response getAllActionServiceResponse = actionResponse.getAllResponse();
 		return getAllActionServiceResponse;
 	}
 	
@@ -104,7 +104,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteActionResponse = actionService.deleteResponse(actionDto);
+		Response deleteActionResponse = actionResponse.deleteResponse(actionDto);
 		return deleteActionResponse;
 	}
 	
@@ -123,7 +123,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateActionServiceResponse = actionService.updateResponse(actionDto);
+		Response updateActionServiceResponse = actionResponse.updateResponse(actionDto);
 		return updateActionServiceResponse;
 	}
 

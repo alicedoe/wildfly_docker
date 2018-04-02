@@ -20,14 +20,14 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.LevelDto;
 import com.alicegabbana.restserver.entity.Level;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.LevelService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.level.LevelResponse;
 
 @Path("/level")
 public class LevelEndpoint {
 	
 	@EJB
-	LevelService levelService;
+	LevelResponse levelResponse;
 	
 	@EJB
 	AuthService authService;
@@ -49,7 +49,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addLevelServiceResponse = levelService.createLevel(level);
+		Response addLevelServiceResponse = levelResponse.createLevel(level);
 		return addLevelServiceResponse;
 	}
 	
@@ -68,7 +68,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getLevelServiceResponse = levelService.getLevel(levelDto);
+		Response getLevelServiceResponse = levelResponse.getLevel(levelDto);
 		return getLevelServiceResponse;
 	}
 	
@@ -86,7 +86,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllLevelServiceResponse = levelService.getAllLevel();
+		Response getAllLevelServiceResponse = levelResponse.getAllLevel();
 		return getAllLevelServiceResponse;
 	}
 	
@@ -105,7 +105,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteLevelResponse = levelService.deleteLevel(level);
+		Response deleteLevelResponse = levelResponse.deleteLevel(level);
 		return deleteLevelResponse;
 	}
 	
@@ -124,7 +124,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateLevelServiceResponse = levelService.updateLevel(level);
+		Response updateLevelServiceResponse = levelResponse.updateLevel(level);
 		return updateLevelServiceResponse;
 	}
 

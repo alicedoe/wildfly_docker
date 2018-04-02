@@ -20,14 +20,14 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.TownDto;
 import com.alicegabbana.restserver.entity.Town;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.TownService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.town.TownResponse;
 
 @Path("/town")
 public class TownEndpoint {
 	
 	@EJB
-	TownService townService;
+	TownResponse townResponse;
 	
 	@EJB
 	AuthService authService;
@@ -38,7 +38,7 @@ public class TownEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addTown(Town town, @HeaderParam("UserToken") String userToken) {
+	public Response addTown(TownDto townDto, @HeaderParam("UserToken") String userToken) {
 		
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -49,7 +49,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addTownServiceResponse = townService.createTown(town);
+		Response addTownServiceResponse = townResponse.createResponse(townDto);
 		return addTownServiceResponse;
 	}
 	
@@ -68,7 +68,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getTownServiceResponse = townService.getTown(townDto);
+		Response getTownServiceResponse = townResponse.getResponse(townDto);
 		return getTownServiceResponse;
 	}
 	
@@ -86,7 +86,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllTownServiceResponse = townService.getAllTown();
+		Response getAllTownServiceResponse = townResponse.getAllResponse();
 		return getAllTownServiceResponse;
 	}
 	
@@ -94,7 +94,7 @@ public class TownEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteTown(Town town, @HeaderParam("UserToken") String userToken) {
+	public Response deleteTown(TownDto townDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -105,7 +105,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteTownResponse = townService.deleteTown(town);
+		Response deleteTownResponse = townResponse.deleteResponse(townDto);
 		return deleteTownResponse;
 	}
 	
@@ -113,7 +113,7 @@ public class TownEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editTown(Town town, @HeaderParam("UserToken") String userToken) {
+	public Response editTown(TownDto townDto, @HeaderParam("UserToken") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -124,7 +124,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateTownServiceResponse = townService.updateTown(town);
+		Response updateTownServiceResponse = townResponse.updateResponse(townDto);
 		return updateTownServiceResponse;
 	}
 

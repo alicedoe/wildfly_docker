@@ -2,7 +2,6 @@ package com.alicegabbana.restserver.endpoints;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,22 +15,20 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.KidsClassDto;
 import com.alicegabbana.restserver.dto.LevelDto;
 import com.alicegabbana.restserver.dto.SchoolDto;
-import com.alicegabbana.restserver.entity.KidsClass;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.KidsClassService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.kidsclass.KidsClassResponse;
 
 @Path("/kidsclass")
 public class KidsClassEndpoint {
 	
 	@EJB
-	KidsClassService kidsClassService;
+	KidsClassResponse kidsClassResponse;
 	
 	@EJB
 	AuthService authService;
@@ -53,7 +50,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addKidsClassServiceResponse = kidsClassService.createResponse(kidsClassDto);
+		Response addKidsClassServiceResponse = kidsClassResponse.createResponse(kidsClassDto);
 		return addKidsClassServiceResponse;
 	}
 	
@@ -72,7 +69,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassService.getResponse(kidsClassDto);
+		Response getKidsClassServiceResponse = kidsClassResponse.getResponse(kidsClassDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -90,7 +87,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllKidsClassServiceResponse = kidsClassService.getAllResponse();
+		Response getAllKidsClassServiceResponse = kidsClassResponse.getAllResponse();
 		return getAllKidsClassServiceResponse;
 	}
 	
@@ -108,7 +105,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassService.getFromSchoolResponse(schoolDto);
+		Response getKidsClassServiceResponse = kidsClassResponse.getFromSchoolResponse(schoolDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -126,7 +123,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassService.getWithLevelResponse(levelDto);
+		Response getKidsClassServiceResponse = kidsClassResponse.getWithLevelResponse(levelDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -145,7 +142,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteKidsClassResponse = kidsClassService.deleteResponse(kidsClassId);
+		Response deleteKidsClassResponse = kidsClassResponse.deleteResponse(kidsClassId);
 		return deleteKidsClassResponse;
 	}
 	
@@ -164,7 +161,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateKidsClassServiceResponse = kidsClassService.updateResponse(kidsClassDto);
+		Response updateKidsClassServiceResponse = kidsClassResponse.updateResponse(kidsClassDto);
 		return updateKidsClassServiceResponse;
 	}
 

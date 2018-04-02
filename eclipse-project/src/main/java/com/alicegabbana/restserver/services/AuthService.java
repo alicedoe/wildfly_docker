@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.service;
+package com.alicegabbana.restserver.services;
 
 import java.util.Date;
 import java.util.List;

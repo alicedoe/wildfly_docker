@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.service;
+package com.alicegabbana.restserver.services.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,20 +9,21 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.UserDao;
 import com.alicegabbana.restserver.dto.ActionDto;
-import com.alicegabbana.restserver.dto.KidsClassDto;
-import com.alicegabbana.restserver.dto.RoleDto;
-import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.action.ActionService;
+import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
+import com.alicegabbana.restserver.services.role.RoleService;
+import com.alicegabbana.restserver.services.school.SchoolService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 
@@ -56,69 +57,13 @@ public class UserService {
 	private static Pattern pattern;
 	private Matcher matcher;
 	
-	public Response createResponse ( UserDto userDto) {
-		
-		if (userDto.getId() != null || newUserIsComplete(userDto) == false) return authService.returnResponse(400);
-
-		if ( userEmailExist(userDto.getEmail()) ) return authService.returnResponse(409);
-		
-		String newToken = returnTokenUserByEmail(userDto.getEmail());
-		
-		if ( newToken == null ) return authService.returnResponse(400);
-		
-		User user = userDtoToUser(userDto);
-		user.setToken(newToken);
-		User newUser = em.merge(user);
-		UserDto newUserDto = userToUserDto(newUser);
-		return authService.returnResponseWithEntity(201, newUserDto);
-	}
-	
-	public Response getResponse ( UserDto userDtoToFind ) {
-		
-		if ( userDtoToFind.getId() == null ) return authService.returnResponse(400);
-		
-		if ( getUserById(userDtoToFind.getId()) == null ) return authService.returnResponse(404);
-
-		User user = em.find(User.class, getUserById(userDtoToFind.getId()));
-		UserDto userDto = userToUserDto(user);
-		return authService.returnResponseWithEntity(200, userDto);
-	}
-	
-	public Response getWithRoleResponse ( RoleDto roleDto ) {
-		
-		if ( roleDto.getId() == null ) return authService.returnResponse(400);
-		
-		if ( roleService.getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);		
-		
-		List<UserDto> listUserDto = getWithRoleService(roleDto.getId());
-		
-		return authService.returnResponseWithEntity(200, listUserDto);
-	}
-	
-	public Response getFromKidsClassResponse ( KidsClassDto kidsClassDto ) {
-		
-		if ( kidsClassDto.getId() == null ) return authService.returnResponse(400);
-		
-		if ( kidsClassService.getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);
-
-		List<UserDto> listUserDto = getFromKidsClassService(kidsClassDto.getId());
-		
-		return authService.returnResponseWithEntity(200, listUserDto);
-	}
-	
-	public Response getActionListResponse ( UserDto userDto ) {
-		
-		if ( userDto.getId() == null ) return authService.returnResponse(400);
-		
-		if ( getUserById(userDto.getId()) == null ) return authService.returnResponse(404);
-
-		List<ActionDto> listActionDto = getActionService(userDto.getId());
-		
-		return authService.returnResponseWithEntity(200, listActionDto);
-	}	
-	
-	public Response getAllResponse( ) {		
-		return authService.returnResponseWithEntity(200, getAllService ());
+	public User create(UserDto userDto) {
+		User user = dtoToDao(userDto);
+		String token = returnTokenUserByEmail(userDto.getEmail());
+		if (token == null) return null;		
+		user.setToken(token);
+		User usercreated = em.merge(user);
+		return usercreated;
 	}
 	
 	public List<UserDto> getWithRoleService (Long id) {
@@ -140,42 +85,11 @@ public class UserService {
 		return null;		
 	}
 	
-	
-	public Response deleteResponse( UserDto userDto ) {
-		
-		if ( userDto == null || userDto.getId() == null ) return authService.returnResponse(400);
-		
-		if ( !userIdExistDao(userDto) ) return authService.returnResponse(404);
-
-		deleteService(userDto.getId());
-		return authService.returnResponse(200);
-	}
-	
-	public Response updateResponse( UserDto newUserDtoProfil ) {
-		
-		if ( newUserDtoProfil == null || newUserDtoProfil.getId() == null ) return authService.returnResponse(400);
-		
-		if ( !userIdExistDao(newUserDtoProfil) ) return authService.returnResponse(404);
-		
-		UserDto userDto = updateService(newUserDtoProfil);
-		return authService.returnResponseWithEntity(200, userDto);
-	}
-	
-	public Response updateMyAccountResponse( UserDto myNewProfil ) {
-		
-		if ( myNewProfil == null || myNewProfil.getId() == null ) return authService.returnResponse(400);
-		
-		UserDto userDto = updateMyAccountService(myNewProfil);
-		return authService.returnResponseWithEntity(200, userDto);
-	}
-	
-//	Services & utilities
-	
 	public UserDto updateMyAccountService (UserDto myNewProfil) {
 		User myCurrentProfil = em.find(User.class, myNewProfil.getId());
 		User oldUserUpdated = updateMyAccount(myCurrentProfil, myNewProfil);
 		em.merge(oldUserUpdated);
-		UserDto userDto = userToUserDto(oldUserUpdated);
+		UserDto userDto = daoToDto(oldUserUpdated);
 		return userDto;
 	}
 	
@@ -183,7 +97,7 @@ public class UserService {
 		User oldUser = em.find(User.class, newUserDtoProfil.getId());
 		User newUserProfil = updateUserProfil(oldUser, newUserDtoProfil);
 		em.merge(newUserProfil);
-		UserDto userDto = userToUserDto(newUserProfil);
+		UserDto userDto = daoToDto(newUserProfil);
 		return userDto;
 	}
 	
@@ -212,7 +126,7 @@ public class UserService {
 		return null;		
 	}
 	
-	public User userDtoToUser (UserDto userDto) {
+	public User dtoToDao(UserDto userDto) {
 		
 		User user = new User();
 		if (userDto != null) {
@@ -240,25 +154,18 @@ public class UserService {
 		return user;
 	}
 	
-	public UserDto userToUserDto (User user) {
+	public UserDto daoToDto(User user) {
 		
 		UserDto userDto = new UserDto();
 		if (user != null) {
-			userDto.setId(user.getId());
-			userDto.setEmail(user.getEmail());
-			
-			if (user.getKidsClass() != null) {
-				userDto.setKidsClassName(user.getKidsClass().getName());
-			}
-			
-			userDto.setName(user.getName());
-			userDto.setFirstname(user.getFirstname());
-			
-			if (user.getRole() != null) {
-				userDto.setRoleName(user.getRole().getName());
-			}
+			if (user.getId() != null) userDto.setId(user.getId());
+			if (user.getEmail() != null) userDto.setEmail(user.getEmail());
+			if (user.getKidsClass() != null) userDto.setKidsClassName(user.getKidsClass().getName());
+			if (user.getName() != null) userDto.setName(user.getName());
+			if (user.getFirstname() != null) userDto.setFirstname(user.getFirstname());
+			if (user.getRole() != null) userDto.setRoleName(user.getRole().getName());
 		}
-		
+
 		return userDto;
 	}
 	
@@ -266,7 +173,7 @@ public class UserService {
 
 		List<UserDto> userDtoList = new ArrayList<UserDto>();
 		for (User user : userList) {
-			UserDto userDto = userToUserDto(user);
+			UserDto userDto = daoToDto(user);
 			userDtoList.add(userDto);
 		}
 
@@ -321,7 +228,7 @@ public class UserService {
 			return false;
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public boolean itsMyAccount (String token, Long id) {		
@@ -374,11 +281,13 @@ public class UserService {
 		return true;
 	}
 	
-	public User getUserById (Long id) {
-		if ( userDao.get(id) != null ) {
-			return userDao.get(id);
-		}
-		
+	public User getDaoById(Long id) {
+		return userDao.get(id);
+	}
+	
+	public UserDto getDtoById(Long id) {
+		User user = userDao.get(id);
+		if (user != null) return daoToDto(user);		
 		return null;
 	}
 	

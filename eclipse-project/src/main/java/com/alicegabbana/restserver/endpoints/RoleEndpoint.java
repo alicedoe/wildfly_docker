@@ -19,14 +19,14 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.RoleDto;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.RoleService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.role.RoleResponse;
 
 @Path("/role")
 public class RoleEndpoint {
 	
 	@EJB
-	RoleService roleService;
+	RoleResponse roleResponse;
 	
 	@EJB
 	AuthService authService;
@@ -48,7 +48,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addRoleServiceResponse = roleService.createResponse(roleDto);
+		Response addRoleServiceResponse = roleResponse.createResponse(roleDto);
 		return addRoleServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleService.getByIdResponse(roleDto);
+		Response getRoleServiceResponse = roleResponse.getByIdResponse(roleDto);
 		return getRoleServiceResponse;
 	}
 	
@@ -85,7 +85,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllRoleServiceResponse = roleService.getAllRole();
+		Response getAllRoleServiceResponse = roleResponse.getAllRoleResponse();
 		return getAllRoleServiceResponse;
 	}
 	
@@ -103,7 +103,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getActionFromRoleServiceResponse = roleService.getActionFromRole(roleDto);
+		Response getActionFromRoleServiceResponse = roleResponse.getActionFromRoleResponse(roleDto);
 		return getActionFromRoleServiceResponse;
 	}
 	
@@ -122,7 +122,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteRoleResponse = roleService.deleteResponse(roleDto);
+		Response deleteRoleResponse = roleResponse.deleteResponse(roleDto);
 		return deleteRoleResponse;
 	}
 	
@@ -141,7 +141,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.updateResponse(roleDto);
+		Response updateRoleServiceResponse = roleResponse.updateResponse(roleDto);
 		return updateRoleServiceResponse;
 	}
 	
@@ -160,7 +160,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.addActionResponse(roleIdWithActionsToAdd);
+		Response updateRoleServiceResponse = roleResponse.addActionResponse(roleIdWithActionsToAdd);
 		return updateRoleServiceResponse;
 	}
 	
@@ -179,7 +179,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleService.removeActionResponse(roleIdWithActionsToRemove);
+		Response updateRoleServiceResponse = roleResponse.removeActionResponse(roleIdWithActionsToRemove);
 		return updateRoleServiceResponse;
 	}
 

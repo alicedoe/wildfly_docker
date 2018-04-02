@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.service;
+package com.alicegabbana.restserver.services.role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,8 @@ import com.alicegabbana.restserver.dao.RoleDao;
 import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.Role;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.action.ActionService;
 
 @Stateless
 public class RoleService {
@@ -34,82 +36,6 @@ public class RoleService {
 	
 	Logger logger = Logger.getLogger(RoleService.class);
 	
-	public Response createResponse(RoleDto roleDto) {		
-		
-		if (roleDto.getId() != null) return authService.returnResponse(400);
-		if ( nameExist(roleDto.getName()) ) return authService.returnResponse(409);		
-		
-		RoleDto roleCreated = createService(roleDto);
-		return authService.returnResponseWithEntity(201, roleCreated);
-		
-	}
-	
-	public Response deleteResponse(RoleDto roleDto) {
-		
-		if ( roleDto.getId() == null ) return authService.returnResponse(400);		
-		if ( getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);
-
-		deleteService(roleDto.getId());
-		return authService.returnResponse(200);
-	}
-	
-	public Response updateResponse (RoleDto roleDto) {
-		
-		if ( roleDto == null || roleDto.getId() == null ) return authService.returnResponse(400);
-		if ( nameExist(roleDto.getName()) == false ) return authService.returnResponse(404);
-		
-		RoleDto roleDtoUpdated = updateService(roleDto);
-		return authService.returnResponseWithEntity(200, roleDtoUpdated);
-
-	}
-	
-	public Response addActionResponse(RoleDto roleDto) {
-		
-		Role role = getDaoByIdService(roleDto.getId());
-		if ( role == null ) return authService.returnResponse(404);
-		if ( role.getId() == null || roleDto.getActions() == null || roleDto.getActions().size() == 0 ) 
-			return authService.returnResponse(400);		
-				
-		RoleDto roleDtoUpdated = addActionService(role.getId(), roleDto.getActions());		
-		return authService.returnResponseWithEntity(200, roleDtoUpdated);
-	}
-	
-	public Response removeActionResponse(RoleDto roleDto) {
-		
-		Role role = getDaoByIdService(roleDto.getId());
-		
-		if ( role == null ) return authService.returnResponse(404);
-		if ( role.getId() == null || roleDto.getActions() == null || roleDto.getActions().size() == 0 ) 
-			return authService.returnResponse(400);				
-				
-		RoleDto roleDtoUpdated = removeActionService(role.getId(), roleDto.getActions());		
-		return authService.returnResponseWithEntity(200, roleDtoUpdated);
-	}
-	
-	public Response getByIdResponse(RoleDto roleDtoToGet) {
-		
-		if ( roleDtoToGet == null ) return authService.returnResponse(400);		
-		if ( getDaoByIdService(roleDtoToGet.getId()) == null ) return authService.returnResponse(404);
-		
-		Role role = getDaoByIdService(roleDtoToGet.getId());
-		RoleDto roleDto = daoToDto(role);
-		return authService.returnResponseWithEntity(200, roleDto);
-		
-	}
-	
-	public Response getAllRole() {		
-		
-		return authService.returnResponseWithEntity(200, getAllService());
-		
-	}
-	
-	public Response getActionFromRole(RoleDto roleDto) {		
-		
-		if ( getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);		
-		
-		return authService.returnResponseWithEntity(200, getActionService(roleDto));
-	}
-	
 	public boolean nameExist (String name) {
 		
 		if ( roleDao.getRoleByName(name) == null ) return false;
@@ -122,13 +48,15 @@ public class RoleService {
 		if (role != null) {
 			roleDto.setId(role.getId());
 			roleDto.setName(role.getName());
-			final List<Long> actionsList = new ArrayList<Long>();
-			role.getActions().forEach(new Consumer<Action>() {
-				public void accept(Action action) {
-					actionsList.add(action.getId());
-				}
-			});
-			roleDto.setActions(actionsList);			
+			if (role.getActions() != null) {
+				final List<Long> actionsList = new ArrayList<Long>();
+				role.getActions().forEach(new Consumer<Action>() {
+					public void accept(Action action) {
+						actionsList.add(action.getId());
+					}
+				});
+				roleDto.setActions(actionsList);	
+			}
 		}
 		
 		return roleDto;
@@ -138,10 +66,9 @@ public class RoleService {
 		
 		Role role = new Role();
 		if (roleDto != null) {
-			role.setId(roleDto.getId());
-			role.setName(roleDto.getName());
+			if (roleDto.getId() != null) role.setId(roleDto.getId());
+			if (roleDto.getName() != null) role.setName(roleDto.getName());
 		}
-		
 		return role;
 	}
 	

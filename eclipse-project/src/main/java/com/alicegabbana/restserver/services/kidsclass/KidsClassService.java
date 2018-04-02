@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.service;
+package com.alicegabbana.restserver.services.kidsclass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,26 +7,22 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.KidsClassDao;
 import com.alicegabbana.restserver.dto.KidsClassDto;
-import com.alicegabbana.restserver.dto.LevelDto;
-import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Level;
 import com.alicegabbana.restserver.entity.School;
+import com.alicegabbana.restserver.services.level.LevelService;
+import com.alicegabbana.restserver.services.school.SchoolService;
 
 @Stateless
 public class KidsClassService {
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
-	
-	@EJB
-	AuthService authService;
 	
 	@EJB
 	SchoolService schoolService;
@@ -38,81 +34,6 @@ public class KidsClassService {
 	KidsClassDao kidsClassDao;
 	
 	Logger logger = Logger.getLogger(KidsClassService.class);
-	
-	public Response createResponse ( KidsClassDto kidsClassDto) {
-		
-		if ( kidsClassIsCorrect(kidsClassDto, false) == false) return authService.returnResponse(400);
-
-		if ( kidsClassDao.kidsClassNameFromLevelExist(kidsClassDto.getName(), kidsClassDto.getLevelName()))
-			return authService.returnResponse(409);
-		
-		KidsClassDto kidsClassDtoCreated = createService(kidsClassDto);
-		return authService.returnResponseWithEntity(201, kidsClassDtoCreated);
-	}
-	
-	public Response getResponse ( KidsClassDto kidsClassDto ) {
-		
-		if (kidsClassDto.getId() == null ) return authService.returnResponse(400);
-
-		if ( getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);		
-		
-		return authService.returnResponseWithEntity(200, getService(kidsClassDto.getId()));
-	}
-	
-	public Response getAllResponse ( ) {
-		
-		
-		return authService.returnResponseWithEntity(200, getAllService());
-	}
-	
-	public Response deleteResponse(Long kidsClassId) {
-		
-		if ( kidsClassId == null ) return authService.returnResponse(400);
-		
-		if ( getById(kidsClassId) == null ) return authService.returnResponse(404);
-
-		deleteService(kidsClassId);
-		return authService.returnResponse(200);
-	}
-	
-	public Response updateResponse (KidsClassDto kidsClassDto) {
-		
-		if ( kidsClassDto == null || kidsClassDto.getId() == null || !kidsClassIsCorrect(kidsClassDto, true) ) 
-			return authService.returnResponse(400);
-
-		if ( getById(kidsClassDto.getId()) == null ) return authService.returnResponse(404);
-		
-		KidsClassDto kidsClassDtoUpdated = updateService(kidsClassDto);
-		
-		return authService.returnResponseWithEntity(200, kidsClassDtoUpdated);
-
-	}
-	
-	public Response getFromSchoolResponse (SchoolDto schoolDto) {
-		
-		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
-		
-		if ( schoolService.getDtoByIdService(schoolDto.getId()) == null ) return authService.returnResponse(404);		
-		
-		List<KidsClassDto> kidsClassDtoList = getFromSchoolService(schoolDto.getId());
-		return authService.returnResponseWithEntity(200, kidsClassDtoList);
-		
-	}
-	
-	public Response getWithLevelResponse (LevelDto levelDto) {
-		
-		if ( levelDto == null || levelDto.getId() == null ) return authService.returnResponse(400);
-		
-		if ( levelService.getLevelById(levelDto.getId()) == null ) return authService.returnResponse(404);		
-		
-		List<KidsClassDto> kidsClassDtoList = getWithLevelService(levelDto.getId());
-		return authService.returnResponseWithEntity(200, kidsClassDtoList);
-		
-	}
-
-/////////////	
-// Service //
-/////////////	
 
 	public List<KidsClassDto> getAllService () {
 		List<KidsClass> kidsClassList = kidsClassDao.getAllKidsClass();
@@ -186,7 +107,7 @@ public class KidsClassService {
 		{	logger.info("missing_attributes");
 			return false; }
 		
-		if ( kidsClassDto.getSchoolName() == "" || kidsClassDto.getLevelName() == "" ) 
+		if ( kidsClassDto.getSchoolName().equals("") || kidsClassDto.getLevelName().equals("")) 
 		{	logger.info("missing_attributes");
 			return false; }
 		

@@ -19,14 +19,14 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.SchoolDto;
-import com.alicegabbana.restserver.service.AuthService;
-import com.alicegabbana.restserver.service.SchoolService;
+import com.alicegabbana.restserver.services.AuthService;
+import com.alicegabbana.restserver.services.school.SchoolResponse;
 
 @Path("/school")
 public class SchoolEndpoint {
 	
 	@EJB
-	SchoolService schoolService;
+	SchoolResponse schoolResponse;
 	
 	@EJB
 	AuthService authService;
@@ -48,7 +48,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addSchoolServiceResponse = schoolService.createResponse(schoolDto);
+		Response addSchoolServiceResponse = schoolResponse.createResponse(schoolDto);
 		return addSchoolServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSchoolServiceResponse = schoolService.getResponse(schoolDto);
+		Response getSchoolServiceResponse = schoolResponse.getResponse(schoolDto);
 		return getSchoolServiceResponse;
 	}
 	
@@ -85,7 +85,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllSchoolServiceResponse = schoolService.getAllResponse();
+		Response getAllSchoolServiceResponse = schoolResponse.getAllResponse();
 		return getAllSchoolServiceResponse;
 	}
 	
@@ -104,7 +104,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteSchoolResponse = schoolService.deleteResponse(schoolDto);
+		Response deleteSchoolResponse = schoolResponse.deleteResponse(schoolDto);
 		return deleteSchoolResponse;
 	}
 	
@@ -123,7 +123,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateSchoolServiceResponse = schoolService.updateResponse(schoolDto);
+		Response updateSchoolServiceResponse = schoolResponse.updateResponse(schoolDto);
 		return updateSchoolServiceResponse;
 	}
 
