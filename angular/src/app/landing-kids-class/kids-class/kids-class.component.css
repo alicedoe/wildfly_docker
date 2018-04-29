@@ -1,0 +1,15 @@
+.circle-badge {
+    background-color: orange;
+    width: 10em;
+    height: 10em;
+    border-radius: 100%;
+    text-align: center;
+    padding-top: 3.2em;
+    margin: 1em auto;
+}
+
+.circle-badge p {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+}
