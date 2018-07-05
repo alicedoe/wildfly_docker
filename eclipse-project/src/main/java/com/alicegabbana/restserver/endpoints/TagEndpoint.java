@@ -37,7 +37,7 @@ public class TagEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addTag(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
+	public Response addTag(TagDto tagDto, @HeaderParam("token") String userToken) {
 		
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -56,7 +56,7 @@ public class TagEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(TagDto tagDto, @HeaderParam("token") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -74,7 +74,7 @@ public class TagEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllTag(@HeaderParam("UserToken") String userToken) {
+	public Response getAllTag(@HeaderParam("token") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -93,7 +93,7 @@ public class TagEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteTag(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
+	public Response deleteTag(TagDto tagDto, @HeaderParam("token") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -112,7 +112,7 @@ public class TagEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editTag(TagDto tagDto, @HeaderParam("UserToken") String userToken) {
+	public Response editTag(TagDto tagDto, @HeaderParam("token") String userToken) {
 
 		List<String> tagsNeeded = new ArrayList<String>(
 	            Arrays.asList(

@@ -38,7 +38,7 @@ public class LevelEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addLevel(Level level, @HeaderParam("UserToken") String userToken) {
+	public Response addLevel(Level level, @HeaderParam("token") String userToken) {
 		
 		List<String> levelsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -57,7 +57,7 @@ public class LevelEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(LevelDto levelDto, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(LevelDto levelDto, @HeaderParam("token") String userToken) {
 
 		List<String> levelsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -75,7 +75,7 @@ public class LevelEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllLevel(@HeaderParam("UserToken") String userToken) {
+	public Response getAllLevel(@HeaderParam("token") String userToken) {
 
 		List<String> levelsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -94,7 +94,7 @@ public class LevelEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteLevel(Level level, @HeaderParam("UserToken") String userToken) {
+	public Response deleteLevel(Level level, @HeaderParam("token") String userToken) {
 
 		List<String> levelsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -113,7 +113,7 @@ public class LevelEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editLevel(Level level, @HeaderParam("UserToken") String userToken) {
+	public Response editLevel(Level level, @HeaderParam("token") String userToken) {
 
 		List<String> levelsNeeded = new ArrayList<String>(
 	            Arrays.asList(

@@ -36,7 +36,7 @@ public class HomeworkEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addHomework(HomeworkDto homeworkDto, @HeaderParam("UserToken") String userToken) {
+	public Response addHomework(HomeworkDto homeworkDto, @HeaderParam("token") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -54,7 +54,7 @@ public class HomeworkEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllRole(@HeaderParam("UserToken") String userToken) {
+	public Response getAllRole(@HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -73,7 +73,7 @@ public class HomeworkEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(HomeworkDto homeworkDto, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(HomeworkDto homeworkDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -92,7 +92,7 @@ public class HomeworkEndpoint {
 	@Path("/getforkidsclass")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(KidsClass kidsClass, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(KidsClass kidsClass, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(

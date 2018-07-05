@@ -17,7 +17,8 @@ export class SchoolEffects {
       console.log('SchoolEffects');
       return this.httpClient.get<School[]>('http://172.17.0.3:8080/application/v1/school/getall', {
         observe: 'body',
-        responseType: 'json'
+        responseType: 'json',
+        headers: { 'token' : 'monsupertoken'}
       });
     }), map(
       (schools) => {

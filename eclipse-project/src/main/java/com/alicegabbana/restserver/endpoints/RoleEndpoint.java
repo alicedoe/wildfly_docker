@@ -37,7 +37,7 @@ public class RoleEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response addRole(RoleDto roleDto, @HeaderParam("token") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -56,7 +56,7 @@ public class RoleEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(RoleDto roleDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -74,7 +74,7 @@ public class RoleEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllRole(@HeaderParam("UserToken") String userToken) {
+	public Response getAllRole(@HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -92,7 +92,7 @@ public class RoleEndpoint {
 	@GET
 	@Path("/getaction")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAction(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response getAction(RoleDto roleDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -111,7 +111,7 @@ public class RoleEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response deleteRole(RoleDto roleDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -130,7 +130,7 @@ public class RoleEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editRole(RoleDto roleDto, @HeaderParam("UserToken") String userToken) {
+	public Response editRole(RoleDto roleDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -149,7 +149,7 @@ public class RoleEndpoint {
 	@Path("/addaction")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(RoleDto roleIdWithActionsToAdd, @HeaderParam("UserToken") String userToken) {
+	public Response addAction(RoleDto roleIdWithActionsToAdd, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -168,7 +168,7 @@ public class RoleEndpoint {
 	@Path("/removeaction")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response removeAction(RoleDto roleIdWithActionsToRemove, @HeaderParam("UserToken") String userToken) {
+	public Response removeAction(RoleDto roleIdWithActionsToRemove, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(

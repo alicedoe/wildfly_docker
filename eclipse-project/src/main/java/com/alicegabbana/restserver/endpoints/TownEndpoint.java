@@ -38,7 +38,7 @@ public class TownEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addTown(TownDto townDto, @HeaderParam("UserToken") String userToken) {
+	public Response addTown(TownDto townDto, @HeaderParam("token") String userToken) {
 		
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -57,7 +57,7 @@ public class TownEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(TownDto townDto, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(TownDto townDto, @HeaderParam("token") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -75,7 +75,7 @@ public class TownEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllTown(@HeaderParam("UserToken") String userToken) {
+	public Response getAllTown(@HeaderParam("token") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -94,7 +94,7 @@ public class TownEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteTown(TownDto townDto, @HeaderParam("UserToken") String userToken) {
+	public Response deleteTown(TownDto townDto, @HeaderParam("token") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -113,7 +113,7 @@ public class TownEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editTown(TownDto townDto, @HeaderParam("UserToken") String userToken) {
+	public Response editTown(TownDto townDto, @HeaderParam("token") String userToken) {
 
 		List<String> townsNeeded = new ArrayList<String>(
 	            Arrays.asList(

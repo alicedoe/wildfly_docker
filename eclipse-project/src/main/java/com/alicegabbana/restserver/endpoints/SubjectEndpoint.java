@@ -38,7 +38,7 @@ public class SubjectEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addSubject(Subject subject, @HeaderParam("UserToken") String userToken) {
+	public Response addSubject(Subject subject, @HeaderParam("token") String userToken) {
 		
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -57,7 +57,7 @@ public class SubjectEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRole(SubjectDto subjectDto, @HeaderParam("UserToken") String userToken) {
+	public Response getRole(SubjectDto subjectDto, @HeaderParam("token") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -75,7 +75,7 @@ public class SubjectEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllSubject(@HeaderParam("UserToken") String userToken) {
+	public Response getAllSubject(@HeaderParam("token") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -94,7 +94,7 @@ public class SubjectEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteSubject(SubjectDto subjectDto, @HeaderParam("UserToken") String userToken) {
+	public Response deleteSubject(SubjectDto subjectDto, @HeaderParam("token") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -113,7 +113,7 @@ public class SubjectEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editSubject(SubjectDto subjectDto, @HeaderParam("UserToken") String userToken) {
+	public Response editSubject(SubjectDto subjectDto, @HeaderParam("token") String userToken) {
 
 		List<String> subjectsNeeded = new ArrayList<String>(
 	            Arrays.asList(

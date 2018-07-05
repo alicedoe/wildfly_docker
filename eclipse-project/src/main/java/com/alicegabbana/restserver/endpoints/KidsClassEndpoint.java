@@ -39,7 +39,7 @@ public class KidsClassEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addKidsClass(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
+	public Response addKidsClass(KidsClassDto kidsClassDto, @HeaderParam("token") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -58,7 +58,7 @@ public class KidsClassEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getKidsClass(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClass(KidsClassDto kidsClassDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -76,7 +76,7 @@ public class KidsClassEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllKidsClass(@HeaderParam("UserToken") String userToken) {
+	public Response getAllKidsClass(@HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -94,7 +94,7 @@ public class KidsClassEndpoint {
 	@GET
 	@Path("/fromschool")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getKidsClassFromSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClassFromSchool(SchoolDto schoolDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -112,7 +112,7 @@ public class KidsClassEndpoint {
 	@GET
 	@Path("/withlevel")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getKidsClassFromLevel(LevelDto levelDto, @HeaderParam("UserToken") String userToken) {
+	public Response getKidsClassFromLevel(LevelDto levelDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -131,7 +131,7 @@ public class KidsClassEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteKidsClass(Long kidsClassId, @HeaderParam("UserToken") String userToken) {
+	public Response deleteKidsClass(Long kidsClassId, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -150,7 +150,7 @@ public class KidsClassEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editKidsClass(KidsClassDto kidsClassDto, @HeaderParam("UserToken") String userToken) {
+	public Response editKidsClass(KidsClassDto kidsClassDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(

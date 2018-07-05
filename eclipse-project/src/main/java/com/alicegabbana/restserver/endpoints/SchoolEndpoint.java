@@ -37,7 +37,7 @@ public class SchoolEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
+	public Response addSchool(SchoolDto schoolDto, @HeaderParam("token") String userToken) {
 		
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -56,7 +56,7 @@ public class SchoolEndpoint {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
+	public Response getSchool(SchoolDto schoolDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -74,7 +74,7 @@ public class SchoolEndpoint {
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllSchool(@HeaderParam("UserToken") String userToken) {
+	public Response getAllSchool(@HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -93,7 +93,7 @@ public class SchoolEndpoint {
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
+	public Response deleteSchool(SchoolDto schoolDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
@@ -112,7 +112,7 @@ public class SchoolEndpoint {
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response editSchool(SchoolDto schoolDto, @HeaderParam("UserToken") String userToken) {
+	public Response editSchool(SchoolDto schoolDto, @HeaderParam("token") String userToken) {
 
 		List<String> actionsNeeded = new ArrayList<String>(
 	            Arrays.asList(
