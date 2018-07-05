@@ -27,7 +27,7 @@ public class TagResponse {
 	
 	Logger logger = Logger.getLogger(TagResponse.class);
 	
-	public Response createResponse(TagDto tagDto) {
+	public Response create(TagDto tagDto) {
 		
 		if ( tagDto == null || tagDto.getId() != null || tagDto.getName().equals("") ) return authService.returnResponse(400);
 
@@ -38,7 +38,7 @@ public class TagResponse {
 
 	}
 	
-	public Response updateResponse(TagDto tagToUpdate) {
+	public Response update(TagDto tagToUpdate) {
 		
 		if ( tagToUpdate == null || tagToUpdate.getId() == null || tagToUpdate.getName().equals("") || tagToUpdate.getName() == null) return authService.returnResponse(400);
 

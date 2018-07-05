@@ -28,7 +28,7 @@ public class TownResponse {
 	
 	Logger logger = Logger.getLogger(TownResponse.class);
 	
-	public Response createResponse(TownDto townDto) {
+	public Response create(TownDto townDto) {
 		
 		if ( townDto == null || townDto.getId() != null || townDto.getName().equals("") ) return authService.returnResponse(400);
 
@@ -39,7 +39,7 @@ public class TownResponse {
 
 	}
 	
-	public Response updateResponse(TownDto townDto) {
+	public Response update(TownDto townDto) {
 		
 		if ( townDto == null || townDto.getId() == null || townDto.getName().equals("") || townDto.getName() == null ) return authService.returnResponse(400);
 		
@@ -48,7 +48,7 @@ public class TownResponse {
 
 	}
 	
-	public Response deleteResponse(TownDto townDto) {
+	public Response delete(TownDto townDto) {
 
 		if ( townDto == null || townDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -59,7 +59,7 @@ public class TownResponse {
 
 	}
 	
-	public Response getResponse( TownDto townDto ) {
+	public Response get( TownDto townDto ) {
 		
 		TownDto townDtoFind = townService.getDtoById(townDto.getId());
 		if ( townDtoFind == null ) return authService.returnResponse(404);		
@@ -68,7 +68,7 @@ public class TownResponse {
 
 	}
 	
-	public Response getAllResponse( ) {
+	public Response getAll( ) {
 
 		List<TownDto> townDtoList = townService.getAllDto();	
 

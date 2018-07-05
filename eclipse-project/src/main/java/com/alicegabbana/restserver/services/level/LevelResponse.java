@@ -32,7 +32,7 @@ public class LevelResponse {
 	
 	Logger logger = Logger.getLogger(LevelResponse.class);
 	
-	public Response createLevel(Level newLevel) {
+	public Response create(Level newLevel) {
 		
 		if ( newLevel == null || newLevel.getId() != null || newLevel.getName().equals("") ) return authService.returnResponse(400);
 
@@ -43,7 +43,7 @@ public class LevelResponse {
 
 	}
 	
-	public Response updateLevel(Level levelToUpdate) {
+	public Response update(Level levelToUpdate) {
 		
 		if ( levelToUpdate == null || levelToUpdate.getId() == null || levelToUpdate.getName().equals("") || levelToUpdate.getName() == null ) return authService.returnResponse(400);
 		
@@ -54,7 +54,7 @@ public class LevelResponse {
 
 	}
 	
-	public Response deleteLevel (Level level) {
+	public Response delete (Level level) {
 
 		if ( level == null || level.getId() == null ) return authService.returnResponse(400);
 		
@@ -65,7 +65,7 @@ public class LevelResponse {
 
 	}
 	
-	public Response getLevel ( LevelDto levelDto ) {
+	public Response get ( LevelDto levelDto ) {
 
 		
 		if ( levelDto == null || levelDto.getId() == null ) return authService.returnResponse(404);
@@ -75,7 +75,7 @@ public class LevelResponse {
 
 	}
 	
-	public Response getAllLevel ( ) {
+	public Response getAll ( ) {
 
 		List<Level> loadedLevels = levelService.getAll();
 		return authService.returnResponseWithEntity(200, loadedLevels);

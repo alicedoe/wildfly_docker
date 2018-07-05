@@ -48,7 +48,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addSchoolServiceResponse = schoolResponse.createResponse(schoolDto);
+		Response addSchoolServiceResponse = schoolResponse.create(schoolDto);
 		return addSchoolServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSchoolServiceResponse = schoolResponse.getResponse(schoolDto);
+		Response getSchoolServiceResponse = schoolResponse.get(schoolDto);
 		return getSchoolServiceResponse;
 	}
 	
@@ -85,7 +85,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllSchoolServiceResponse = schoolResponse.getAllResponse();
+		Response getAllSchoolServiceResponse = schoolResponse.getAll();
 		return getAllSchoolServiceResponse;
 	}
 	
@@ -104,7 +104,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteSchoolResponse = schoolResponse.deleteResponse(schoolDto);
+		Response deleteSchoolResponse = schoolResponse.delete(schoolDto);
 		return deleteSchoolResponse;
 	}
 	
@@ -123,7 +123,7 @@ public class SchoolEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateSchoolServiceResponse = schoolResponse.updateResponse(schoolDto);
+		Response updateSchoolServiceResponse = schoolResponse.update(schoolDto);
 		return updateSchoolServiceResponse;
 	}
 

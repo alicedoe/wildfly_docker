@@ -33,7 +33,7 @@ public class ActionResponse {
 	
 	Logger logger = Logger.getLogger(ActionResponse.class);
 	
-	public Response createResponse(ActionDto newActionDto) {
+	public Response create(ActionDto newActionDto) {
 		
 		if ( newActionDto == null || newActionDto.getId() != null || newActionDto.getName().equals("") )
 			return authService.returnResponse(400);
@@ -44,7 +44,7 @@ public class ActionResponse {
 
 	}
 	
-	public Response updateResponse(ActionDto actionDtoToUpdate) {
+	public Response update(ActionDto actionDtoToUpdate) {
 		
 		if ( actionDtoToUpdate == null || actionDtoToUpdate.getId() == null || actionDtoToUpdate.getName().equals("") )
 			return authService.returnResponse(400);
@@ -60,7 +60,7 @@ public class ActionResponse {
 
 	}
 	
-	public Response deleteResponse (ActionDto actionDto) {
+	public Response delete (ActionDto actionDto) {
 		
 		if ( actionDto.getId() == null ) return authService.returnResponse(400);
 		Action action = actionService.getByIdService(actionDto.getId());
@@ -70,7 +70,7 @@ public class ActionResponse {
 
 	}
 	
-	public Response getResponse ( ActionDto actionDto ) {
+	public Response get ( ActionDto actionDto ) {
 		
 		Action action = actionService.getByIdService(actionDto.getId());
 		if ( action == null ) return authService.returnResponse(404);
@@ -79,7 +79,7 @@ public class ActionResponse {
 
 	}
 	
-	public Response getAllResponse ( ) {
+	public Response getAll ( ) {
 
 		List<Action> loadedActions = actionService.getAllService();
 		return authService.returnResponseWithEntity(200, loadedActions);

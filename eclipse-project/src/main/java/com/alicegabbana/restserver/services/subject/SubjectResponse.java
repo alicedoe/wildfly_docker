@@ -29,7 +29,7 @@ public class SubjectResponse {
 	
 	Logger logger = Logger.getLogger(SubjectResponse.class);
 	
-	public Response createResponse(Subject newSubject) {
+	public Response create(Subject newSubject) {
 		
 		if ( newSubject == null || newSubject.getId() != null || newSubject.getName().equals("") ) return authService.returnResponse(400);
 
@@ -40,7 +40,7 @@ public class SubjectResponse {
 
 	}
 	
-	public Response updateResponse(SubjectDto subjectDtoToUpdate) {
+	public Response update(SubjectDto subjectDtoToUpdate) {
 		
 		if ( subjectDtoToUpdate == null || subjectDtoToUpdate.getId() == null || subjectDtoToUpdate.getName().equals("") ) return authService.returnResponse(400);
 
@@ -51,7 +51,7 @@ public class SubjectResponse {
 
 	}
 	
-	public Response deleteResponse(SubjectDto subjectDto) {
+	public Response delete(SubjectDto subjectDto) {
 
 		if ( subjectDto == null || subjectDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -62,7 +62,7 @@ public class SubjectResponse {
 
 	}
 	
-	public Response getResponse( SubjectDto subjectDto ) {
+	public Response get( SubjectDto subjectDto ) {
 		
 		if ( subjectDto == null || subjectDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -74,7 +74,7 @@ public class SubjectResponse {
 
 	}
 	
-	public Response getAllResponse( ) {
+	public Response getAll( ) {
 
 		List<SubjectDto> subjectDtoList = subjectService.getAllDto();	
 

@@ -39,7 +39,7 @@ public class SchoolResponse {
 	
 	Logger logger = Logger.getLogger(SchoolResponse.class);
 	
-	public Response createResponse(SchoolDto schoolDto) {		
+	public Response create(SchoolDto schoolDto) {		
 		
 		if (schoolDto.getId() != null) return authService.returnResponse(400);
 
@@ -52,7 +52,7 @@ public class SchoolResponse {
 		
 	}
 	
-	public Response deleteResponse(SchoolDto schoolDto) {
+	public Response delete(SchoolDto schoolDto) {
 		
 		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -63,7 +63,7 @@ public class SchoolResponse {
 		return authService.returnResponse(200);
 	}
 	
-	public Response updateResponse(SchoolDto schoolDto) {
+	public Response update(SchoolDto schoolDto) {
 		
 		if ( schoolDto == null || schoolDto.getId() == null || schoolDto.getName() == null || schoolDto.getTownName() == null ) return authService.returnResponse(400);
 
@@ -76,7 +76,7 @@ public class SchoolResponse {
 
 	}
 	
-	public Response getResponse(SchoolDto schoolDto) {
+	public Response get(SchoolDto schoolDto) {
 		
 		if ( schoolDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -87,7 +87,7 @@ public class SchoolResponse {
 		
 	}
 	
-	public Response getAllResponse() {
+	public Response getAll() {
 		
 		List<SchoolDto> schoolDtoList = schoolService.getAllService();
 		return authService.returnResponseWithEntity(200, schoolDtoList);

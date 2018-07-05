@@ -44,7 +44,7 @@ public class HomeworkResponse {
 	
 	Logger logger = Logger.getLogger(HomeworkResponse.class);
 	
-	public Response createResponse(HomeworkDto homeworkDto) {		
+	public Response create(HomeworkDto homeworkDto) {		
 		
 		if (homeworkDto.getId() != null || !homeworkService.homeworkDtoIsComplete(homeworkDto, false) ) return authService.returnResponse(400);
 		
@@ -53,11 +53,11 @@ public class HomeworkResponse {
 		
 	}
 	
-	public Response getAllResponse ( ) {		
+	public Response getAll ( ) {		
 		return authService.returnResponseWithEntity(200, homeworkService.getAllService());
 	}
 	
-	public Response getResponse ( HomeworkDto homeworkDto ) {	
+	public Response get ( HomeworkDto homeworkDto ) {	
 		
 		if ( homeworkService.getService(homeworkDto.getId()) == null ) return authService.returnResponse(404);
 		
@@ -65,7 +65,7 @@ public class HomeworkResponse {
 		return authService.returnResponseWithEntity(200, homeworkDtoFound);
 	}
 	
-	public Response getForKidsClassResponse ( KidsClass kidsClass ) {	
+	public Response getForKidsClass ( KidsClass kidsClass ) {	
 		
 		if ( kidsClassService.getById(kidsClass.getId()) == null ) return authService.returnResponse(404);
 		

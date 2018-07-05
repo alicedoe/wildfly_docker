@@ -48,7 +48,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addActionServiceResponse = actionResponse.createResponse(actionDto);
+		Response addActionServiceResponse = actionResponse.create(actionDto);
 		return addActionServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getActionServiceResponse = actionResponse.getResponse(actionDto);
+		Response getActionServiceResponse = actionResponse.get(actionDto);
 		return getActionServiceResponse;
 	}
 	
@@ -85,7 +85,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllActionServiceResponse = actionResponse.getAllResponse();
+		Response getAllActionServiceResponse = actionResponse.getAll();
 		return getAllActionServiceResponse;
 	}
 	
@@ -104,7 +104,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteActionResponse = actionResponse.deleteResponse(actionDto);
+		Response deleteActionResponse = actionResponse.delete(actionDto);
 		return deleteActionResponse;
 	}
 	
@@ -123,7 +123,7 @@ public class ActionEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateActionServiceResponse = actionResponse.updateResponse(actionDto);
+		Response updateActionServiceResponse = actionResponse.update(actionDto);
 		return updateActionServiceResponse;
 	}
 

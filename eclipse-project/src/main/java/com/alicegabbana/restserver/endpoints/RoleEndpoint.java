@@ -48,7 +48,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addRoleServiceResponse = roleResponse.createResponse(roleDto);
+		Response addRoleServiceResponse = roleResponse.create(roleDto);
 		return addRoleServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getRoleServiceResponse = roleResponse.getByIdResponse(roleDto);
+		Response getRoleServiceResponse = roleResponse.getById(roleDto);
 		return getRoleServiceResponse;
 	}
 	
@@ -85,7 +85,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllRoleServiceResponse = roleResponse.getAllRoleResponse();
+		Response getAllRoleServiceResponse = roleResponse.getAllRole();
 		return getAllRoleServiceResponse;
 	}
 	
@@ -122,7 +122,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteRoleResponse = roleResponse.deleteResponse(roleDto);
+		Response deleteRoleResponse = roleResponse.delete(roleDto);
 		return deleteRoleResponse;
 	}
 	
@@ -141,7 +141,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleResponse.updateResponse(roleDto);
+		Response updateRoleServiceResponse = roleResponse.update(roleDto);
 		return updateRoleServiceResponse;
 	}
 	
@@ -160,7 +160,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleResponse.addActionResponse(roleIdWithActionsToAdd);
+		Response updateRoleServiceResponse = roleResponse.addAction(roleIdWithActionsToAdd);
 		return updateRoleServiceResponse;
 	}
 	
@@ -179,7 +179,7 @@ public class RoleEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateRoleServiceResponse = roleResponse.removeActionResponse(roleIdWithActionsToRemove);
+		Response updateRoleServiceResponse = roleResponse.removeAction(roleIdWithActionsToRemove);
 		return updateRoleServiceResponse;
 	}
 

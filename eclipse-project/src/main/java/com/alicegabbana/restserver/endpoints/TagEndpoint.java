@@ -48,7 +48,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addTagServiceResponse = tagResponse.createResponse(tagDto);
+		Response addTagServiceResponse = tagResponse.create(tagDto);
 		return addTagServiceResponse;
 	}
 	
@@ -123,7 +123,7 @@ public class TagEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateTagServiceResponse = tagResponse.updateResponse(tagDto);
+		Response updateTagServiceResponse = tagResponse.update(tagDto);
 		return updateTagServiceResponse;
 	}
 

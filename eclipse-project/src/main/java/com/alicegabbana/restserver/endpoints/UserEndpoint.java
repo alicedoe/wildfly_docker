@@ -49,7 +49,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response addUserServiceResponse = userResponse.createResponse( userDto );
+		Response addUserServiceResponse = userResponse.create( userDto );
 		return addUserServiceResponse;
 	}
 	
@@ -67,7 +67,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserServiceResponse = userResponse.getResponse( userDto );
+		Response getUserServiceResponse = userResponse.get( userDto );
 		return getUserServiceResponse;
 	}
 	
@@ -84,7 +84,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getAllUserServiceResponse = userResponse.getAllResponse( );
+		Response getAllUserServiceResponse = userResponse.getAll( );
 		return getAllUserServiceResponse;
 	}
 	
@@ -101,7 +101,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserWithRoleServiceResponse = userResponse.getWithRoleResponse(roleDto);
+		Response getUserWithRoleServiceResponse = userResponse.getWithRole(roleDto);
 		return getUserWithRoleServiceResponse;
 	}
 	
@@ -118,7 +118,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response getUserFromKidsClassServiceResponse = userResponse.getFromKidsClassResponse(kidsClassDto);
+		Response getUserFromKidsClassServiceResponse = userResponse.getFromKidsClass(kidsClassDto);
 		return getUserFromKidsClassServiceResponse;
 	}
 	
@@ -153,7 +153,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response deleteUserResponse = userResponse.deleteResponse( userDto );
+		Response deleteUserResponse = userResponse.delete( userDto );
 		return deleteUserResponse;
 	}
 	
@@ -171,7 +171,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response updateUserServiceResponse = userResponse.updateResponse( userDto );
+		Response updateUserServiceResponse = userResponse.update( userDto );
 		return updateUserServiceResponse;
 	}
 	
@@ -189,7 +189,7 @@ public class UserEndpoint {
 		{
 			return authService.returnResponse(401);
 		}
-		Response updateUserServiceResponse = userResponse.updateMyAccountResponse( user );
+		Response updateUserServiceResponse = userResponse.updateMyAccount( user );
 		return updateUserServiceResponse;
 	}
 

@@ -47,7 +47,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addHomeworkServiceResponse = homeResponse.createResponse(homeworkDto);
+		Response addHomeworkServiceResponse = homeResponse.create(homeworkDto);
 		return addHomeworkServiceResponse;
 	}
 	
@@ -65,7 +65,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllHomeworkServiceResponse = homeResponse.getAllResponse();
+		Response getAllHomeworkServiceResponse = homeResponse.getAll();
 		return getAllHomeworkServiceResponse;
 	}
 	
@@ -84,7 +84,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getHomeworkServiceResponse = homeResponse.getResponse(homeworkDto);
+		Response getHomeworkServiceResponse = homeResponse.get(homeworkDto);
 		return getHomeworkServiceResponse;
 	}
 	
@@ -103,7 +103,7 @@ public class HomeworkEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getHomeworkServiceResponse = homeResponse.getForKidsClassResponse(kidsClass);
+		Response getHomeworkServiceResponse = homeResponse.getForKidsClass(kidsClass);
 		return getHomeworkServiceResponse;
 	}
 

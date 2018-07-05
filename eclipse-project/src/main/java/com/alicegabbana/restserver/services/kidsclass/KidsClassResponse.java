@@ -29,7 +29,7 @@ public class KidsClassResponse {
 	
 	Logger logger = Logger.getLogger(KidsClassResponse.class);
 	
-	public Response createResponse ( KidsClassDto kidsClassDto) {
+	public Response create ( KidsClassDto kidsClassDto) {
 		
 		if ( kidsClassService.kidsClassIsCorrect(kidsClassDto, false) == false) return authService.returnResponse(400);
 
@@ -40,7 +40,7 @@ public class KidsClassResponse {
 		return authService.returnResponseWithEntity(201, kidsClassDtoCreated);
 	}
 	
-	public Response getResponse ( KidsClassDto kidsClassDto ) {
+	public Response get ( KidsClassDto kidsClassDto ) {
 		
 		if (kidsClassDto.getId() == null ) return authService.returnResponse(400);
 
@@ -49,13 +49,13 @@ public class KidsClassResponse {
 		return authService.returnResponseWithEntity(200, kidsClassService.getService(kidsClassDto.getId()));
 	}
 	
-	public Response getAllResponse ( ) {
+	public Response getAll ( ) {
 		
 		
 		return authService.returnResponseWithEntity(200, kidsClassService.getAllService());
 	}
 	
-	public Response deleteResponse(Long kidsClassId) {
+	public Response delete(Long kidsClassId) {
 		
 		if ( kidsClassId == null ) return authService.returnResponse(400);
 		
@@ -65,7 +65,7 @@ public class KidsClassResponse {
 		return authService.returnResponse(200);
 	}
 	
-	public Response updateResponse (KidsClassDto kidsClassDto) {
+	public Response update (KidsClassDto kidsClassDto) {
 		
 		if ( kidsClassDto == null || kidsClassDto.getId() == null || !kidsClassService.kidsClassIsCorrect(kidsClassDto, true) ) 
 			return authService.returnResponse(400);
@@ -78,7 +78,7 @@ public class KidsClassResponse {
 
 	}
 	
-	public Response getFromSchoolResponse (SchoolDto schoolDto) {
+	public Response getFromSchool (SchoolDto schoolDto) {
 		
 		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -89,7 +89,7 @@ public class KidsClassResponse {
 		
 	}
 	
-	public Response getWithLevelResponse (LevelDto levelDto) {
+	public Response getWithLevel (LevelDto levelDto) {
 		
 		if ( levelDto == null || levelDto.getId() == null ) return authService.returnResponse(400);
 		

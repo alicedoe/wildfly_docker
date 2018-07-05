@@ -49,7 +49,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addTownServiceResponse = townResponse.createResponse(townDto);
+		Response addTownServiceResponse = townResponse.create(townDto);
 		return addTownServiceResponse;
 	}
 	
@@ -68,7 +68,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getTownServiceResponse = townResponse.getResponse(townDto);
+		Response getTownServiceResponse = townResponse.get(townDto);
 		return getTownServiceResponse;
 	}
 	
@@ -86,7 +86,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllTownServiceResponse = townResponse.getAllResponse();
+		Response getAllTownServiceResponse = townResponse.getAll();
 		return getAllTownServiceResponse;
 	}
 	
@@ -105,7 +105,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteTownResponse = townResponse.deleteResponse(townDto);
+		Response deleteTownResponse = townResponse.delete(townDto);
 		return deleteTownResponse;
 	}
 	
@@ -124,7 +124,7 @@ public class TownEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateTownServiceResponse = townResponse.updateResponse(townDto);
+		Response updateTownServiceResponse = townResponse.update(townDto);
 		return updateTownServiceResponse;
 	}
 

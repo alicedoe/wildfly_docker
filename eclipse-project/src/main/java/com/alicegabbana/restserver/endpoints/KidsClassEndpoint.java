@@ -50,7 +50,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addKidsClassServiceResponse = kidsClassResponse.createResponse(kidsClassDto);
+		Response addKidsClassServiceResponse = kidsClassResponse.create(kidsClassDto);
 		return addKidsClassServiceResponse;
 	}
 	
@@ -69,7 +69,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassResponse.getResponse(kidsClassDto);
+		Response getKidsClassServiceResponse = kidsClassResponse.get(kidsClassDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -87,7 +87,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllKidsClassServiceResponse = kidsClassResponse.getAllResponse();
+		Response getAllKidsClassServiceResponse = kidsClassResponse.getAll();
 		return getAllKidsClassServiceResponse;
 	}
 	
@@ -105,7 +105,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassResponse.getFromSchoolResponse(schoolDto);
+		Response getKidsClassServiceResponse = kidsClassResponse.getFromSchool(schoolDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -123,7 +123,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getKidsClassServiceResponse = kidsClassResponse.getWithLevelResponse(levelDto);
+		Response getKidsClassServiceResponse = kidsClassResponse.getWithLevel(levelDto);
 		return getKidsClassServiceResponse;
 	}
 	
@@ -142,7 +142,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteKidsClassResponse = kidsClassResponse.deleteResponse(kidsClassId);
+		Response deleteKidsClassResponse = kidsClassResponse.delete(kidsClassId);
 		return deleteKidsClassResponse;
 	}
 	
@@ -161,7 +161,7 @@ public class KidsClassEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateKidsClassServiceResponse = kidsClassResponse.updateResponse(kidsClassDto);
+		Response updateKidsClassServiceResponse = kidsClassResponse.update(kidsClassDto);
 		return updateKidsClassServiceResponse;
 	}
 

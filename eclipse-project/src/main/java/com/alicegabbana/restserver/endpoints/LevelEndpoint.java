@@ -49,7 +49,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addLevelServiceResponse = levelResponse.createLevel(level);
+		Response addLevelServiceResponse = levelResponse.create(level);
 		return addLevelServiceResponse;
 	}
 	
@@ -68,7 +68,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getLevelServiceResponse = levelResponse.getLevel(levelDto);
+		Response getLevelServiceResponse = levelResponse.get(levelDto);
 		return getLevelServiceResponse;
 	}
 	
@@ -86,7 +86,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllLevelServiceResponse = levelResponse.getAllLevel();
+		Response getAllLevelServiceResponse = levelResponse.getAll();
 		return getAllLevelServiceResponse;
 	}
 	
@@ -105,7 +105,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteLevelResponse = levelResponse.deleteLevel(level);
+		Response deleteLevelResponse = levelResponse.delete(level);
 		return deleteLevelResponse;
 	}
 	
@@ -124,7 +124,7 @@ public class LevelEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateLevelServiceResponse = levelResponse.updateLevel(level);
+		Response updateLevelServiceResponse = levelResponse.update(level);
 		return updateLevelServiceResponse;
 	}
 

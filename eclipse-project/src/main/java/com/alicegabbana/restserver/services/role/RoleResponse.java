@@ -36,7 +36,7 @@ public class RoleResponse {
 	
 	Logger logger = Logger.getLogger(RoleResponse.class);
 	
-	public Response createResponse(RoleDto roleDto) {		
+	public Response create(RoleDto roleDto) {		
 		
 		if (roleDto.getId() != null) return authService.returnResponse(400);
 		if ( roleService.nameExist(roleDto.getName()) ) return authService.returnResponse(409);		
@@ -46,7 +46,7 @@ public class RoleResponse {
 		
 	}
 	
-	public Response deleteResponse(RoleDto roleDto) {
+	public Response delete(RoleDto roleDto) {
 		
 		if ( roleDto.getId() == null ) return authService.returnResponse(400);		
 		if ( roleService.getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);
@@ -55,7 +55,7 @@ public class RoleResponse {
 		return authService.returnResponse(200);
 	}
 	
-	public Response updateResponse (RoleDto roleDto) {
+	public Response update (RoleDto roleDto) {
 		
 		if ( roleDto == null || roleDto.getId() == null ) return authService.returnResponse(400);
 		if ( roleService.nameExist(roleDto.getName()) == false ) return authService.returnResponse(404);
@@ -65,7 +65,7 @@ public class RoleResponse {
 
 	}
 	
-	public Response addActionResponse(RoleDto roleDto) {
+	public Response addAction(RoleDto roleDto) {
 		
 		Role role = roleService.getDaoByIdService(roleDto.getId());
 		if ( role == null ) return authService.returnResponse(404);
@@ -76,7 +76,8 @@ public class RoleResponse {
 		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 	}
 	
-	public Response removeActionResponse(RoleDto roleDto) {
+	//TODO mix with update
+	public Response removeAction(RoleDto roleDto) {
 		
 		Role role = roleService.getDaoByIdService(roleDto.getId());
 		
@@ -88,7 +89,7 @@ public class RoleResponse {
 		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 	}
 	
-	public Response getByIdResponse(RoleDto roleDtoToGet) {
+	public Response getById(RoleDto roleDtoToGet) {
 		
 		if ( roleDtoToGet == null ) return authService.returnResponse(400);		
 		if ( roleService.getDaoByIdService(roleDtoToGet.getId()) == null ) return authService.returnResponse(404);
@@ -99,7 +100,7 @@ public class RoleResponse {
 		
 	}
 	
-	public Response getAllRoleResponse() {		
+	public Response getAllRole() {		
 		List<RoleDto> roleList = roleService.getAllService();
 		return authService.returnResponseWithEntity(200, roleList);
 		

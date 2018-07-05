@@ -49,7 +49,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response addSubjectServiceResponse = subjectResponse.createResponse(subject);
+		Response addSubjectServiceResponse = subjectResponse.create(subject);
 		return addSubjectServiceResponse;
 	}
 	
@@ -68,7 +68,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getSubjectServiceResponse = subjectResponse.getResponse(subjectDto);
+		Response getSubjectServiceResponse = subjectResponse.get(subjectDto);
 		return getSubjectServiceResponse;
 	}
 	
@@ -86,7 +86,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response getAllSubjectServiceResponse = subjectResponse.getAllResponse();
+		Response getAllSubjectServiceResponse = subjectResponse.getAll();
 		return getAllSubjectServiceResponse;
 	}
 	
@@ -105,7 +105,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response deleteSubjectResponse = subjectResponse.deleteResponse(subjectDto);
+		Response deleteSubjectResponse = subjectResponse.delete(subjectDto);
 		return deleteSubjectResponse;
 	}
 	
@@ -124,7 +124,7 @@ public class SubjectEndpoint {
 			return authService.returnResponse(401);
 		}
 		
-		Response updateSubjectServiceResponse = subjectResponse.updateResponse(subjectDto);
+		Response updateSubjectServiceResponse = subjectResponse.update(subjectDto);
 		return updateSubjectServiceResponse;
 	}
 

@@ -39,7 +39,7 @@ public class UserResponse {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
-	public Response createResponse ( UserDto userDto) {
+	public Response create ( UserDto userDto) {
 		
 		if (userDto.getId() != null || userService.newUserIsComplete(userDto) == false) return authService.returnResponse(400);
 
@@ -53,7 +53,7 @@ public class UserResponse {
 		return authService.returnResponseWithEntity(201, userDtoCreated);
 	}
 	
-	public Response getResponse ( UserDto userDto ) {
+	public Response get ( UserDto userDto ) {
 		
 		if ( userDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -63,7 +63,7 @@ public class UserResponse {
 		return authService.returnResponseWithEntity(200, userDtoFind);
 	}
 	
-	public Response getWithRoleResponse ( RoleDto roleDto ) {
+	public Response getWithRole ( RoleDto roleDto ) {
 		
 		if ( roleDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -74,7 +74,7 @@ public class UserResponse {
 		return authService.returnResponseWithEntity(200, userDtoList);
 	}
 	
-	public Response getFromKidsClassResponse ( KidsClassDto kidsClassDto ) {
+	public Response getFromKidsClass ( KidsClassDto kidsClassDto ) {
 		
 		if ( kidsClassDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -96,12 +96,12 @@ public class UserResponse {
 		return authService.returnResponseWithEntity(200, listActionDto);
 	}	
 	
-	public Response getAllResponse( ) {		
+	public Response getAll( ) {		
 		return authService.returnResponseWithEntity(200, userService.getAllService ());
 	}
 	
 	
-	public Response deleteResponse( UserDto userDto ) {
+	public Response delete( UserDto userDto ) {
 		
 		if ( userDto == null || userDto.getId() == null ) return authService.returnResponse(400);
 		
@@ -111,7 +111,7 @@ public class UserResponse {
 		return authService.returnResponse(200);
 	}
 	
-	public Response updateResponse( UserDto newUserDtoProfil ) {
+	public Response update( UserDto newUserDtoProfil ) {
 		
 		if ( newUserDtoProfil == null || newUserDtoProfil.getId() == null ) return authService.returnResponse(400);
 		
@@ -121,7 +121,7 @@ public class UserResponse {
 		return authService.returnResponseWithEntity(200, userDto);
 	}
 	
-	public Response updateMyAccountResponse( UserDto myNewProfil ) {
+	public Response updateMyAccount( UserDto myNewProfil ) {
 		
 		if ( myNewProfil == null || myNewProfil.getId() == null ) return authService.returnResponse(400);
 		
