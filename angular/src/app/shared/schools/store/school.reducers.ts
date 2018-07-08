@@ -1,4 +1,4 @@
-import { School } from '../school.model';
+import { SchoolDto } from '../schoolDto.model';
 import * as SchoolActions from './school.actions';
 import * as fromApp from '../../../store/app.reducers';
 
@@ -7,7 +7,7 @@ export interface FeatureState extends fromApp.AppState {
 }
 
 export interface State {
-  schools: School[];
+  schools: SchoolDto[];
 }
 
 const initialState: State = {

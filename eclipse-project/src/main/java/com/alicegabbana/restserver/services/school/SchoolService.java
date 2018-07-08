@@ -39,10 +39,12 @@ public class SchoolService {
 	
 	Logger logger = Logger.getLogger(SchoolService.class);
 	
-	public boolean schoolNameExist (String name) {
+	public boolean schoolNameExist (SchoolDto schoolDto) {
 		
-		if ( schoolDao.getSchoolByName(name) == null ) return false;
-		return true;
+		if (schoolDao.getSchoolByName(schoolDto.getName()).getId() != schoolDto.getId() )
+			return true;
+		
+		return false;
 	}
 	
 	public SchoolDto schoolToSchoolDto (School school) {

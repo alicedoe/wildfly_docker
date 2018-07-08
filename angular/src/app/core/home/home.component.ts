@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.store.dispatch(new SchoolActions.GetSchools());
+    this.store.dispatch(new SchoolActions.GetSchool(1));
   }
 
 

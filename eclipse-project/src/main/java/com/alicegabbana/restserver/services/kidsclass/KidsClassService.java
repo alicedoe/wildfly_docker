@@ -12,6 +12,7 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.KidsClassDao;
 import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Level;
 import com.alicegabbana.restserver.entity.School;
@@ -111,7 +112,7 @@ public class KidsClassService {
 		{	logger.info("missing_attributes");
 			return false; }
 		
-		else if ( !schoolService.schoolNameExist(kidsClassDto.getSchoolName()) || !levelService.levelNameExist(kidsClassDto.getLevelName()) )
+		else if ( schoolService.getSchoolByName(kidsClassDto.getSchoolName()) == null || !levelService.levelNameExist(kidsClassDto.getLevelName()) )
 		{	logger.info("wrong attributes");
 			return false; }
 		

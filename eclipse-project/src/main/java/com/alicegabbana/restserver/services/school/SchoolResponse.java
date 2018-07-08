@@ -43,7 +43,7 @@ public class SchoolResponse {
 		
 		if (schoolDto.getId() != null) return authService.returnResponse(400);
 
-		if ( schoolService.schoolNameExist(schoolDto.getName()) ) return authService.returnResponse(409);
+		if ( schoolService.schoolNameExist(schoolDto) ) return authService.returnResponse(409);
 		
 		if ( !townService.nameExist(schoolDto.getTownName()) ) return authService.returnResponse(404);
 		
@@ -52,13 +52,13 @@ public class SchoolResponse {
 		
 	}
 	
-	public Response delete(SchoolDto schoolDto) {
+	public Response delete(Long schoolId) {
 		
-		if ( schoolDto == null || schoolDto.getId() == null ) return authService.returnResponse(400);
+		if ( schoolId == null ) return authService.returnResponse(400);
 		
-		if ( schoolService.getDtoByIdService(schoolDto.getId()) == null ) return authService.returnResponse(404);
+		if ( schoolService.getDtoByIdService(schoolId) == null ) return authService.returnResponse(404);
 		
-		schoolService.deleteService(schoolDto.getId());
+		schoolService.deleteService(schoolId);
 		
 		return authService.returnResponse(200);
 	}
@@ -67,7 +67,7 @@ public class SchoolResponse {
 		
 		if ( schoolDto == null || schoolDto.getId() == null || schoolDto.getName() == null || schoolDto.getTownName() == null ) return authService.returnResponse(400);
 
-		if ( schoolService.schoolNameExist(schoolDto.getName()) == true ) return authService.returnResponse(409);
+		if ( schoolService.schoolNameExist(schoolDto) == true ) return authService.returnResponse(409);
 		
 		if ( townService.nameExist(schoolDto.getTownName()) == false ) return authService.returnResponse(404);
 		
@@ -76,13 +76,13 @@ public class SchoolResponse {
 
 	}
 	
-	public Response get(SchoolDto schoolDto) {
+	public Response get(Long schoolId) {
 		
-		if ( schoolDto.getId() == null ) return authService.returnResponse(400);
+		if ( schoolId == null ) return authService.returnResponse(400);
 		
-		if ( schoolService.getDtoByIdService(schoolDto.getId()) == null ) return authService.returnResponse(404);
+		if ( schoolService.getDtoByIdService(schoolId) == null ) return authService.returnResponse(404);
 		
-		SchoolDto schoolDtoFind = schoolService.getDtoByIdService(schoolDto.getId());
+		SchoolDto schoolDtoFind = schoolService.getDtoByIdService(schoolId);
 		return authService.returnResponseWithEntity(200, schoolDtoFind);
 		
 	}

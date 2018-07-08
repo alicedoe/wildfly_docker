@@ -1,4 +1,4 @@
-export class School {
+export class SchoolDto {
   public id: number;
   public name: string;
   public townName: string;

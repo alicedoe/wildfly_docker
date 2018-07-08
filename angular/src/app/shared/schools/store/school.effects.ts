@@ -5,27 +5,31 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import * as SchoolActions from '../store/school.actions';
-import { School } from '../school.model';
 import * as fromSchool from './school.reducers';
+import { SchoolDto } from '../schoolDto.model';
 
 @Injectable()
 export class SchoolEffects {
+
+  schoolDto:SchoolDto = new SchoolDto( 2, "Ecole de Maraussan", "Maraussan");
+
   @Effect()
-  getSchools = this.actions$
-    .ofType(SchoolActions.GET_SCHOOLS)
-    .pipe(switchMap((action: SchoolActions.GetSchools) => {
-      console.log('SchoolEffects');
-      return this.httpClient.get<School[]>('http://172.17.0.3:8080/application/v1/school/getall', {
-        observe: 'body',
+  getSchool = this.actions$
+    .ofType(SchoolActions.GET_SCHOOL)
+    .pipe(switchMap((action: SchoolActions.GetSchool) => {
+      let headers: HttpHeaders = new HttpHeaders();
+      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append('token', 'monsupertoken');
+      return this.httpClient.get<SchoolDto[]>('http://172.17.0.3:8080/application/v1/school/get/'+action.id, {
         responseType: 'json',
-        headers: { 'token' : 'monsupertoken'}
+        headers:headers
       });
     }), map(
-      (schools) => {
-        console.log(schools);
+      (school) => {
+        console.log(school);
         return {
           type: SchoolActions.SET_SCHOOLS,
-          payload: schools
+          payload: school
         };
       }
     ));
