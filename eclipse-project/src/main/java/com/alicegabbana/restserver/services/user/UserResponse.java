@@ -19,6 +19,8 @@ import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
 import com.alicegabbana.restserver.services.role.RoleService;
 
+import net.minidev.json.JSONObject;
+
 @Stateless
 public class UserResponse {
 	
@@ -127,6 +129,16 @@ public class UserResponse {
 		
 		UserDto userDto = userService.updateMyAccountService(myNewProfil);
 		return authService.returnResponseWithEntity(200, userDto);
+	}
+
+	public Response login(JSONObject body) {
+		
+		if ( body.getAsString("email") == "" || body.getAsString("pwd") == "" ) {
+			return authService.returnResponse(400);
+		}
+		
+//		UserDto userDto = userService.getByEmail(body.getAsString("email"));
+		return null;
 	}
 	
 }

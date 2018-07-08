@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { reducers } from './store/app.reducers';
 import { SchoolEffects } from './shared/schools/store/school.effects';
-
+import { AuthEffects } from './shared/auth/store/auth.effects';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { SchoolEffects } from './shared/schools/store/school.effects';
     CoreModule,
     AuthModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([SchoolEffects]),
+    EffectsModule.forRoot([SchoolEffects, AuthEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

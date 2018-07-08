@@ -24,6 +24,8 @@ import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.user.UserResponse;
 
+import net.minidev.json.JSONObject;
+
 @Path("/user")
 public class UserEndpoint {
 	
@@ -34,6 +36,17 @@ public class UserEndpoint {
 	AuthService authService;
 	
 	Logger logger = Logger.getLogger(UserEndpoint.class);
+	
+	@POST
+	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public JSONObject addUser(JSONObject body) {
+		
+		System.out.println(body);
+//		Response loginService = userResponse.login( body );
+		return body;
+	}
 
 	@POST
 	@Path("/add")

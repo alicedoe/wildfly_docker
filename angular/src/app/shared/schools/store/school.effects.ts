@@ -4,7 +4,7 @@ import { switchMap, withLatestFrom, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import * as SchoolActions from '../store/school.actions';
+import * as SchoolActions from './school.actions';
 import * as fromSchool from './school.reducers';
 import { SchoolDto } from '../schoolDto.model';
 
