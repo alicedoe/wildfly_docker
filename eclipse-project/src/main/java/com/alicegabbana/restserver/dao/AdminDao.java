@@ -30,8 +30,13 @@ public class AdminDao {
 	}
 	
 	public Setting getSettingByName(String name) {
-		Setting setting = em.find(Setting.class, name);
-		return setting;
+		try {
+			Setting setting = em.find(Setting.class, name);
+			return setting;
+		} catch (IllegalArgumentException e) {
+			System.out.println("Setting does not exist");
+		}		
+		return null;
 	}
 
 }

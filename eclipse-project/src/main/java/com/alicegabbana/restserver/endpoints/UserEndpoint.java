@@ -19,10 +19,12 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.dto.NewUserDto;
 import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.user.UserResponse;
+import com.alicegabbana.restserver.services.user.UserService;
 
 import net.minidev.json.JSONObject;
 
@@ -35,6 +37,9 @@ public class UserEndpoint {
 	@EJB
 	AuthService authService;
 	
+	@EJB
+	UserService userService;
+	
 	Logger logger = Logger.getLogger(UserEndpoint.class);
 	
 	@POST
@@ -42,26 +47,18 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(JSONObject body) {
-		
+		System.out.println(userService.hashPassword("adminPass"));
 		Response loginService = userResponse.login( body );
 		return loginService;
 	}
 
 	@POST
+	@Actions({"create user"})
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(UserDto userDto, @HeaderParam("token") String userToken) {
-
-//		List<String> actionsNeeded = new ArrayList<String>(
-//	            Arrays.asList(
-//	            		"create user"
-//	            		));
-//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-//		{
-//			return authService.returnResponse(401);
-//		}
-		Response addUserServiceResponse = userResponse.create( userDto );
+	public Response addUser(NewUserDto newUserDto) {
+		Response addUserServiceResponse = userResponse.create( newUserDto );
 		return addUserServiceResponse;
 	}
 	

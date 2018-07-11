@@ -1,5 +1,7 @@
 package com.alicegabbana.restserver.entity;
 
+import java.security.SecureRandom;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

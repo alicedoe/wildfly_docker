@@ -15,8 +15,9 @@
 		<maven.warplugin.version>3.0.0</maven.warplugin.version>
 		<maven.compilerplugin.version>3.5.1</maven.compilerplugin.version>
 		<wildfly.plugins.version>1.2.0.Final</wildfly.plugins.version>
-
 		<version.jboss.spec.javaee.7.0>1.0.3.Final</version.jboss.spec.javaee.7.0>
+	    <maven.compiler.source>1.8</maven.compiler.source>
+	    <maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>

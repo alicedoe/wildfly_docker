@@ -1,21 +1,14 @@
 package com.alicegabbana.restserver.dto;
 
-public class UserDto {
-
-	private Long id;
+public class NewUserDto {
+	
 	private String roleName;
 	private String firstname;
 	private String name;
 	private String email;
 	private String kidsClassName;
-	private String token;
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private String pwd;
+
 	public String getRoleName() {
 		return roleName;
 	}
@@ -46,17 +39,16 @@ public class UserDto {
 	public void setKidsClassName(String kidsClassName) {
 		this.kidsClassName = kidsClassName;
 	}
-	public String getToken() {
-		return token;
+	public String getPwd() {
+		return pwd;
 	}
-	public void setToken(String token) {
-		this.token = token;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
-
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", roleName=" + roleName + ", firstname=" + firstname + ", name=" + name
-				+ ", email=" + email + ", kidsClassName=" + kidsClassName + ", token=" + token + "]";
+		return "NewUserDto [roleName=" + roleName + ", firstname=" + firstname + ", name=" + name
+				+ ", email=" + email + ", kidsClassName=" + kidsClassName + ", pwd=" + pwd + "]";
 	}
 	
 }

@@ -8,11 +8,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.ActionDto;
 import com.alicegabbana.restserver.dto.KidsClassDto;
+import com.alicegabbana.restserver.dto.NewUserDto;
 import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.entity.User;
@@ -44,13 +44,13 @@ public class UserResponse {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
-	public Response create ( UserDto userDto) {
+	public Response create ( NewUserDto newUserDto) {
 		
-		if (userDto.getId() != null || userService.newUserIsComplete(userDto) == false) return authService.returnResponse(400);
+		if ( userService.newUserIsComplete(newUserDto) == false) return authService.returnResponse(400);
 
-		if ( userService.isUserEmailExist(userDto.getEmail()) ) return authService.returnResponse(409);
+		if ( userService.isUserEmailExist(newUserDto.getEmail()) ) return authService.returnResponse(409);
 		
-		User user = userService.create(userDto);		
+		User user = userService.create(newUserDto);		
 		if ( user == null ) return authService.returnResponse(400);
 		
 		UserDto userDtoCreated = userService.daoToDto(user);

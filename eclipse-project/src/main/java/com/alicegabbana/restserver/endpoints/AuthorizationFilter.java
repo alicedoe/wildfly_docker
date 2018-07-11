@@ -36,48 +36,24 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   @Override
   public void filter(ContainerRequestContext reqContext) throws IOException {
 	  Actions annotations = resourceInfo.getResourceMethod().getAnnotation(Actions.class);
+	  String token;
 	  
-	  System.out.println("--request headers-----");
       MultivaluedMap<String, String> headers = reqContext.getHeaders();
-      for (Entry<String, List<String>> string : headers.entrySet()) {
-		System.out.println("tzst : "+string);
-	}
 
-       
-	  if (reqContext.getMethod() == "PUT") {
-		  
-	  }
-	  String token = reqContext.getHeaders().get("token").get(0);
-	  for (String annotation : annotations.value()) {
-		  actionsNeeded.add(annotation);
-	  }
+      try {
+    	  token = reqContext.getHeaders().get("token").get(0);	
+    	  for (String annotation : annotations.value()) {
+    		  actionsNeeded.add(annotation);
+    	  }
+	    	if (authService.userHasActionList(token, actionsNeeded) == false ) 
+	    	{
+	    		reqContext.abortWith(authService.returnResponse(401));
+	    		return;
+	    	}
+		} catch (Exception e) {
+			System.out.println("Headers 'token' does not exist !");
+			reqContext.abortWith(authService.returnResponse(400));
+		}    
 	  
-		if (authService.userHasActionList(token, actionsNeeded) == false ) 
-		{
-			reqContext.abortWith(authService.returnResponse(401));
-			return;
-		}
   }
-  
-//  private String getEntityBody(ContainerRequestContext requestContext) {
-//	  ByteArrayOutputStream out = new ByteArrayOutputStream();
-//	  InputStream in = requestContext.getEntityStream();
-//
-//	  String result = null;
-//	  try {
-//	    ReaderWriter.writeTo(in, out);
-//	    IOUtils.copy(in, writer, encoding);	    
-//
-//	    byte[] requestEntity = out.toByteArray();
-//	    if (requestEntity.length == 0) {
-//	      result = "";
-//	    } else {
-//	      result = new String(requestEntity, "UTF-8");
-//	    }
-//	    requestContext.setEntityStream(new ByteArrayInputStream(requestEntity));
-//
-//	  } catch (IOException e) {
-//	  }
-//	  return result;
-//	}
 }

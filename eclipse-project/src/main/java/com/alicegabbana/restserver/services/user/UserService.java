@@ -11,8 +11,10 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.jboss.logging.Logger;
 
+import com.alicegabbana.restserver.dao.AdminDao;
 import com.alicegabbana.restserver.dao.UserDao;
 import com.alicegabbana.restserver.dto.ActionDto;
+import com.alicegabbana.restserver.dto.NewUserDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.KidsClass;
@@ -23,6 +25,7 @@ import com.alicegabbana.restserver.services.action.ActionService;
 import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
 import com.alicegabbana.restserver.services.role.RoleService;
 import com.alicegabbana.restserver.services.school.SchoolService;
+import com.alicegabbana.restserver.utils.PasswordUtils;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 
@@ -52,9 +55,9 @@ public class UserService {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
-	public User create(UserDto userDto) {
-		User user = dtoToDao(userDto);
-		String token = returnTokenUserByEmail(userDto.getEmail());
+	public User create(NewUserDto newUserDto) {
+		User user = dtoToDao(newUserDto);
+		String token = returnTokenUserByEmail(newUserDto.getEmail());
 		if (token == null) return null;		
 		user.setToken(token);
 		System.out.println(user.toString());
@@ -150,6 +153,32 @@ public class UserService {
 		return user;
 	}
 	
+	public User dtoToDao(NewUserDto newUserDto) {
+		
+		User user = new User();
+		if (newUserDto != null) {
+			user.setEmail(newUserDto.getEmail());
+			user.setName(newUserDto.getName());
+			user.setFirstname(newUserDto.getFirstname());
+			
+			if (newUserDto.getKidsClassName() != null) {
+				KidsClass kidsClass = kidsClassService.getByName(newUserDto.getKidsClassName());
+				user.setKidsClass(kidsClass);
+			}			
+			
+			if (newUserDto.getRoleName() != null) {
+				Role role = roleService.getDaoByName(newUserDto.getRoleName());
+				user.setRole(role);
+			}
+			
+			if (newUserDto.getPwd() != null) {
+				user.setPwd(newUserDto.getPwd());
+			}
+		}
+		
+		return user;
+	}
+	
 	public UserDto daoToDto(User user) {
 		
 		UserDto userDto = new UserDto();
@@ -160,6 +189,7 @@ public class UserService {
 			if (user.getName() != null) userDto.setName(user.getName());
 			if (user.getFirstname() != null) userDto.setFirstname(user.getFirstname());
 			if (user.getRole() != null) userDto.setRoleName(user.getRole().getName());
+			if (user.getToken() != null) userDto.setToken(user.getToken());
 		}
 
 		return userDto;
@@ -254,21 +284,17 @@ public class UserService {
 		}
 	}
 	
-	public boolean newUserIsComplete (UserDto userDto) {
-		if ( userDto.getEmail() == null ||  !emailFormatCorrect(userDto.getEmail()) ) 
+	public boolean newUserIsComplete (NewUserDto newUserDto) {
+		if ( newUserDto.getEmail() == null ||  !emailFormatCorrect(newUserDto.getEmail()) ) 
 		{	logger.info("invalid_null_email");
 			return false;
 			}
 		
-		else if ( userDto.getName() == null || userDto.getFirstname() == null ) 
+		else if ( newUserDto.getName() == null || newUserDto.getFirstname() == null ) 
 		{	logger.info("missing_attributes");
 			return false; }
 		
-		else if ( userDto.getId() != null || userDto.getEmail() == null )
-		{	logger.info("forced_id");
-			return false; }
-		
-		else if ( roleService.getDaoByName( userDto.getRoleName() ) == null )
+		else if ( roleService.getDaoByName( newUserDto.getRoleName() ) == null )
 		{	logger.info("role_doesnt_exist");
 			return false; }
 		
@@ -292,7 +318,15 @@ public class UserService {
 	}
 
 	public boolean isPasswordCorrect(String email, String password) {
-		return userDao.isPasswordCorrect(email, password);
+		
+		String hashPassword = hashPassword(password);
+		return userDao.isPasswordCorrect(email, hashPassword);
+	}
+	
+	public String hashPassword(String password) {		
+        String salt = userDao.getSalt();
+        String mySecurePassword = PasswordUtils.generateSecurePassword(password, salt);
+		return mySecurePassword;
 	}
 	
 }

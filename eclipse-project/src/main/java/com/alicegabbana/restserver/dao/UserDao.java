@@ -2,6 +2,7 @@ package com.alicegabbana.restserver.dao;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,9 @@ public class UserDao {
 	
 	Logger logger = Logger.getLogger(UserDao.class);
 	
+	@EJB
+	AdminDao adminDao;
+	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 
@@ -31,14 +35,20 @@ public class UserDao {
 		
 	}
 	
-	public boolean isPasswordCorrect(String email, String password) {
+	public String getSalt() {		
+		String salt = adminDao.getSettingByName("PASS_SALT").getParam();
+		if ( salt == null) return null;
+		return salt;		
+	}
+	
+	public boolean isPasswordCorrect(String email, String hashPassword) {
 		
 		TypedQuery<User> query_email = em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
 				.setParameter("email", email);
 		List<User> loadedUsers = query_email.getResultList();
 		
 		if ( loadedUsers.size() != 0 ) {
-			if (loadedUsers.get(0).getPwd().equals(password)) {
+			if (loadedUsers.get(0).getPwd().equals(hashPassword)) {
 				return true;
 			} else return false;
 		}
