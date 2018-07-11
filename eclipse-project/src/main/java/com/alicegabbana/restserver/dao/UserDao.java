@@ -31,6 +31,20 @@ public class UserDao {
 		
 	}
 	
+	public boolean isPasswordCorrect(String email, String password) {
+		
+		TypedQuery<User> query_email = em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
+				.setParameter("email", email);
+		List<User> loadedUsers = query_email.getResultList();
+		
+		if ( loadedUsers.size() != 0 ) {
+			if (loadedUsers.get(0).getPwd().equals(password)) {
+				return true;
+			} else return false;
+		}
+		return false;
+	}
+	
 	public User getByEmail ( String email ) {		
 		
 		TypedQuery<User> query_email = em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)

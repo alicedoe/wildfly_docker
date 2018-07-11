@@ -41,11 +41,10 @@ public class UserEndpoint {
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JSONObject addUser(JSONObject body) {
+	public Response login(JSONObject body) {
 		
-		System.out.println(body);
-//		Response loginService = userResponse.login( body );
-		return body;
+		Response loginService = userResponse.login( body );
+		return loginService;
 	}
 
 	@POST
@@ -54,14 +53,14 @@ public class UserEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(UserDto userDto, @HeaderParam("token") String userToken) {
 
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"create user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
+//		List<String> actionsNeeded = new ArrayList<String>(
+//	            Arrays.asList(
+//	            		"create user"
+//	            		));
+//		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
+//		{
+//			return authService.returnResponse(401);
+//		}
 		Response addUserServiceResponse = userResponse.create( userDto );
 		return addUserServiceResponse;
 	}

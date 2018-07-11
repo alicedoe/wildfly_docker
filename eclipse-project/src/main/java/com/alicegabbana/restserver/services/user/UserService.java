@@ -2,14 +2,13 @@ package com.alicegabbana.restserver.services.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dao.UserDao;
@@ -53,15 +52,12 @@ public class UserService {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
-	private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
-	private static Pattern pattern;
-	private Matcher matcher;
-	
 	public User create(UserDto userDto) {
 		User user = dtoToDao(userDto);
 		String token = returnTokenUserByEmail(userDto.getEmail());
 		if (token == null) return null;		
 		user.setToken(token);
+		System.out.println(user.toString());
 		User usercreated = em.merge(user);
 		return usercreated;
 	}
@@ -146,8 +142,8 @@ public class UserService {
 				user.setRole(role);
 			}
 			
-			if (userDto.getPwd() != null) {
-				user.setPwd(userDto.getPwd());
+			if (userDto.getToken() != null) {
+				user.setToken(userDto.getToken());
 			}
 		}
 		
@@ -185,12 +181,12 @@ public class UserService {
 		String firstname = newUserProfil.getFirstname();
 		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
-		String pwd = newUserProfil.getPwd();
+		String token = newUserProfil.getToken();
 		
 		if (firstname != null) user.setFirstname(firstname);
 		if (name != null) user.setName(name);
 		if (email != null && emailFormatCorrect(email)) user.setEmail(email);
-		if (pwd != null) user.setPwd(pwd);
+		if (token != null) user.setToken(token);
 		
 		return user;
 	}
@@ -202,27 +198,23 @@ public class UserService {
 		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
 		KidsClass kidsClass = kidsClassService.getByName(newUserProfil.getKidsClassName());
-		String pwd = newUserProfil.getPwd();
+		String token = newUserProfil.getToken();
 		
 		if (role != null) user.setRole(role);
 		if (firstname != null) user.setFirstname(firstname);
 		if (name != null) user.setName(name);
 		if (email != null && emailFormatCorrect(email)) user.setEmail(email);
 		if (kidsClass != null) user.setKidsClass(kidsClass);
-		if (pwd != null) user.setPwd(pwd);
+		if (token != null) user.setToken(token);
 		
 		return user;
 	}
 	
-	public boolean emailFormatCorrect(String email) {		
-		logger.info("validateEmail : " + email);	
-		pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
-		matcher = pattern.matcher(email);
-		logger.info("Email is valid : " + matcher.matches());
-		return matcher.matches();
+	public boolean emailFormatCorrect(String email) {
+		return EmailValidator.getInstance().isValid(email);
 	}
 	
-	public boolean userEmailExist (String email) {
+	public boolean isUserEmailExist (String email) {
 		
 		if ( userDao.getByEmail(email) == null ) {
 			return false;
@@ -239,7 +231,9 @@ public class UserService {
 		else return false;
 	}
 	
-	public boolean userIdExistDao (UserDto userDto) {
+	public boolean isUserExist(UserDto userDto) {
+		
+		if ( userDto.getId() == null) return false;
 		
 		User currentUser = userDao.get(userDto.getId());
 		
@@ -266,7 +260,7 @@ public class UserService {
 			return false;
 			}
 		
-		else if ( userDto.getName() == null || userDto.getFirstname() == null || userDto.getPwd() == null ) 
+		else if ( userDto.getName() == null || userDto.getFirstname() == null ) 
 		{	logger.info("missing_attributes");
 			return false; }
 		
@@ -289,6 +283,16 @@ public class UserService {
 		User user = userDao.get(id);
 		if (user != null) return daoToDto(user);		
 		return null;
+	}
+	
+	public UserDto getDtoByEmail(String email) {
+		User user = userDao.getByEmail(email);
+		if (user != null) return daoToDto(user);		
+		return null;
+	}
+
+	public boolean isPasswordCorrect(String email, String password) {
+		return userDao.isPasswordCorrect(email, password);
 	}
 	
 }

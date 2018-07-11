@@ -8,6 +8,7 @@ public class UserDto {
 	private String name;
 	private String email;
 	private String kidsClassName;
+	private String token;
 	private String pwd;
 	
 	public Long getId() {
@@ -46,6 +47,13 @@ public class UserDto {
 	public void setKidsClassName(String kidsClassName) {
 		this.kidsClassName = kidsClassName;
 	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 	public String getPwd() {
 		return pwd;
 	}
@@ -55,7 +63,7 @@ public class UserDto {
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", roleName=" + roleName + ", firstname=" + firstname + ", name=" + name
-				+ ", email=" + email + ", kidsClassName=" + kidsClassName + ", pwd=" + pwd + "]";
+				+ ", email=" + email + ", kidsClassName=" + kidsClassName + ", token=" + token + ", pwd=" + pwd + "]";
 	}
 	
 }

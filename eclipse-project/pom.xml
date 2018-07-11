@@ -19,7 +19,13 @@
 		<version.jboss.spec.javaee.7.0>1.0.3.Final</version.jboss.spec.javaee.7.0>
 	</properties>
 
-	<dependencies>	
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>1.4.0</version>
+		</dependency>	
 		<dependency>
 		  <groupId>joda-time</groupId>
 		  <artifactId>joda-time</artifactId>

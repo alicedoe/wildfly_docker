@@ -32,5 +32,4 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
     default:
       return state;
   }
-  return state;
 }

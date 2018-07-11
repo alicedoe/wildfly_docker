@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.dto.ActionDto;
@@ -18,6 +19,8 @@ import com.alicegabbana.restserver.entity.User;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
 import com.alicegabbana.restserver.services.role.RoleService;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.KeyLengthException;
 
 import net.minidev.json.JSONObject;
 
@@ -45,7 +48,7 @@ public class UserResponse {
 		
 		if (userDto.getId() != null || userService.newUserIsComplete(userDto) == false) return authService.returnResponse(400);
 
-		if ( userService.userEmailExist(userDto.getEmail()) ) return authService.returnResponse(409);
+		if ( userService.isUserEmailExist(userDto.getEmail()) ) return authService.returnResponse(409);
 		
 		User user = userService.create(userDto);		
 		if ( user == null ) return authService.returnResponse(400);
@@ -133,12 +136,46 @@ public class UserResponse {
 
 	public Response login(JSONObject body) {
 		
-		if ( body.getAsString("email") == "" || body.getAsString("pwd") == "" ) {
+		String email = body.getAsString("username");
+		String password = body.getAsString("password");
+		
+		if ( email == "" || 
+				password == "" ) {
+			System.out.println("email or pass empty");
 			return authService.returnResponse(400);
 		}
+		if ( userService.emailFormatCorrect(email) == false ) {
+				System.out.println("email wrong format");
+				return authService.returnResponse(400);
+			}
+				
+		UserDto userDto = userService.getDtoByEmail(email);
 		
-//		UserDto userDto = userService.getByEmail(body.getAsString("email"));
-		return null;
+		boolean userExist = userService.isUserExist(userDto);
+		boolean validPassword = userService.isPasswordCorrect(email, password);
+		
+		if ( userExist == false ) {
+			System.out.println("userExist false");
+			return authService.returnResponse(401);
+		}
+		
+		if ( validPassword == false ) {
+			System.out.println("validPassword false");
+			return authService.returnResponse(401);
+		}
+		
+		try {
+			String token = authService.createAndReturnToken(email);
+			userDto.setToken(token);
+			return authService.returnResponseWithEntity(200, userDto);
+		} catch (KeyLengthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JOSEException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return authService.returnResponse(400); 
 	}
 	
 }
