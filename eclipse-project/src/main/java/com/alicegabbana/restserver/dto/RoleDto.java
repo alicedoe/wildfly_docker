@@ -6,7 +6,7 @@ public class RoleDto {
 
 	private Long id;
 	private String name;
-	private List<Long> actions;
+	private List<String> actions;
 	
 	public Long getId() {
 		return id;
@@ -20,11 +20,11 @@ public class RoleDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Long> getActions() {
+	public List<String> getActions() {
 		return actions;
 	}
-	public void setActions(List<Long> actions) {
-		this.actions = actions;
+	public void setActions(List<String> actionsNames) {
+		this.actions = actionsNames;
 	}
 	@Override
 	public String toString() {

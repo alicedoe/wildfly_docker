@@ -25,6 +25,7 @@ import org.jboss.logging.Logger;
 import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.school.SchoolResponse;
+import com.alicegabbana.restserver.utils.Actions;
 
 import net.minidev.json.JSONObject;
 

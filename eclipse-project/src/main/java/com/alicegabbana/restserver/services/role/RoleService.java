@@ -8,7 +8,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
@@ -17,7 +16,6 @@ import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.services.AuthService;
-import com.alicegabbana.restserver.services.action.ActionService;
 
 @Stateless
 public class RoleService {
@@ -28,8 +26,8 @@ public class RoleService {
 	@EJB
 	AuthService authService;
 	
-	@EJB
-	ActionService actionService;
+//	@EJB
+//	ActionService actionService;
 	
 	@EJB
 	RoleDao roleDao;
@@ -49,10 +47,10 @@ public class RoleService {
 			roleDto.setId(role.getId());
 			roleDto.setName(role.getName());
 			if (role.getActions() != null) {
-				final List<Long> actionsList = new ArrayList<Long>();
+				final List<String> actionsList = new ArrayList<String>();
 				role.getActions().forEach(new Consumer<Action>() {
 					public void accept(Action action) {
-						actionsList.add(action.getId());
+						actionsList.add(action.getName());
 					}
 				});
 				roleDto.setActions(actionsList);	
@@ -103,38 +101,38 @@ public class RoleService {
 		return roleDtoUpdated;
 	}
 	
-	public RoleDto addActionService ( Long roleId, List<Long> actionsIdToAdd ) {
-		Role role = getDaoByIdService(roleId);
-		
-		final List<Action> actionsList = role.getActions();
-		
-		actionsIdToAdd.forEach(new Consumer<Long>() {
-			public void accept(Long actionID) {
-				Action action = actionService.getByIdService(actionID);
-				if ( !actionsList.contains(action)) actionsList.add(action);
-			}
-		});
-		
-		role.setActions(actionsList);
-		Role roleUpdated = em.merge(role);
-		return daoToDto(roleUpdated);
-	}
-	
-	public RoleDto removeActionService ( Long roleId, List<Long> actionsIdToremove ) {
-		Role role = getDaoByIdService(roleId);
-		final List<Action> roleActionsList = role.getActions();
-		
-		actionsIdToremove.forEach(new Consumer<Long>() {
-			public void accept(Long actionID) {
-				Action action = actionService.getByIdService(actionID);
-				if ( roleActionsList.contains(action)) roleActionsList.remove(action);
-			}
-		});
-		
-		role.setActions(roleActionsList);
-		Role roleUpdated = em.merge(role);
-		return daoToDto(roleUpdated);
-	}
+//	public RoleDto addActionService ( Long roleId, List<Long> actionsIdToAdd ) {
+//		Role role = getDaoByIdService(roleId);
+//		
+//		final List<Action> actionsList = role.getActions();
+//		
+//		actionsIdToAdd.forEach(new Consumer<Long>() {
+//			public void accept(Long actionID) {
+//				Action action = actionService.getByIdService(actionID);
+//				if ( !actionsList.contains(action)) actionsList.add(action);
+//			}
+//		});
+//		
+//		role.setActions(actionsList);
+//		Role roleUpdated = em.merge(role);
+//		return daoToDto(roleUpdated);
+//	}
+//	
+//	public RoleDto removeActionService ( Long roleId, List<Long> actionsIdToremove ) {
+//		Role role = getDaoByIdService(roleId);
+//		final List<Action> roleActionsList = role.getActions();
+//		
+//		actionsIdToremove.forEach(new Consumer<Long>() {
+//			public void accept(Long actionID) {
+//				Action action = actionService.getByIdService(actionID);
+//				if ( roleActionsList.contains(action)) roleActionsList.remove(action);
+//			}
+//		});
+//		
+//		role.setActions(roleActionsList);
+//		Role roleUpdated = em.merge(role);
+//		return daoToDto(roleUpdated);
+//	}
 	
 	public Role getDaoByIdService (Long roleId) {
 		Role role = roleDao.getRoleById(roleId);

@@ -1,9 +1,5 @@
 package com.alicegabbana.restserver.endpoints;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -25,6 +21,7 @@ import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.user.UserResponse;
 import com.alicegabbana.restserver.services.user.UserService;
+import com.alicegabbana.restserver.utils.Actions;
 
 import net.minidev.json.JSONObject;
 
@@ -47,7 +44,6 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(JSONObject body) {
-		System.out.println(userService.hashPassword("adminPass"));
 		Response loginService = userResponse.login( body );
 		return loginService;
 	}
@@ -63,143 +59,78 @@ public class UserEndpoint {
 	}
 	
 	@GET
+	@Actions({"read user"})
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getUser(UserDto userDto, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"read user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
+	public Response getUser(UserDto userDto) {
 		Response getUserServiceResponse = userResponse.get( userDto );
 		return getUserServiceResponse;
 	}
 	
 	@GET
+	@Actions({"read user"})
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUser(@HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"read user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response getAllUserServiceResponse = userResponse.getAll( );
 		return getAllUserServiceResponse;
 	}
 	
 	@GET
+	@Actions({"read user"})
 	@Path("/withrole")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserWithRole(RoleDto roleDto, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"read user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response getUserWithRoleServiceResponse = userResponse.getWithRole(roleDto);
 		return getUserWithRoleServiceResponse;
 	}
 	
 	@GET
+	@Actions({"read user"})
 	@Path("/fromkidsclass")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserFromKidsClass(KidsClassDto kidsClassDto, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"read user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response getUserFromKidsClassServiceResponse = userResponse.getFromKidsClass(kidsClassDto);
 		return getUserFromKidsClassServiceResponse;
 	}
 	
 	@GET
+	@Actions({"read user"})
 	@Path("/getactionsfromuser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActionListFromUser(UserDto userDto, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"read user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response getUserFromKidsClassServiceResponse = userResponse.getActionListResponse(userDto);
 		return getUserFromKidsClassServiceResponse;
 	}
 	
 	@DELETE
+	@Actions({"delete user"})
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteUser(UserDto userDto, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"delete user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response deleteUserResponse = userResponse.delete( userDto );
 		return deleteUserResponse;
 	}
 	
 	@PUT
+	@Actions({"update user"})
 	@Path("/edit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response editUser(UserDto userDto, @HeaderParam("token") String userToken) {
-		
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"update user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response updateUserServiceResponse = userResponse.update( userDto );
 		return updateUserServiceResponse;
 	}
 	
 	@PUT
+	@Actions({"update user"})
 	@Path("/editmyaccount")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response editMyAccount(UserDto user, @HeaderParam("token") String userToken) {
-		
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"update user"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
 		Response updateUserServiceResponse = userResponse.updateMyAccount( user );
 		return updateUserServiceResponse;
 	}
-
 }

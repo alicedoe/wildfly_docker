@@ -1,4 +1,4 @@
-package com.alicegabbana.restserver.endpoints;
+package com.alicegabbana.restserver.utils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

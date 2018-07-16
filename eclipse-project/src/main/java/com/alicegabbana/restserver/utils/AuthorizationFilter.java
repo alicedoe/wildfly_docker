@@ -1,23 +1,17 @@
-package com.alicegabbana.restserver.endpoints;
+package com.alicegabbana.restserver.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javax.ejb.EJB;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 
 import com.alicegabbana.restserver.services.AuthService;
-import com.nimbusds.jose.util.IOUtils;
 
 
 
@@ -37,8 +31,6 @@ public class AuthorizationFilter implements ContainerRequestFilter {
   public void filter(ContainerRequestContext reqContext) throws IOException {
 	  Actions annotations = resourceInfo.getResourceMethod().getAnnotation(Actions.class);
 	  String token;
-	  
-      MultivaluedMap<String, String> headers = reqContext.getHeaders();
 
       try {
     	  token = reqContext.getHeaders().get("token").get(0);	

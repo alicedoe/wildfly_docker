@@ -144,43 +144,5 @@ public class RoleEndpoint {
 		Response updateRoleServiceResponse = roleResponse.update(roleDto);
 		return updateRoleServiceResponse;
 	}
-	
-	@PUT
-	@Path("/addaction")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addAction(RoleDto roleIdWithActionsToAdd, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"update role"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
-		
-		Response updateRoleServiceResponse = roleResponse.addAction(roleIdWithActionsToAdd);
-		return updateRoleServiceResponse;
-	}
-	
-	@PUT
-	@Path("/removeaction")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response removeAction(RoleDto roleIdWithActionsToRemove, @HeaderParam("token") String userToken) {
-
-		List<String> actionsNeeded = new ArrayList<String>(
-	            Arrays.asList(
-	            		"update role"
-	            		));
-		if (authService.userHasActionList(userToken, actionsNeeded) == false ) 
-		{
-			return authService.returnResponse(401);
-		}
-		
-		Response updateRoleServiceResponse = roleResponse.removeAction(roleIdWithActionsToRemove);
-		return updateRoleServiceResponse;
-	}
 
 }

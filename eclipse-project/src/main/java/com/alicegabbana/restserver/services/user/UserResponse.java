@@ -10,11 +10,11 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.dto.ActionDto;
 import com.alicegabbana.restserver.dto.KidsClassDto;
 import com.alicegabbana.restserver.dto.NewUserDto;
 import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.dto.UserDto;
+import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.User;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
@@ -96,9 +96,9 @@ public class UserResponse {
 		
 		if ( userService.getDaoById(userDto.getId()) == null ) return authService.returnResponse(404);
 
-		List<ActionDto> listActionDto = userService.getActionService(userDto.getId());
+		List<Action> listAction = userService.getActionService(userDto.getId());
 		
-		return authService.returnResponseWithEntity(200, listActionDto);
+		return authService.returnResponseWithEntity(200, listAction);
 	}	
 	
 	public Response getAll( ) {		

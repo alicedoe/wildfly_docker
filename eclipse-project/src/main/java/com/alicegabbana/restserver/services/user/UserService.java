@@ -11,9 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.dao.AdminDao;
 import com.alicegabbana.restserver.dao.UserDao;
-import com.alicegabbana.restserver.dto.ActionDto;
 import com.alicegabbana.restserver.dto.NewUserDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.entity.Action;
@@ -21,7 +19,6 @@ import com.alicegabbana.restserver.entity.KidsClass;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 import com.alicegabbana.restserver.services.AuthService;
-import com.alicegabbana.restserver.services.action.ActionService;
 import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
 import com.alicegabbana.restserver.services.role.RoleService;
 import com.alicegabbana.restserver.services.school.SchoolService;
@@ -43,9 +40,6 @@ public class UserService {
 	
 	@EJB
 	KidsClassService kidsClassService;
-	
-	@EJB
-	ActionService actionService;
 	
 	@EJB
 	SchoolService schoolService;
@@ -105,14 +99,9 @@ public class UserService {
 		em.remove(user);
 	}
 	
-	public List<ActionDto> getActionService (Long id) {
-		List<Action> actionList = userDao.getActionFromUser(id);				
-		if (actionList != null) {
-			List<ActionDto> listActionDto = actionService.daoListToDtoList(actionList);
-			return listActionDto;
-		}
-		
-		return null;		
+	public List<Action> getActionService (Long id) {
+		List<Action> actionList = userDao.getActionFromUser(id);		
+		return actionList;		
 	}
 	
 	public List<UserDto> getFromKidsClassService (Long id) {

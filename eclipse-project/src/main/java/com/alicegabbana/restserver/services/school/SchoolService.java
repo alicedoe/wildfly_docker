@@ -7,7 +7,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
@@ -16,7 +15,6 @@ import com.alicegabbana.restserver.dto.SchoolDto;
 import com.alicegabbana.restserver.entity.School;
 import com.alicegabbana.restserver.entity.Town;
 import com.alicegabbana.restserver.services.AuthService;
-import com.alicegabbana.restserver.services.action.ActionService;
 import com.alicegabbana.restserver.services.town.TownService;
 
 @Stateless
@@ -30,9 +28,6 @@ public class SchoolService {
 	
 	@EJB
 	TownService townService;
-	
-	@EJB
-	ActionService actionService;
 	
 	@EJB
 	SchoolDao schoolDao;

@@ -1,6 +1,5 @@
 package com.alicegabbana.restserver.services.school;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,12 +10,8 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
-import com.alicegabbana.restserver.dao.SchoolDao;
 import com.alicegabbana.restserver.dto.SchoolDto;
-import com.alicegabbana.restserver.entity.School;
-import com.alicegabbana.restserver.entity.Town;
 import com.alicegabbana.restserver.services.AuthService;
-import com.alicegabbana.restserver.services.action.ActionService;
 import com.alicegabbana.restserver.services.town.TownService;
 
 @Stateless
@@ -30,9 +25,6 @@ public class SchoolResponse {
 	
 	@EJB
 	TownService townService;
-	
-	@EJB
-	ActionService actionService;
 	
 	@EJB
 	SchoolService schoolService;

@@ -14,7 +14,6 @@ import com.alicegabbana.restserver.dao.RoleDao;
 import com.alicegabbana.restserver.dto.RoleDto;
 import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.services.AuthService;
-import com.alicegabbana.restserver.services.action.ActionService;
 
 @Stateless
 public class RoleResponse {
@@ -24,9 +23,6 @@ public class RoleResponse {
 	
 	@EJB
 	AuthService authService;
-	
-	@EJB
-	ActionService actionService;
 	
 	@EJB
 	RoleDao roleDao;
@@ -63,30 +59,6 @@ public class RoleResponse {
 		RoleDto roleDtoUpdated = roleService.updateService(roleDto);
 		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 
-	}
-	
-	public Response addAction(RoleDto roleDto) {
-		
-		Role role = roleService.getDaoByIdService(roleDto.getId());
-		if ( role == null ) return authService.returnResponse(404);
-		if ( role.getId() == null || roleDto.getActions() == null || roleDto.getActions().size() == 0 ) 
-			return authService.returnResponse(400);		
-				
-		RoleDto roleDtoUpdated = roleService.addActionService(role.getId(), roleDto.getActions());		
-		return authService.returnResponseWithEntity(200, roleDtoUpdated);
-	}
-	
-	//TODO mix with update
-	public Response removeAction(RoleDto roleDto) {
-		
-		Role role = roleService.getDaoByIdService(roleDto.getId());
-		
-		if ( role == null ) return authService.returnResponse(404);
-		if ( role.getId() == null || roleDto.getActions() == null || roleDto.getActions().size() == 0 ) 
-			return authService.returnResponse(400);				
-				
-		RoleDto roleDtoUpdated = roleService.removeActionService(role.getId(), roleDto.getActions());		
-		return authService.returnResponseWithEntity(200, roleDtoUpdated);
 	}
 	
 	public Response getById(RoleDto roleDtoToGet) {
