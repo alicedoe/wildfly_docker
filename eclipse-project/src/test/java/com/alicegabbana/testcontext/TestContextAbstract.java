@@ -9,7 +9,6 @@ import javax.naming.NamingException;
 import org.junit.BeforeClass;
 
 import com.alicegabbana.restserver.services.action.ActionServiceRemote;
-import com.alicegabbana.restserver.services.action.TotoRemote;
 
 public abstract class TestContextAbstract {
 
@@ -20,6 +19,7 @@ public abstract class TestContextAbstract {
 	public static String JNDI_PORT = "8080";
 	
 	public static ActionServiceRemote actionService;
+//	public static RoleServiceRemote roleService;
 
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -40,6 +40,8 @@ public abstract class TestContextAbstract {
 					System.out.println("Getting remote services endpoints...");					
 					actionService = (ActionServiceRemote)
 							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_ACTION);
+//					roleService = (RoleServiceRemote)
+//							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_ROLE);
 				}
 		} catch (Exception e) {
 			e.printStackTrace();

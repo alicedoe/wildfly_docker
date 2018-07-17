@@ -9,9 +9,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Action implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = -4254732460564208575L;
+	
 	@Id
 	@Column(unique = true)
 	@NotNull

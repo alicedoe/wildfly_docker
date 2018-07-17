@@ -16,7 +16,6 @@ import com.alicegabbana.restserver.dto.NewUserDto;
 import com.alicegabbana.restserver.dto.UserDto;
 import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.KidsClass;
-import com.alicegabbana.restserver.entity.Role;
 import com.alicegabbana.restserver.entity.User;
 import com.alicegabbana.restserver.services.AuthService;
 import com.alicegabbana.restserver.services.kidsclass.KidsClassService;
@@ -129,10 +128,10 @@ public class UserService {
 			user.setName(userDto.getName());
 			user.setFirstname(userDto.getFirstname());
 			
-			if (userDto.getRoleName() != null) {
-				Role role = roleService.getDaoByName(userDto.getRoleName());
-				user.setRole(role);
-			}
+//			if (userDto.getRoleName() != null) {
+//				Role role = roleService.getDaoByName(userDto.getRoleName());
+//				user.setRole(role);
+//			}
 			
 			if (userDto.getToken() != null) {
 				user.setToken(userDto.getToken());
@@ -155,10 +154,10 @@ public class UserService {
 				user.setKidsClass(kidsClass);
 			}			
 			
-			if (newUserDto.getRoleName() != null) {
-				Role role = roleService.getDaoByName(newUserDto.getRoleName());
-				user.setRole(role);
-			}
+//			if (newUserDto.getRoleName() != null) {
+//				Role role = roleService.getDaoByName(newUserDto.getRoleName());
+//				user.setRole(role);
+//			}
 			
 			if (newUserDto.getPwd() != null) {
 				user.setPwd(newUserDto.getPwd());
@@ -212,14 +211,14 @@ public class UserService {
 	
 	public User updateUserProfil(User user, UserDto newUserProfil) {
 		
-		Role role = roleService.getDaoByName(newUserProfil.getRoleName());
+//		Role role = roleService.getDaoByName(newUserProfil.getRoleName());
 		String firstname = newUserProfil.getFirstname();
 		String name = newUserProfil.getName();
 		String email = newUserProfil.getEmail();
 		KidsClass kidsClass = kidsClassService.getByName(newUserProfil.getKidsClassName());
 		String token = newUserProfil.getToken();
 		
-		if (role != null) user.setRole(role);
+//		if (role != null) user.setRole(role);
 		if (firstname != null) user.setFirstname(firstname);
 		if (name != null) user.setName(name);
 		if (email != null && emailFormatCorrect(email)) user.setEmail(email);
@@ -283,9 +282,9 @@ public class UserService {
 		{	logger.info("missing_attributes");
 			return false; }
 		
-		else if ( roleService.getDaoByName( newUserDto.getRoleName() ) == null )
-		{	logger.info("role_doesnt_exist");
-			return false; }
+//		else if ( roleService.getDaoByName( newUserDto.getRoleName() ) == null )
+//		{	logger.info("role_doesnt_exist");
+//			return false; }
 		
 		return true;
 	}

@@ -1,5 +1,7 @@
 package com.alicegabbana.restserver.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +11,9 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class School {
+public class School implements Serializable {
+	
+	private static final long serialVersionUID = -3700516815475302277L;
 	
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_School")

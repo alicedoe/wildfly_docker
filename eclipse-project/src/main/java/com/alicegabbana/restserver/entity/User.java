@@ -1,20 +1,20 @@
 package com.alicegabbana.restserver.entity;
 
-import java.security.SecureRandom;
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class User {
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = 8718563851700245805L;
 	
 	@Id
 	@GeneratedValue (strategy= GenerationType.SEQUENCE, generator="SEQUENCE_User")

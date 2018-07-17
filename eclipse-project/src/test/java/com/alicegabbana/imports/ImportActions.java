@@ -42,7 +42,7 @@ public class ImportActions extends TestContextAbstract {
 		Action action = new Action();
 		for (String actionName : actionsNames) {
 			action.setName(actionName);			
-			actionService.test(action);
+			actionService.create(action);
 		}
 		
 	}

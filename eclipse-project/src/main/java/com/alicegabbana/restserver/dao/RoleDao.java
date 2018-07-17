@@ -11,7 +11,6 @@ import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.entity.Action;
 import com.alicegabbana.restserver.entity.Role;
-import com.alicegabbana.restserver.entity.User;
 
 @Stateless
 public class RoleDao {
@@ -20,6 +19,11 @@ public class RoleDao {
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
+	
+	public Role create (Role role) {
+		Role roleCreated = em.merge(role);
+		return roleCreated;
+	}
 
 	public Role getRoleById ( Long id ) {		
 		

@@ -1,11 +1,15 @@
 package com.alicegabbana.restserver.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Setting {
+public class Setting implements Serializable {
+	
+	private static final long serialVersionUID = 609054930976754370L;
 	
 	@Id
 	private String id;	

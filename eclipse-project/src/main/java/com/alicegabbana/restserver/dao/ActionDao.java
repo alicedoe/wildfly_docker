@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 import org.jboss.logging.Logger;
 
 import com.alicegabbana.restserver.entity.Action;
-import com.alicegabbana.restserver.entity.Role;
 
 @Stateless
 public class ActionDao {
@@ -19,6 +18,21 @@ public class ActionDao {
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
+	
+	public Action create (Action action) {
+		Action actionCreated = em.merge(action);
+		return actionCreated;
+	}
+	
+	public Action update (Action action) {
+		Action actionUpdated = em.merge(action);
+		return actionUpdated;
+	}
+	
+	public void delete( Long id) {		
+		Action action = em.find(Action.class, id);
+		em.remove(action);
+	}
 	
 	public Action getActionById (Long id) {
 		

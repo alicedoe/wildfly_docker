@@ -72,7 +72,7 @@ public class UserResponse {
 		
 		if ( roleDto.getId() == null ) return authService.returnResponse(400);
 		
-		if ( roleService.getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);		
+//		if ( roleService.getDaoByIdService(roleDto.getId()) == null ) return authService.returnResponse(404);		
 		
 		List<UserDto> userDtoList = userService.getWithRoleService(roleDto.getId());
 		
