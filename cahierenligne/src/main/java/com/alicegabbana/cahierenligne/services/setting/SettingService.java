@@ -4,7 +4,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.log4j.Logger;
+
 import com.alicegabbana.cahierenligne.entities.Setting;
+import com.alicegabbana.cahierenligne.services.action.ActionService;
 
 @Stateless
 public class SettingService implements SettingServiceLocal, SettingServiceRemote {
@@ -13,26 +16,33 @@ public class SettingService implements SettingServiceLocal, SettingServiceRemote
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
+	
+	Logger logger = Logger.getLogger(ActionService.class);
 
 	public Setting create( Setting setting ) {		
-		
-		if ( setting.getName() == null ) {
-			String message = "Id must be defined to create a setting : " + setting;
-			throw new IllegalArgumentException(message);
+		if (settingIsComplete(setting)) {
+			Setting loadedSetting = em.merge(setting);
+			return loadedSetting;
 		}
-		Setting loadedSetting = em.merge(setting);
-		return loadedSetting;
-		
+		logger.fatal("Setting is not complete : "+setting.toString());
+		throw new NullPointerException();		
 	}
 	
-	public Setting get(String name) {
-		try {
-			Setting setting = em.find(Setting.class, name);
-			return setting;
-		} catch (IllegalArgumentException e) {
-			System.out.println("Setting "+name+" does not exist");
-		}		
-		return null;
+	private Boolean settingIsComplete(Setting setting) {
+		if ( setting.getName() == null 
+				|| setting.getParam() == null ) {
+			return false;
+		}
+		return true;
+	}
+	
+	public Setting get(String name) {		
+		Setting setting = em.find(Setting.class, name);
+		if (setting == null) {
+			logger.fatal("Setting "+name+" Not found !");
+			throw new NullPointerException();		
+		}
+		return setting;
 	}
 
 }

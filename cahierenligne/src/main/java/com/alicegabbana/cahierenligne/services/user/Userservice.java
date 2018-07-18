@@ -5,6 +5,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.log4j.Logger;
+
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.setting.SettingServiceLocal;
 import com.alicegabbana.cahierenligne.services.utils.AuthServiceLocal;
@@ -26,22 +28,36 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
+	Logger logger = Logger.getLogger(Userservice.class);
+	
 	public User create(User user) {
 		String token = returnTokenUserByEmail(user.getEmail());
-		if (token == null) return null;
 		String hashPwd = hashPassword(user.getPwd());
 		user.setPwd(hashPwd);
 		user.setToken(token);
-		User usercreated = em.merge(user);
-		return usercreated;
+		if (userIsComplete(user)) {
+			User usercreated = em.merge(user);
+			return usercreated;
+		}
+		logger.fatal("User is not complete : "+user.toString());
+		throw new NullPointerException();
 	}
 	
-	public String hashPassword(String password) {		
-		System.out.println("password : "+password);
+	private Boolean userIsComplete(User user) {
+		if ( user.getRole() == null 
+				|| user.getName() == null 
+				|| user.getFirstname() == null 
+				|| user.getEmail() == null
+				|| user.getToken() == null 
+				|| user.getPwd() == null ) {
+			return false;
+		}
+		return true;
+	}
+	
+	public String hashPassword(String password) {
         String salt = getSalt();
-        System.out.println("salt : "+salt);
         String mySecurePassword = PasswordUtils.generateSecurePassword(password, salt);
-        System.out.println("mysecure : "+mySecurePassword);
 		return mySecurePassword;
 	}
 	

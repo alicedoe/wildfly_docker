@@ -4,6 +4,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.log4j.Logger;
+
 import com.alicegabbana.cahierenligne.entities.Role;
 
 @Stateless
@@ -14,19 +16,25 @@ public class RoleService implements RoleServiceRemote {
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
+	Logger logger = Logger.getLogger(RoleService.class);
+	
 	public Role create (Role role) {
-		Role roleCreated = em.merge(role);
-		return roleCreated;
+		if ( get(role.getName()) != null ) {
+			logger.info("Role "+role.toString()+" already exist !");
+			return role;
+		} else {
+			Role roleCreated = em.merge(role);
+			return roleCreated;
+		}
 	}
 	
 	public Role get(String name) {
-		try {
-			Role role = em.find(Role.class, name);
-			return role;
-		} catch (IllegalArgumentException e) {
-			System.out.println("Role "+name+" does not exist");
-		}		
-		return null;
+		Role role = em.find(Role.class, name);
+		if (role == null) {
+			logger.fatal("Role "+name+" Not found !");
+			throw new NullPointerException();		
+		}
+		return role;
 	}
 
 //	@EJB

@@ -11,8 +11,6 @@ import com.alicegabbana.cahierenligne.entities.Action;
 public interface ActionServiceRemote extends Serializable {
 
 	Action create(Action action);
-	Action updateService( Action action );
-	void deleteService( Long id);
-	Action getAction (String name);
+	Action get (String name);
 	
 }

@@ -1,9 +1,7 @@
 package com.alicegabbana.imports;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.junit.Test;
 
@@ -57,7 +55,7 @@ public class ImportActions extends TestContextAbstract {
 		Role role = new Role();
 		List<Action> actions = new ArrayList<Action>();
 		for (String actionName : actionsNames) {			
-			Action action = actionService.getAction(actionName);
+			Action action = actionService.get(actionName);
 			actions.add(action);
 		}
 		role.setName("admin");
