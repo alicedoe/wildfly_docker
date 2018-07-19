@@ -12,8 +12,8 @@ import com.alicegabbana.cahierenligne.services.action.ActionService;
 @Stateless
 public class SettingService implements SettingServiceLocal, SettingServiceRemote {
 
-	private static final long serialVersionUID = 166347038186308495L;
-	
+	private static final long serialVersionUID = -6244705257010130363L;
+
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	

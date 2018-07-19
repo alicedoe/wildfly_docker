@@ -1,6 +1,5 @@
 package com.alicegabbana.cahierenligne.services.action;
 
-
 import java.io.Serializable;
 
 import javax.ejb.Remote;

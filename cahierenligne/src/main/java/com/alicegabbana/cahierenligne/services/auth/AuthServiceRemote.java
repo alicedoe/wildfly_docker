@@ -1,4 +1,4 @@
-package com.alicegabbana.cahierenligne.services.utils;
+package com.alicegabbana.cahierenligne.services.auth;
 
 import java.io.Serializable;
 
