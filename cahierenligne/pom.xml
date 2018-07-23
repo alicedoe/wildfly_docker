@@ -26,19 +26,18 @@
 	</properties>
 
 	<dependencies>		
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>1.6</version>
+		</dependency>
 		<!-- Used by Test to manage entity -->
 		<dependency>
 		   <groupId>org.hibernate</groupId>
 		   <artifactId>hibernate-search-orm</artifactId>
 		   <scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
-		<dependency>
-		    <groupId>commons-validator</groupId>
-		    <artifactId>commons-validator</artifactId>
-		    <version>1.4.0</version>
-		    <scope>provided</scope>
-		</dependency>	
 		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
 		<dependency>
 		    <groupId>joda-time</groupId>

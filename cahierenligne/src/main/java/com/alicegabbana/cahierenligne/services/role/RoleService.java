@@ -31,8 +31,7 @@ public class RoleService implements RoleServiceRemote {
 	public Role get(String name) {
 		Role role = em.find(Role.class, name);
 		if (role == null) {
-			logger.fatal("Role "+name+" Not found !");
-			throw new NullPointerException();		
+			logger.info("Role "+name+" Not found !");	
 		}
 		return role;
 	}

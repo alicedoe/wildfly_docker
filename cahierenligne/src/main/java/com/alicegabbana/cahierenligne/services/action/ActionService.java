@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import com.alicegabbana.cahierenligne.entities.Action;
 
 @Stateless
-public class ActionService implements ActionServiceRemote {
+public class ActionService implements ActionServiceRemote, ActionServiceLocal {
 	
 	private static final long serialVersionUID = -2666467701541680725L;
 	
@@ -31,8 +31,7 @@ public class ActionService implements ActionServiceRemote {
 	public Action get(String name) {
 		Action action = em.find(Action.class, name);
 		if (action == null) {
-			logger.fatal("Action "+name+" Not found !");
-			throw new NullPointerException();		
+			logger.info("Action "+name+" Not found !");	
 		}
 		return action;
 	}
