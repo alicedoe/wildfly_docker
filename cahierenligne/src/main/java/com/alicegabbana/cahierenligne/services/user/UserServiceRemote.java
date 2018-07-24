@@ -9,5 +9,5 @@ import com.alicegabbana.cahierenligne.entities.User;
 @Remote
 public interface UserServiceRemote extends Serializable {
 
-	User create(User user);
+	User create(User user)  throws UserException;
 }

@@ -45,6 +45,7 @@
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/endpoints/RoleEndpoint.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/entities/Subject.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/entities/Town.java
+/home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/user/UserException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/utils/PasswordUtils.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/role/RoleServiceLocal.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/homework/HomeworkServiceRemote.java

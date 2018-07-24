@@ -9,6 +9,7 @@ import com.alicegabbana.cahierenligne.entities.Action;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.Setting;
 import com.alicegabbana.cahierenligne.entities.User;
+import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.alicegabbana.testcontext.TestContextAbstract;
 
 public class ImportActions extends TestContextAbstract {
@@ -90,7 +91,11 @@ public class ImportActions extends TestContextAbstract {
 		adminUser.setRole(adminRole);
 		adminUser.setName("nom admin");
 		adminUser.setPwd("password");
-		userService.create(adminUser);
+		try {
+			userService.create(adminUser);
+		} catch (UserException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
