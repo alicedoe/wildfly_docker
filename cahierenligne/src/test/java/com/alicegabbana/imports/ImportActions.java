@@ -9,6 +9,7 @@ import com.alicegabbana.cahierenligne.entities.Action;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.Setting;
 import com.alicegabbana.cahierenligne.entities.User;
+import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.alicegabbana.testcontext.TestContextAbstract;
 
@@ -61,7 +62,12 @@ public class ImportActions extends TestContextAbstract {
 		}
 		role.setName("admin");
 		role.setActions(actions);
-		roleService.create(role);
+		try {
+			roleService.create(role);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@Test
@@ -84,18 +90,22 @@ public class ImportActions extends TestContextAbstract {
 	@Test
 	public void user_040_createAdminUser()  {
 		Role adminRole = new Role();
-		adminRole = roleService.get("admin");
-		User adminUser = new User();
-		adminUser.setFirstname("prenom admin");
-		adminUser.setEmail("admin@admin.com");
-		adminUser.setRole(adminRole);
-		adminUser.setName("nom admin");
-		adminUser.setPwd("password");
 		try {
-			userService.create(adminUser);
-		} catch (UserException e) {
+			adminRole = roleService.get("admin");
+			User adminUser = new User();
+			adminUser.setFirstname("prenom admin");
+			adminUser.setEmail("admin@admin.com");
+			adminUser.setRole(adminRole);
+			adminUser.setName("nom admin");
+			adminUser.setPwd("password");
+			try {
+				userService.create(adminUser);
+			} catch (UserException e) {
+				e.printStackTrace();
+			}
+		} catch (RoleException e) {
 			e.printStackTrace();
-		}
+		}		
 	}
 
 }

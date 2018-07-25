@@ -11,9 +11,14 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.log4j.Logger;
 
+import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
+import com.alicegabbana.cahierenligne.entities.KidsClass;
+import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
+import com.alicegabbana.cahierenligne.services.kidsclass.KidsclassServiceLocal;
+import com.alicegabbana.cahierenligne.services.role.RoleServiceLocal;
 import com.alicegabbana.cahierenligne.services.setting.SettingServiceLocal;
 import com.alicegabbana.cahierenligne.services.utils.PasswordUtils;
 import com.nimbusds.jose.JOSEException;
@@ -31,6 +36,12 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	
 	@EJB
 	SettingServiceLocal settingService;
+	
+	@EJB
+	KidsclassServiceLocal kidsclassServiceLocal;
+	
+	@EJB
+	RoleServiceLocal roleServiceLocal;
 
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
@@ -82,23 +93,60 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		user.setPwd(hashPwd);
 		user.setToken(token);
 		
-		if ( getByEmail(user.getEmail()) != null ) {
-			throw new UserException ("Two account found with same email" + user.getEmail());
-		}
-		
 		try {
 			userIsComplete(user);
 		} catch (UserException e) {
 			throw new UserException ("User "+user.toString()+" incomplete !");
 		}
 		
-		if ( emailIsNew(user.getEmail()) ) {
-			
+		try {
+			emailAvailable(user.getEmail());
 			User usercreated = em.merge(user);
 			return usercreated;
-		} else {
-			throw new UserException ("Email "+user.getEmail()+" already exist !");
+		} catch (UserException e) {
+			throw new UserException(e.getMessage());
 		}
+		
+	}
+	
+	public UserDto create(NewUserDto newUserDto) throws UserException {
+		
+		try {
+			newUserIsCorrect(newUserDto);
+			String token = returnTokenUserByEmail(newUserDto.getEmail());
+			String hashPwd = hashPassword(newUserDto.getPwd());
+			User user = dtoToDao(newUserDto);
+			user.setPwd(hashPwd);
+			user.setToken(token);
+			User usercreated = em.merge(user);
+			UserDto userDto = daoToDto(usercreated);
+			return userDto;
+		} catch (Exception e) {
+			throw new UserException(e.getMessage());
+		}
+		
+	}
+	
+	private Boolean newUserIsCorrect(NewUserDto newUserDto) throws UserException {
+		if ( newUserDto.getRoleName() == null 
+				|| newUserDto.getName() == null 
+				|| newUserDto.getFirstname() == null 
+				|| newUserDto.getEmail() == null
+				|| newUserDto.getPwd() == null ) {
+			throw new UserException ("User "+newUserDto.toString()+" incomplete !");
+		}
+		
+		try {
+			roleServiceLocal.get(newUserDto.getRoleName());
+			try {
+				emailAvailable(newUserDto.getEmail());
+				return true;
+			} catch (UserException e) {
+				throw new UserException(e.getMessage());
+			}
+		} catch (Exception e) {
+			throw new UserException(e.getMessage());
+		}	
 		
 	}
 	
@@ -114,19 +162,10 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return true;
 	}
 	
-	private Boolean emailIsNew(String email) {		
-		
-		System.out.println("begin");
-		
-		try {
-			getByEmail(email);
-			System.out.println("test");
-			return false;
-		} catch (UserException e) {
-			System.out.println("test2");
-		}
-		System.out.println("test3");
-		return true;
+	private Boolean emailAvailable(String email) throws UserException {		
+		if ( getByEmail(email) == null)
+			return true;
+		else throw new UserException("Email "+email+" is not available");
 	}
 	
 	private String hashPassword(String password) {
@@ -171,7 +210,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return EmailValidator.getInstance().isValid(email);
 	}
 	
-	public User getByEmail ( String email ) throws UserException {		
+	public User getByEmail ( String email ) {		
 		
 		TypedQuery<User> query_email = em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
 				.setParameter("email", email);
@@ -179,10 +218,9 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 		if ( loadedUsers.size() != 0 ) {
 			return loadedUsers.get(0);
-		} else {
-			throw new UserException("Email "+email+" doesn't exist");
-		}		
+		} 
 		
+		return null;
 	}
 
 	public boolean isPasswordCorrect(String email, String password) {
@@ -201,7 +239,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return false;
 	}
 	
-	public UserDto daoToDto(User user) {
+	private UserDto daoToDto(User user) {
 		
 		UserDto userDto = new UserDto();
 		if (user != null) {
@@ -216,4 +254,28 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 
 		return userDto;
 	}
+	
+	private User dtoToDao(NewUserDto newUserDto) throws UserException {
+		
+		User user = new User();
+		
+		user.setEmail(newUserDto.getEmail());
+		
+		if (newUserDto.getKidsClassName() != null) {
+			KidsClass kidsClass = kidsclassServiceLocal.getByName(newUserDto.getKidsClassName());
+			user.setKidsClass(kidsClass);
+		}
+			
+		user.setName(newUserDto.getName());
+		user.setFirstname(newUserDto.getFirstname());
+		
+		try {
+			Role role = roleServiceLocal.get(newUserDto.getRoleName());
+			user.setRole(role);
+			return user;
+		} catch (Exception e) {
+			throw new UserException(e.getMessage());
+		}
+	}
+	
 }

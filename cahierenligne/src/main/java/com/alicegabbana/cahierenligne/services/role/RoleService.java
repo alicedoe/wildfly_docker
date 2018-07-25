@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import com.alicegabbana.cahierenligne.entities.Role;
 
 @Stateless
-public class RoleService implements RoleServiceRemote {
+public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 	
 	private static final long serialVersionUID = -7710388624873133691L;
 	
@@ -18,20 +18,20 @@ public class RoleService implements RoleServiceRemote {
 	
 	Logger logger = Logger.getLogger(RoleService.class);
 	
-	public Role create (Role role) {
-		if ( get(role.getName()) != null ) {
-			logger.info("Role "+role.toString()+" already exist !");
-			return role;
-		} else {
+	public Role create (Role role) throws RoleException {		
+		try {
+			get(role.getName());
+			throw new RoleException("Role already created !");
+		} catch (Exception e) {
 			Role roleCreated = em.merge(role);
 			return roleCreated;
 		}
 	}
 	
-	public Role get(String name) {
+	public Role get(String name) throws RoleException {
 		Role role = em.find(Role.class, name);
 		if (role == null) {
-			logger.info("Role "+name+" Not found !");	
+			throw new RoleException("Role does not exist !");
 		}
 		return role;
 	}

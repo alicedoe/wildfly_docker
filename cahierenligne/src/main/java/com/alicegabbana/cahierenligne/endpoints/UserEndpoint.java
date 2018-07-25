@@ -7,7 +7,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.services.user.UserResponse;
+import com.alicegabbana.cahierenligne.services.utils.Actions;
 
 import net.minidev.json.JSONObject;
 
@@ -24,5 +26,15 @@ public class UserEndpoint {
 	public Response login(JSONObject body) {
 		Response loginService = userResponse.login( body );
 		return loginService;
+	}
+	
+	@POST
+	@Actions({"create user"})
+	@Path("/add")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addUser(NewUserDto newUserDto) {
+		Response addUserServiceResponse = userResponse.create( newUserDto );
+		return addUserServiceResponse;
 	}
 }

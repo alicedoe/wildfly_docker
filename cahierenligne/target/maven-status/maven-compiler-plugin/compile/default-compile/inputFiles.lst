@@ -11,6 +11,7 @@
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/action/ActionService.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/entities/User.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/role/RoleServiceRemote.java
+/home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/dto/NewUserDto.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/user/UserServiceLocal.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolServiceRemote.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/entities/Action.java
@@ -29,6 +30,7 @@
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/level/LevelServiceRemote.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/tag/TagServiceLocal.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/endpoints/SchoolEndpoint.java
+/home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/role/RoleException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolService.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolServiceLocal.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/endpoints/TagEndpoint.java

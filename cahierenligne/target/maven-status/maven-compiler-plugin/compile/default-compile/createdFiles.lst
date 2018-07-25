@@ -54,6 +54,7 @@ com/alicegabbana/cahierenligne/services/level/LevelServiceLocal.class
 com/alicegabbana/cahierenligne/services/role/RoleServiceLocal.class
 com/alicegabbana/cahierenligne/services/action/ActionServiceRemote.class
 com/alicegabbana/cahierenligne/services/homework/HomeworkServiceRemote.class
+com/alicegabbana/cahierenligne/services/user/UserException.class
 com/alicegabbana/cahierenligne/services/auth/AuthServiceRemote.class
 com/alicegabbana/cahierenligne/endpoints/TagEndpoint.class
 com/alicegabbana/cahierenligne/endpoints/UserEndpoint.class
