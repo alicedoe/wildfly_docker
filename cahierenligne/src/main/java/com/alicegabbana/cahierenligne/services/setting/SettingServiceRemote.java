@@ -8,5 +8,5 @@ import com.alicegabbana.cahierenligne.entities.Setting;
 
 @Remote
 public interface SettingServiceRemote extends Serializable {
-	Setting create( Setting setting );
+	Setting create( Setting setting ) throws SettingException;
 }

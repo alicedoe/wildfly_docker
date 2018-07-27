@@ -17,7 +17,7 @@ public class KidsclassService implements KidsclassServiceLocal, KidsclassService
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
 	
-	public KidsClass getByName ( String name ) {		
+	public KidsClass getByName ( String name ) throws KidsclassException {		
 		
 		TypedQuery<KidsClass> query_name = em.createQuery("SELECT kidsClass FROM KidsClass kidsClass WHERE kidsClass.name = :name", KidsClass.class)
 				.setParameter("name", name);
@@ -27,7 +27,7 @@ public class KidsclassService implements KidsclassServiceLocal, KidsclassService
 			return loadedKidsClass.get(0);
 		} 
 		
-		return null;
+		throw new KidsclassException("Kidsclass "+name+" does not exist !");
 	}
 
 }

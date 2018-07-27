@@ -18,20 +18,21 @@ public class ActionService implements ActionServiceRemote, ActionServiceLocal {
 	
 	Logger logger = Logger.getLogger(ActionService.class);
 
-	public Action create( Action action ) {		
-		if ( get(action.getName()) != null ) {
-			logger.info("Action "+action.toString()+" already exist !");
-			return action;
-		} else {
+	public Action create( Action action ) {
+		
+		try {
+			get(action.getName());
+			throw new ActionException("Action "+action.toString()+" already exist !");
+		} catch (Exception e) {
 			Action actionCreated = em.merge(action);
 			return actionCreated;
 		}
 	}
 	
-	public Action get(String name) {
+	public Action get(String name) throws ActionException {
 		Action action = em.find(Action.class, name);
 		if (action == null) {
-			logger.info("Action "+name+" Not found !");	
+			throw new ActionException("Action "+name+" does not exist !");
 		}
 		return action;
 	}

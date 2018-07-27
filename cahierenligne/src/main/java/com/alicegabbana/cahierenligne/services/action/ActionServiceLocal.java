@@ -7,5 +7,5 @@ import com.alicegabbana.cahierenligne.entities.Action;
 @Local
 public interface ActionServiceLocal {
 
-	Action get(String name);
+	Action get(String name) throws ActionException;
 }

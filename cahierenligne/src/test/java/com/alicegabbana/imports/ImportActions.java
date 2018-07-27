@@ -3,17 +3,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import com.alicegabbana.cahierenligne.entities.Action;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.Setting;
 import com.alicegabbana.cahierenligne.entities.User;
+import com.alicegabbana.cahierenligne.services.action.ActionException;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
+import com.alicegabbana.cahierenligne.services.setting.SettingException;
 import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.alicegabbana.testcontext.TestContextAbstract;
 
 public class ImportActions extends TestContextAbstract {
+	
+	Logger logger = Logger.getLogger(ImportActions.class);
 	
 	List<String> actionsNames = Arrays.asList(
 			"create level", 
@@ -56,16 +61,20 @@ public class ImportActions extends TestContextAbstract {
 	public void user_020_createAdminRole()  {
 		Role role = new Role();
 		List<Action> actions = new ArrayList<Action>();
-		for (String actionName : actionsNames) {			
-			Action action = actionService.get(actionName);
-			actions.add(action);
+		for (String actionName : actionsNames) {		
+			try {
+				Action action = actionService.get(actionName);
+				actions.add(action);
+			} catch (ActionException e) {
+				logger.error(e.getMessage());
+			}						
 		}
 		role.setName("admin");
 		role.setActions(actions);
 		try {
 			roleService.create(role);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 	}
@@ -75,20 +84,32 @@ public class ImportActions extends TestContextAbstract {
 		Setting setting = new Setting();
 		setting.setName("TOKEN_EXP");
 		setting.setParam("1500");
-		settingService.create(setting);
+		try {
+			settingService.create(setting);
+		} catch (SettingException e) {
+			logger.error(e.getMessage());
+		}		
 		
 		setting.setName("API_KEY");
 		setting.setParam("20e9b1b2-e17f-4667-8656-9899aafedbda");
-		settingService.create(setting);
+		try {
+			settingService.create(setting);
+		} catch (SettingException e) {
+			logger.error(e.getMessage());
+		}
 		
 		setting.setName("PASS_SALT");
 		setting.setParam("9899aafedbda");
-		settingService.create(setting);
+		try {
+			settingService.create(setting);
+		} catch (SettingException e) {
+			logger.error(e.getMessage());
+		}
 		
 	}
 	
 	@Test
-	public void user_040_createAdminUser()  {
+	public void user_040_createAdminUser() throws SettingException  {
 		Role adminRole = new Role();
 		try {
 			adminRole = roleService.get("admin");
@@ -104,7 +125,7 @@ public class ImportActions extends TestContextAbstract {
 				e.printStackTrace();
 			}
 		} catch (RoleException e) {
-			e.printStackTrace();
+//			logger.error("Role does not exist !");
 		}		
 	}
 

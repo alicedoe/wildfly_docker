@@ -10,6 +10,6 @@ import com.alicegabbana.cahierenligne.entities.Action;
 public interface ActionServiceRemote extends Serializable {
 
 	Action create(Action action);
-	Action get (String name);
+	Action get (String name) throws ActionException;
 	
 }

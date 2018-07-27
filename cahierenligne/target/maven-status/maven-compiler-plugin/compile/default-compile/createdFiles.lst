@@ -4,6 +4,8 @@ com/alicegabbana/cahierenligne/services/utils/PasswordUtils.class
 com/alicegabbana/cahierenligne/services/homework/HomeworkService.class
 com/alicegabbana/cahierenligne/services/school/SchoolServiceLocal.class
 com/alicegabbana/cahierenligne/endpoints/RoleEndpoint.class
+com/alicegabbana/cahierenligne/services/kidsclass/KidsclassException.class
+com/alicegabbana/cahierenligne/services/town/TownResponse.class
 com/alicegabbana/cahierenligne/services/user/UserServiceRemote.class
 com/alicegabbana/cahierenligne/endpoints/TownEndpoint.class
 com/alicegabbana/cahierenligne/endpoints/SchoolEndpoint.class
@@ -14,6 +16,7 @@ com/alicegabbana/cahierenligne/services/utils/Actions.class
 com/alicegabbana/cahierenligne/entities/Action.class
 com/alicegabbana/cahierenligne/entities/Role.class
 com/alicegabbana/cahierenligne/services/role/RoleServiceRemote.class
+com/alicegabbana/cahierenligne/dto/NewUserDto.class
 com/alicegabbana/cahierenligne/services/homework/HomeworkServiceLocal.class
 com/alicegabbana/cahierenligne/services/auth/AuthService.class
 com/alicegabbana/cahierenligne/services/auth/AuthServiceLocal.class
@@ -33,6 +36,7 @@ com/alicegabbana/cahierenligne/services/school/SchoolServiceRemote.class
 com/alicegabbana/cahierenligne/endpoints/KidsClassEndpoint.class
 com/alicegabbana/cahierenligne/services/kidsclass/KidsclassServiceRemote.class
 com/alicegabbana/cahierenligne/services/kidsclass/KidsclassServiceLocal.class
+com/alicegabbana/cahierenligne/services/role/RoleException.class
 com/alicegabbana/cahierenligne/services/user/UserServiceLocal.class
 com/alicegabbana/cahierenligne/entities/Setting.class
 com/alicegabbana/cahierenligne/entities/Level.class
@@ -52,11 +56,14 @@ com/alicegabbana/cahierenligne/services/setting/SettingServiceRemote.class
 com/alicegabbana/cahierenligne/services/utils/AuthorizationFilter.class
 com/alicegabbana/cahierenligne/services/level/LevelServiceLocal.class
 com/alicegabbana/cahierenligne/services/role/RoleServiceLocal.class
+com/alicegabbana/cahierenligne/services/town/TownException.class
 com/alicegabbana/cahierenligne/services/action/ActionServiceRemote.class
+com/alicegabbana/cahierenligne/services/setting/SettingException.class
 com/alicegabbana/cahierenligne/services/homework/HomeworkServiceRemote.class
 com/alicegabbana/cahierenligne/services/user/UserException.class
 com/alicegabbana/cahierenligne/services/auth/AuthServiceRemote.class
 com/alicegabbana/cahierenligne/endpoints/TagEndpoint.class
 com/alicegabbana/cahierenligne/endpoints/UserEndpoint.class
+com/alicegabbana/cahierenligne/services/action/ActionException.class
 com/alicegabbana/cahierenligne/services/auth/AuthService$1.class
 com/alicegabbana/cahierenligne/services/utils/CorsFilter.class

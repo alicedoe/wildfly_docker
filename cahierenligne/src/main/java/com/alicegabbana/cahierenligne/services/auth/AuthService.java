@@ -16,7 +16,9 @@ import org.joda.time.Period;
 
 import com.alicegabbana.cahierenligne.entities.Action;
 import com.alicegabbana.cahierenligne.entities.User;
+import com.alicegabbana.cahierenligne.services.action.ActionException;
 import com.alicegabbana.cahierenligne.services.action.ActionServiceLocal;
+import com.alicegabbana.cahierenligne.services.setting.SettingException;
 import com.alicegabbana.cahierenligne.services.setting.SettingServiceLocal;
 import com.alicegabbana.cahierenligne.services.user.UserServiceLocal;
 import com.nimbusds.jose.JOSEException;
@@ -47,26 +49,31 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 	
 	boolean userIsGranted;
 
-	public String createAndReturnToken(String email) throws KeyLengthException, JOSEException {
-		int tokenDelay = Integer.parseInt(settingService.get("TOKEN_EXP").getParam());
-		String api_key = settingService.get("API_KEY").getParam();
-		LocalDate currentDate = new LocalDate();
-		LocalDate expiration = currentDate.plus(Period.days(tokenDelay));
+	public String createAndReturnToken(String email) throws KeyLengthException, JOSEException, SettingException {
 		
+		try {
+			int tokenDelay = Integer.parseInt(settingService.get("TOKEN_EXP").getParam());
+			String api_key = settingService.get("API_KEY").getParam();
+			LocalDate currentDate = new LocalDate();
+			LocalDate expiration = currentDate.plus(Period.days(tokenDelay));
+			
 
-		JWSSigner signer;
+			JWSSigner signer;
 
-		JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-		    .subject(email)
-		    .expirationTime(expiration.toDate())
-		    .build();
+			JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+			    .subject(email)
+			    .expirationTime(expiration.toDate())
+			    .build();
 
-		SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+			SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
 
-		signer = new MACSigner(api_key);
-		signedJWT.sign(signer);
-		
-		return signedJWT.serialize();
+			signer = new MACSigner(api_key);
+			signedJWT.sign(signer);
+			
+			return signedJWT.serialize();
+		} catch (Exception e) {
+			throw new SettingException(e.getMessage());
+		}		
 		
 	}
 	
@@ -76,10 +83,14 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 		
 		actions.forEach(new Consumer<String>() {
 			public void accept(String actionName) {
-				Action action = actionService.get(actionName);
-				if ( !userHasThisAction(currentUserToken, action) ) {
-					userIsGranted = false;
-				} else userIsGranted = true;
+				try {
+					Action action = actionService.get(actionName);
+					if ( !userHasThisAction(currentUserToken, action) ) {
+						userIsGranted = false;
+					} else userIsGranted = true;
+				} catch (ActionException e) {
+					e.printStackTrace();
+				}				
 			}
 		});
 		return userIsGranted;

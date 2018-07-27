@@ -19,13 +19,12 @@ public class SettingService implements SettingServiceLocal, SettingServiceRemote
 	
 	Logger logger = Logger.getLogger(ActionService.class);
 
-	public Setting create( Setting setting ) {		
+	public Setting create( Setting setting ) throws SettingException {		
 		if (settingIsComplete(setting)) {
 			Setting loadedSetting = em.merge(setting);
 			return loadedSetting;
 		}
-		logger.fatal("Setting is not complete : "+setting.toString());
-		throw new NullPointerException();		
+		throw new SettingException("Setting is not complete : "+setting.toString());	
 	}
 	
 	private Boolean settingIsComplete(Setting setting) {
@@ -36,11 +35,10 @@ public class SettingService implements SettingServiceLocal, SettingServiceRemote
 		return true;
 	}
 	
-	public Setting get(String name) {		
+	public Setting get(String name) throws SettingException {		
 		Setting setting = em.find(Setting.class, name);
 		if (setting == null) {
-			logger.fatal("Setting "+name+" Not found !");
-			throw new NullPointerException();		
+			throw new SettingException("Setting "+name+" Not found !");	
 		}
 		return setting;
 	}

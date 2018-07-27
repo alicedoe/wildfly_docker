@@ -5,5 +5,5 @@ import com.alicegabbana.cahierenligne.entities.KidsClass;
 
 @Local
 public interface KidsclassServiceLocal {
-	KidsClass getByName ( String name );
+	KidsClass getByName ( String name ) throws KidsclassException;
 }

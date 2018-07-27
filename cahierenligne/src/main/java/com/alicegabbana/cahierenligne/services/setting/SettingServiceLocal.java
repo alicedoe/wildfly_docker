@@ -7,5 +7,5 @@ import com.alicegabbana.cahierenligne.entities.Setting;
 @Local
 public interface SettingServiceLocal {
 
-	Setting get(String name);
+	Setting get(String name) throws SettingException;
 }
