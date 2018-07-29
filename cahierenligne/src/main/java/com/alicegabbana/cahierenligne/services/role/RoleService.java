@@ -31,7 +31,7 @@ public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 	public Role get(String name) throws RoleException {
 		Role role = em.find(Role.class, name);
 		if (role == null) {
-			throw new RoleException("Role does not exist !");
+			throw new RoleException("Role "+name+" does not exist !");
 		}
 		return role;
 	}

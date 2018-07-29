@@ -24,7 +24,7 @@ public class SettingService implements SettingServiceLocal, SettingServiceRemote
 			Setting loadedSetting = em.merge(setting);
 			return loadedSetting;
 		}
-		throw new SettingException("Setting is not complete : "+setting.toString());	
+		throw new SettingException(SettingException.BAD_REQUEST, "Setting is not complete : "+setting.toString());	
 	}
 	
 	private Boolean settingIsComplete(Setting setting) {
@@ -38,7 +38,7 @@ public class SettingService implements SettingServiceLocal, SettingServiceRemote
 	public Setting get(String name) throws SettingException {		
 		Setting setting = em.find(Setting.class, name);
 		if (setting == null) {
-			throw new SettingException("Setting "+name+" Not found !");	
+			throw new SettingException(SettingException.NOT_FOUND, "Setting "+name+" Not found !");	
 		}
 		return setting;
 	}

@@ -19,7 +19,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 
 	public Town create(String name) throws TownException {
 		if ( nameExist(name) ) {
-			throw new TownException("Town "+name+" already exist !");
+			throw new TownException(409);
 		}
 		Town newTown = new Town();
 		newTown.setName(name);
@@ -36,7 +36,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 		if ( loadedTowns.size() != 0 ) {
 			return loadedTowns.get(0);
 		}
-		throw new TownException("Town "+id+" does not exist !");
+		throw new TownException(404);
 	}
 	
 	private boolean nameExist(String name) {
@@ -57,7 +57,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 		if ( loadedTowns.size() != 0 ) {
 			return loadedTowns.get(0);
 		}
-		throw new TownException("Town "+name+" does not exist !");
+		throw new TownException(404);
 	}
 	
 	public void delete(Long id) throws TownException {
@@ -65,7 +65,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 			Town town = get(id);
 			em.remove(town);
 		} catch (TownException e) {
-			throw new TownException("Town "+id+" does not exist !");
+			throw new TownException(404);
 		}		
 	}
 	
@@ -83,7 +83,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 			Town updatedTown = em.merge(town);
 			return updatedTown;			
 		} catch (TownException e) {
-			throw new TownException("Town "+town.getId()+" does not exist !");
+			throw new TownException(404);
 		}
 	}
 }

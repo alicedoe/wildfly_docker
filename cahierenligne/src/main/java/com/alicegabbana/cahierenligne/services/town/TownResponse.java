@@ -19,9 +19,9 @@ public class TownResponse {
 	public Response create(String name) {		
 		try {
 			Town townCreated = townService.create(name);
-			return authService.returnResponseWithEntity(200, townCreated);
+			return authService.returnResponse(200, townCreated);
 		} catch (TownException e) {
-			return authService.returnResponse(409);
+			return authService.returnResponse(e.code);
 		}		
 	}
 	
@@ -30,20 +30,28 @@ public class TownResponse {
 			townService.delete(id);
 			return authService.returnResponse(200);
 		} catch (TownException e) {
-			return authService.returnResponse(404);
+			return authService.returnResponse(e.code);
 		}		
 	}
 	
 	public Response update(Town town) {		
 		try {
 			Town updatedTown = townService.update(town);
-			return authService.returnResponseWithEntity(200, updatedTown);
-		} catch (TownException e) {
-			return authService.returnResponse(400);
+			return authService.returnResponse(200, updatedTown);
+		} catch (TownException e) {			
+			return authService.returnResponse(e.code);
 		}		
 	}
 	
 	public Response getAll() {
-		return authService.returnResponseWithEntity(200, townService.getAllTowns());
+		return authService.returnResponse(200, townService.getAllTowns());
+	}
+	
+	public Response get(Long id) {
+		try {
+			return authService.returnResponse(200, townService.get(id));
+		} catch (TownException e) {
+			return authService.returnResponse(404);
+		}
 	}
 }

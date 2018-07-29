@@ -12,5 +12,5 @@ public interface TownServiceLocal {
 	void delete(Long id) throws TownException;
 	List<Town> getAllTowns ();
 	Town update(Town town) throws TownException;
-
+	Town get (Long id) throws TownException;
 }

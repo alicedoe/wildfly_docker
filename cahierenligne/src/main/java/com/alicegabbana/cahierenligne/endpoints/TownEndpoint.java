@@ -63,5 +63,14 @@ public class TownEndpoint {
 		Response response = townResponse.getAll();
 		return response;
 	}
+	
+	@GET
+	@Path("/get")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response get(Town town) {		
+		Response response = townResponse.get(town.getId());
+		return response;
+	}
 
 }

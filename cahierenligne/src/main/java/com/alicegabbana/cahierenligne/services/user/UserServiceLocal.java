@@ -13,5 +13,5 @@ import net.minidev.json.JSONObject;
 public interface UserServiceLocal {
 	UserDto login (JSONObject body) throws UserException, SettingException;
 	UserDto create(NewUserDto newUserDto) throws UserException;
-	User getByToken (String token);
+	User getByToken (String token) throws UserException;
 }

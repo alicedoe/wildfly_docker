@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
@@ -20,6 +21,7 @@ import com.alicegabbana.cahierenligne.services.action.ActionException;
 import com.alicegabbana.cahierenligne.services.action.ActionServiceLocal;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 import com.alicegabbana.cahierenligne.services.setting.SettingServiceLocal;
+import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.alicegabbana.cahierenligne.services.user.UserServiceLocal;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -48,6 +50,8 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 	EntityManager em;
 	
 	boolean userIsGranted;
+	
+	Logger logger = Logger.getLogger(AuthService.class);
 
 	public String createAndReturnToken(String email) throws KeyLengthException, JOSEException, SettingException {
 		
@@ -71,46 +75,52 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 			signedJWT.sign(signer);
 			
 			return signedJWT.serialize();
-		} catch (Exception e) {
-			throw new SettingException(e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode());
 		}		
 		
 	}
 	
-	public boolean userHasActionList (String token, List<String> actions) {		
+	public boolean userHasActionList (String token, List<String> actions) throws UserException, ActionException {		
 
 		final String currentUserToken = token;
 		
 		actions.forEach(new Consumer<String>() {
-			public void accept(String actionName) {
-				try {
-					Action action = actionService.get(actionName);
-					if ( !userHasThisAction(currentUserToken, action) ) {
+			public void accept(String actionName) {					
+					try {
+						Action action;
+						action = actionService.get(actionName);
+						try {
+							if ( !userHasThisAction(currentUserToken, action) ) {
+								userIsGranted = false;
+							} else userIsGranted = true;
+						} catch (UserException e) {
+							userIsGranted = false;
+						}
+					} catch (ActionException e1) {
 						userIsGranted = false;
-					} else userIsGranted = true;
-				} catch (ActionException e) {
-					e.printStackTrace();
-				}				
+					}			
 			}
 		});
 		return userIsGranted;
 	}
 
-	private boolean userHasThisAction( String token, Action action ) {		
+	private boolean userHasThisAction( String token, Action action ) throws UserException {		
 		
-		User currentUser;
-		
-		currentUser = userService.getByToken(token);
-		
-		if ( currentUser != null ) {
-			if ( !currentUser.getRole().getActions().contains(action) ) {
+		try {
+			User currentUser;
+			currentUser = userService.getByToken(token);
+			if ( currentUser != null ) {
+				if ( !currentUser.getRole().getActions().contains(action) ) {
+					return false;
+				}
+			} else {
 				return false;
 			}
-		} else {
-			return false;
+			return true;
+		} catch (UserException e) {
+			throw new UserException (UserException.BAD_REQUEST, "User with this token does not exist !");
 		}
-		return true;
-		
 	}
 	
 	public Response returnResponse (int status) {
@@ -123,15 +133,12 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 		return builder.build();
 	}
 	
-	public Response returnResponseWithEntity (int status, Object entity) {
+	public Response returnResponse (int status, Object entity) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
-		builder.status(status);
-		if (entity != null) builder.entity(entity);
-		
-		return builder.build();
+		return builder.status(status).entity(entity).build();
 	}
 
 }

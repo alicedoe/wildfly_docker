@@ -2,6 +2,8 @@ package com.alicegabbana.cahierenligne.services.user;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
@@ -25,10 +27,17 @@ public class UserResponse {
 		
 		try {
 			userDto = userService.login(body);
-			return authService.returnResponseWithEntity(200, userDto);
-		} catch (UserException | SettingException e) {
-			e.printStackTrace();
-			return authService.returnResponse(400);
+			return authService.returnResponse(200, userDto);
+		} catch (UserException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (SettingException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(400, jsonObject);
 		}
 	}
 	
@@ -36,10 +45,12 @@ public class UserResponse {
 		
 		try {
 			UserDto userDto = userService.create(newUserDto);
-			return authService.returnResponseWithEntity(200, userDto);
+			return authService.returnResponse(200, userDto);
 		} catch (UserException e) {
-			e.printStackTrace();
-			return authService.returnResponse(400);
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
 		}			
 		
 	}

@@ -5,7 +5,9 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ws.rs.core.Response;
 
+import com.alicegabbana.cahierenligne.services.action.ActionException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
+import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 
@@ -13,7 +15,7 @@ import com.nimbusds.jose.KeyLengthException;
 public interface AuthServiceLocal {
 
 	String createAndReturnToken(String email)  throws KeyLengthException, JOSEException, SettingException;
-	boolean userHasActionList (String token, List<String> actions);
+	boolean userHasActionList (String token, List<String> actions) throws UserException, ActionException;
 	Response returnResponse (int status);
-	Response returnResponseWithEntity (int status, Object entity);
+	Response returnResponse (int status, Object entity);
 }

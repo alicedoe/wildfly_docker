@@ -22,7 +22,7 @@ public class ActionService implements ActionServiceRemote, ActionServiceLocal {
 		
 		try {
 			get(action.getName());
-			throw new ActionException("Action "+action.toString()+" already exist !");
+			throw new ActionException(ActionException.CONFLICT);
 		} catch (Exception e) {
 			Action actionCreated = em.merge(action);
 			return actionCreated;
@@ -32,7 +32,7 @@ public class ActionService implements ActionServiceRemote, ActionServiceLocal {
 	public Action get(String name) throws ActionException {
 		Action action = em.find(Action.class, name);
 		if (action == null) {
-			throw new ActionException("Action "+name+" does not exist !");
+			throw new ActionException(ActionException.NOT_FOUND);
 		}
 		return action;
 	}

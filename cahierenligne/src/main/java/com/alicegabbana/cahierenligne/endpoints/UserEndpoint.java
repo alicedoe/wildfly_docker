@@ -24,8 +24,8 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(JSONObject body) {
-		Response loginService = userResponse.login( body );
-		return loginService;
+		Response response = userResponse.login( body );
+		return response;
 	}
 	
 	@POST
@@ -34,7 +34,7 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(NewUserDto newUserDto) {
-		Response addUserServiceResponse = userResponse.create( newUserDto );
-		return addUserServiceResponse;
+		Response response = userResponse.create( newUserDto );
+		return response;
 	}
 }

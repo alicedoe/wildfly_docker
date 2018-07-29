@@ -56,23 +56,23 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 		if ( email == "" || 
 				password == "" ) {
-			throw new UserException ("Email or password empty");
+			throw new UserException (UserException.BAD_REQUEST,"Email or password empty");
 		}
 		if ( emailFormatCorrect(email) == false ) {
-			throw new UserException ("Wrong email format");
+			throw new UserException (UserException.BAD_REQUEST,"Wrong email format");
 			}
 				
 		User user = getByEmail(email);
 		
 		if ( user == null ) {
-			throw new UserException ("User does not exist");
+			throw new UserException (UserException.NOT_FOUND,"User does not exist");
 		}
 		
 		try {
 			boolean validPassword = isPasswordCorrect(email, password);
 			
 			if ( validPassword == false ) {
-				throw new UserException ("Wrong credits");
+				throw new UserException (UserException.UNAUTHORIZED, "Wrong credits");
 			}
 			
 			UserDto userDto = daoToDto(user);
@@ -83,13 +83,13 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				return userDto;
 			} catch (KeyLengthException e) {
 				e.printStackTrace();
-				throw new UserException ("Impossible to generate Token");
+				throw new UserException (UserException.INTERNAL_SERVER_ERROR, "Impossible to generate Token");
 			} catch (JOSEException e) {
 				e.printStackTrace();
-				throw new UserException ("Impossible to generate Token");
+				throw new UserException (UserException.INTERNAL_SERVER_ERROR, "Impossible to generate Token");
 			}
-		} catch (Exception e) {
-			throw new SettingException(e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode());
 		}
 
 	}
@@ -104,7 +104,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			try {
 				userIsComplete(user);
 			} catch (UserException e) {
-				throw new UserException ("User "+user.toString()+" incomplete !");
+				throw new UserException (UserException.BAD_REQUEST, "User "+user.toString()+" incomplete !");
 			}
 			
 			try {
@@ -112,10 +112,10 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				User usercreated = em.merge(user);
 				return usercreated;
 			} catch (UserException e) {
-				throw new UserException(e.getMessage());
+				throw new UserException(UserException.CONFLICT, e.getMessage());
 			}
-		} catch (Exception e) {
-			throw new SettingException(e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode());
 		}		
 		
 	}
@@ -133,12 +133,12 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			UserDto userDto = daoToDto(usercreated);
 			return userDto;
 		} catch (Exception e) {
-			throw new UserException(e.getMessage());
+			throw new UserException(UserException.BAD_REQUEST, e.getMessage());
 		}
 		
 	}
 	
-	public User getByToken (String token) {
+	public User getByToken (String token) throws UserException {
 		
 		TypedQuery<User> query_token = em.createQuery("SELECT user FROM User user WHERE user.token = :token", User.class)
 				.setParameter("token", token);
@@ -147,15 +147,14 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		if ( loadedUsers.size() != 0 ) {
 			return loadedUsers.get(0);
 		}
-		logger.info("Dao getByToken : user with this token doesn't exist");		
-		return null;
+		throw new UserException(UserException.NOT_FOUND, "User with this token doesn't exist");
 	}
 	
 	public boolean emailFormatCorrect(String email) {
 		return EmailValidator.getInstance().isValid(email);
 	}
 	
-	public User getByEmail ( String email ) {		
+	public User getByEmail ( String email ) throws UserException {		
 		
 		TypedQuery<User> query_email = em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
 				.setParameter("email", email);
@@ -183,8 +182,8 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				} else return false;
 			}
 			return false;
-		} catch (Exception e) {
-			throw new SettingException(e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode());
 		}
 		
 	}
@@ -195,7 +194,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				|| newUserDto.getFirstname() == null 
 				|| newUserDto.getEmail() == null
 				|| newUserDto.getPwd() == null ) {
-			throw new UserException ("User "+newUserDto.toString()+" incomplete !");
+			throw new UserException (UserException.BAD_REQUEST, "User "+newUserDto.toString()+" incomplete !");
 		}
 		
 		try {
@@ -204,10 +203,10 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				emailAvailable(newUserDto.getEmail());
 				return true;
 			} catch (UserException e) {
-				throw new UserException(e.getMessage());
+				throw new UserException(UserException.CONFLICT, e.getMessage());
 			}
 		} catch (Exception e) {
-			throw new UserException(e.getMessage());
+			throw new UserException(UserException.NOT_FOUND, e.getMessage());
 		}	
 		
 	}
@@ -219,7 +218,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				|| user.getEmail() == null
 				|| user.getToken() == null 
 				|| user.getPwd() == null ) {
-			throw new UserException ("User "+user.toString()+" incomplete !");
+			throw new UserException (UserException.BAD_REQUEST, "User "+user.toString()+" incomplete !");
 		}
 		return true;
 	}
@@ -227,7 +226,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	private Boolean emailAvailable(String email) throws UserException {		
 		if ( getByEmail(email) == null)
 			return true;
-		else throw new UserException("Email "+email+" is not available");
+		else throw new UserException(UserException.CONFLICT, "Email "+email+" is not available");
 	}
 	
 	private String hashPassword(String password) throws SettingException {
@@ -235,8 +234,8 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			String salt = getSalt();
 	        String mySecurePassword = PasswordUtils.generateSecurePassword(password, salt);
 			return mySecurePassword;
-		} catch (Exception e) {
-			throw new SettingException(e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode());
 		}
 	}
 	
@@ -244,21 +243,21 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		try {
 			String salt = settingService.get("PASS_SALT").getParam();
 			return salt;
-		} catch (Exception e) {
-			throw new SettingException(e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(SettingException.NOT_FOUND);
 		}	
 	}
 	
-	private String returnTokenUserByEmail (String email) throws SettingException {
+	private String returnTokenUserByEmail (String email) throws SettingException, UserException {
 		try {
 			String token = authService.createAndReturnToken(email);
 			return token;
 		} catch (KeyLengthException e) {
 			e.printStackTrace();
-			return null;
+			throw new UserException(UserException.INTERNAL_SERVER_ERROR, "KeyLengthException");
 		} catch (JOSEException e) {
 			e.printStackTrace();
-			return null;
+			throw new UserException(UserException.INTERNAL_SERVER_ERROR, "JOSEException");
 		}
 	}
 	
@@ -301,7 +300,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			user.setRole(role);
 			return user;
 		} catch (Exception e) {
-			throw new UserException(e.getMessage());
+			throw new UserException(UserException.NOT_FOUND, e.getMessage());
 		}
 	}	
 }
