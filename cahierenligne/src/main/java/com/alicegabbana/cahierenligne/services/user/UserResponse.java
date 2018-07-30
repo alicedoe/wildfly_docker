@@ -72,4 +72,13 @@ public class UserResponse {
 		}		
 	}
 	
+	public Response get ( Long id ) {
+		try {
+			User user = userService.get(id);
+			return authService.returnResponse(200, user);
+		} catch (UserException e) {
+			return authService.returnResponse(404);
+		}
+	}
+	
 }

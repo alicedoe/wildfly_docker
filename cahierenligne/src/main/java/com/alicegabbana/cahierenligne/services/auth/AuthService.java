@@ -95,9 +95,11 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 								userIsGranted = false;
 							} else userIsGranted = true;
 						} catch (UserException e) {
+							logger.error(e.getCode()+" : "+e.getMessage());
 							userIsGranted = false;
 						}
 					} catch (ActionException e1) {
+						logger.error(e1.getCode()+" : "+e1.getMessage());
 						userIsGranted = false;
 					}			
 			}
@@ -112,6 +114,7 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 			currentUser = userService.getByToken(token);
 			if ( currentUser != null ) {
 				if ( !currentUser.getRole().getActions().contains(action) ) {
+					logger.error(action+" not allowed !");
 					return false;
 				}
 			} else {
@@ -119,6 +122,7 @@ public class AuthService implements AuthServiceLocal, AuthServiceRemote {
 			}
 			return true;
 		} catch (UserException e) {
+			logger.error(e.getCode()+" : "+e.getMessage());
 			throw new UserException (UserException.BAD_REQUEST, "User with this token does not exist !");
 		}
 	}

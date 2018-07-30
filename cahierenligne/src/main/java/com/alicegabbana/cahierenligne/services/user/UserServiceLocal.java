@@ -18,4 +18,5 @@ public interface UserServiceLocal {
 	User getByToken (String token) throws UserException;
 	List<User> getAll();
 	void deleteUser (Long id) throws UserException;
+	User get(Long id) throws UserException;
 }

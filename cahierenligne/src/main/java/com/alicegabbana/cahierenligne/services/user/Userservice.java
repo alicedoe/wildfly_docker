@@ -185,7 +185,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		}
 	}
 	
-	private User get(Long id) throws UserException {
+	public User get(Long id) throws UserException {
 		TypedQuery<User> query_id = em.createQuery("SELECT user FROM User user WHERE user.id = :id", User.class)
 				.setParameter("id", id);
 		List<User> loadedUsers = query_id.getResultList();

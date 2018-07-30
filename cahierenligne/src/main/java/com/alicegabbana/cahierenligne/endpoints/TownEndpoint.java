@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -34,12 +35,12 @@ public class TownEndpoint {
 	
 	@DELETE
 	@Actions({"delete all town"})
-	@Path("/delete")
+	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteTown(Town town) {
+	public Response deleteTown(@PathParam("id") Long id) {
 		
-		Response response = townResponse.delete( town.getId() );
+		Response response = townResponse.delete( id );
 		return response;
 	}
 	
@@ -65,11 +66,11 @@ public class TownEndpoint {
 	}
 	
 	@GET
-	@Path("/get")
+	@Path("/get/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response get(Town town) {		
-		Response response = townResponse.get(town.getId());
+	public Response get(@PathParam("id") Long id) {		
+		Response response = townResponse.get( id );
 		return response;
 	}
 
