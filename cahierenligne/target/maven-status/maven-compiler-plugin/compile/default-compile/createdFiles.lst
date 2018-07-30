@@ -54,11 +54,14 @@ com/alicegabbana/cahierenligne/endpoints/LevelEndpoint.class
 com/alicegabbana/cahierenligne/services/user/UserResponse.class
 com/alicegabbana/cahierenligne/services/setting/SettingServiceRemote.class
 com/alicegabbana/cahierenligne/services/utils/AuthorizationFilter.class
+com/alicegabbana/cahierenligne/services/school/SchoolException.class
+com/alicegabbana/cahierenligne/services/school/SchoolResponse.class
 com/alicegabbana/cahierenligne/services/level/LevelServiceLocal.class
 com/alicegabbana/cahierenligne/services/role/RoleServiceLocal.class
 com/alicegabbana/cahierenligne/services/town/TownException.class
 com/alicegabbana/cahierenligne/services/action/ActionServiceRemote.class
 com/alicegabbana/cahierenligne/services/setting/SettingException.class
+com/alicegabbana/cahierenligne/dto/SchoolDto.class
 com/alicegabbana/cahierenligne/services/homework/HomeworkServiceRemote.class
 com/alicegabbana/cahierenligne/services/user/UserException.class
 com/alicegabbana/cahierenligne/services/auth/AuthServiceRemote.class

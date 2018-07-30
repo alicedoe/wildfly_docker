@@ -21,7 +21,7 @@ public class TownResponse {
 			Town townCreated = townService.create(name);
 			return authService.returnResponse(200, townCreated);
 		} catch (TownException e) {
-			return authService.returnResponse(e.code);
+			return authService.returnResponse(e.getCode());
 		}		
 	}
 	
@@ -30,7 +30,7 @@ public class TownResponse {
 			townService.delete(id);
 			return authService.returnResponse(200);
 		} catch (TownException e) {
-			return authService.returnResponse(e.code);
+			return authService.returnResponse(e.getCode());
 		}		
 	}
 	
@@ -39,7 +39,7 @@ public class TownResponse {
 			Town updatedTown = townService.update(town);
 			return authService.returnResponse(200, updatedTown);
 		} catch (TownException e) {			
-			return authService.returnResponse(e.code);
+			return authService.returnResponse(e.getCode());
 		}		
 	}
 	
@@ -51,7 +51,7 @@ public class TownResponse {
 		try {
 			return authService.returnResponse(200, townService.get(id));
 		} catch (TownException e) {
-			return authService.returnResponse(e.code);
+			return authService.returnResponse(e.getCode());
 		}
 	}
 }

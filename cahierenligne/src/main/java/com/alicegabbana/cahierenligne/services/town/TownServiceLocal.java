@@ -13,4 +13,5 @@ public interface TownServiceLocal {
 	List<Town> getAllTowns ();
 	Town update(Town town) throws TownException;
 	Town get (Long id) throws TownException;
+	Town get (String name) throws TownException;
 }

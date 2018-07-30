@@ -53,7 +53,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 		if ( loadedTowns.size() != 0 ) {
 			return loadedTowns.get(0);
 		}
-		throw new TownException(404);
+		throw new TownException(404, "Town "+id+" not Found !");
 	}
 	
 	public Town get (String name) throws TownException {
@@ -65,7 +65,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 		if ( loadedTowns.size() != 0 ) {
 			return loadedTowns.get(0);
 		}
-		throw new TownException(404);
+		throw new TownException(404, "Town "+name+" not Found !");
 	}
 	
 	public void delete(Long id) throws TownException {

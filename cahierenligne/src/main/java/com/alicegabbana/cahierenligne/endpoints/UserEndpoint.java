@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
-import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.user.UserResponse;
 import com.alicegabbana.cahierenligne.services.utils.Actions;
 

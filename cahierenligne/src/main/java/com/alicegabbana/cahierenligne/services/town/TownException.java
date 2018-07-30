@@ -8,10 +8,24 @@ public class TownException extends Exception implements ErrorCode {
 	
 	public int DUPLICATE = 409;
 	public int NOT_FOUND = 404;
-	public int code;
+	private int code;
+	private String message;	
 
 	public TownException(int code) {
 		this.code = code;
+	}
+	
+	public TownException(int code, String message) {
+		this.code = code;
+		this.message = message;
+	}
+	
+	public int getCode () {
+		return this.code;
+	}
+	
+	public String getMessage () {
+		return this.message;
 	}
 
 }

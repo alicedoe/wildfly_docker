@@ -11,6 +11,7 @@
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/action/ActionServiceRemote.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/action/ActionService.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/entities/User.java
+/home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/dto/SchoolDto.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/town/TownException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/kidsclass/KidsclassException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/role/RoleServiceRemote.java
@@ -35,6 +36,7 @@
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/endpoints/SchoolEndpoint.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/role/RoleException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolService.java
+/home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolResponse.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolServiceLocal.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/endpoints/TagEndpoint.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/setting/SettingServiceRemote.java
@@ -65,4 +67,5 @@
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/action/ActionServiceLocal.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/action/ActionException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/user/UserResponse.java
+/home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/services/school/SchoolException.java
 /home/aliiiiiiiiii/dev/cahierenligne/cahierenligne/src/main/java/com/alicegabbana/cahierenligne/endpoints/HomeworkEndpoint.java
