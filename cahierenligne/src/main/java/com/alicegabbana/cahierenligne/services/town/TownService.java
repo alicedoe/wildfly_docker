@@ -16,7 +16,15 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 	
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
+	
+	public List<Town> getAllTowns () {
+		
+		TypedQuery<Town> query_towns = em.createQuery("SELECT town FROM Town town", Town.class);
+		List<Town> loadedTowns = query_towns.getResultList();
 
+		return loadedTowns;
+	}
+	
 	public Town create(String name) throws TownException {
 		if ( nameExist(name) ) {
 			throw new TownException(409);
@@ -25,6 +33,15 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 		newTown.setName(name);
 		Town townCreated = em.merge(newTown);
 		return townCreated;
+	}
+	
+	private boolean nameExist(String name) {
+		try {
+			get(name);
+			return true;
+		} catch (TownException e) {
+			return false;
+		}
 	}
 	
 	public Town get (Long id) throws TownException {
@@ -37,15 +54,6 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 			return loadedTowns.get(0);
 		}
 		throw new TownException(404);
-	}
-	
-	private boolean nameExist(String name) {
-		try {
-			get(name);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 	
 	public Town get (String name) throws TownException {
@@ -69,14 +77,6 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 		}		
 	}
 	
-	public List<Town> getAllTowns () {
-		
-		TypedQuery<Town> query_towns = em.createQuery("SELECT town FROM Town town", Town.class);
-		List<Town> loadedTowns = query_towns.getResultList();
-
-		return loadedTowns;
-	}
-	
 	public Town update(Town town) throws TownException {
 		try {
 			get(town.getId());
@@ -86,4 +86,5 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 			throw new TownException(404);
 		}
 	}
+	
 }

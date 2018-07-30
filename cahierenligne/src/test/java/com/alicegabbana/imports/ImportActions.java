@@ -44,7 +44,8 @@ public class ImportActions extends TestContextAbstract {
 			"delete all tag",
 			"create user", 
 			"update all user", 
-			"delete all user"
+			"delete all user",
+			"read all user"
 			);	
 	
 	@Test
@@ -73,8 +74,8 @@ public class ImportActions extends TestContextAbstract {
 		role.setActions(actions);
 		try {
 			roleService.create(role);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
+		} catch (RoleException e) {
+			logger.error(e.getCode()+" : "+e.getMessage());
 		}
 		
 	}

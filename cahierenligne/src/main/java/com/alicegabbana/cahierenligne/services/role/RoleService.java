@@ -21,7 +21,7 @@ public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 	public Role create (Role role) throws RoleException {		
 		try {
 			get(role.getName());
-			throw new RoleException("Role already created !");
+			throw new RoleException(409, "Role already created !");
 		} catch (Exception e) {
 			Role roleCreated = em.merge(role);
 			return roleCreated;
@@ -31,7 +31,7 @@ public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 	public Role get(String name) throws RoleException {
 		Role role = em.find(Role.class, name);
 		if (role == null) {
-			throw new RoleException("Role "+name+" does not exist !");
+			throw new RoleException(404, "Role "+name+" does not exist !");
 		}
 		return role;
 	}

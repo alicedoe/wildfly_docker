@@ -15,13 +15,16 @@ import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.KidsClass;
 import com.alicegabbana.cahierenligne.entities.Role;
+import com.alicegabbana.cahierenligne.entities.Town;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
 import com.alicegabbana.cahierenligne.services.kidsclass.KidsclassException;
 import com.alicegabbana.cahierenligne.services.kidsclass.KidsclassServiceLocal;
+import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.role.RoleServiceLocal;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 import com.alicegabbana.cahierenligne.services.setting.SettingServiceLocal;
+import com.alicegabbana.cahierenligne.services.town.TownException;
 import com.alicegabbana.cahierenligne.services.utils.PasswordUtils;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
@@ -166,6 +169,32 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 		return null;
 	}
+	
+	public List<User> getAll () {
+		List<User> allUsers = em.createQuery("SELECT user FROM User user", User.class)
+				.getResultList();
+		return allUsers;
+	}
+	
+	public void deleteUser (Long id) throws UserException {
+		try {
+			User user = get(id);
+			em.remove(user);
+		} catch (UserException e) {
+			throw new UserException(e.getCode(), e.getMessage());
+		}
+	}
+	
+	private User get(Long id) throws UserException {
+		TypedQuery<User> query_id = em.createQuery("SELECT user FROM User user WHERE user.id = :id", User.class)
+				.setParameter("id", id);
+		List<User> loadedUsers = query_id.getResultList();
+
+		if ( loadedUsers.size() != 0 ) {
+			return loadedUsers.get(0);
+		}
+		throw new UserException(404, "No user with id "+id);
+	}
 
 	public boolean isPasswordCorrect(String email, String password) throws SettingException {
 		
@@ -277,30 +306,38 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return userDto;
 	}
 	
-	private User dtoToDao(NewUserDto newUserDto) throws UserException, KidsclassException {
+	private User dtoToDao(NewUserDto newUserDto) throws UserException, KidsclassException, RoleException {
 		
 		User user = new User();
 		
 		user.setEmail(newUserDto.getEmail());
 		
 		if (newUserDto.getKidsClassName() != null) {
-			try {
-				KidsClass kidsClass = kidsclassServiceLocal.getByName(newUserDto.getKidsClassName());
-				user.setKidsClass(kidsClass);
-			} catch (KidsclassException e) {
-				throw new KidsclassException(e.getMessage());
-			}			
+			user.setKidsClass(getKidsClass(newUserDto));	
 		}	
 		
 		user.setName(newUserDto.getName());
 		user.setFirstname(newUserDto.getFirstname());
+		user.setRole(getRole(newUserDto));
 		
+		return user;
+	}
+	
+	private KidsClass getKidsClass (NewUserDto newUserDto) throws KidsclassException {
+		try {
+			KidsClass kidsClass = kidsclassServiceLocal.getByName(newUserDto.getKidsClassName());
+			return kidsClass;
+		} catch (KidsclassException e) {
+			throw new KidsclassException(e.getCode(), e.getMessage());
+		}
+	}
+	
+	private Role getRole (NewUserDto newUserDto) throws RoleException {
 		try {
 			Role role = roleServiceLocal.get(newUserDto.getRoleName());
-			user.setRole(role);
-			return user;
-		} catch (Exception e) {
-			throw new UserException(UserException.NOT_FOUND, e.getMessage());
+			return role;
+		} catch (RoleException e) {
+			throw new RoleException(e.getCode(), e.getMessage());
 		}
-	}	
+	}
 }

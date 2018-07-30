@@ -23,7 +23,7 @@ public class ActionService implements ActionServiceRemote, ActionServiceLocal {
 		try {
 			get(action.getName());
 			throw new ActionException(ActionException.CONFLICT);
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			Action actionCreated = em.merge(action);
 			return actionCreated;
 		}
@@ -32,7 +32,7 @@ public class ActionService implements ActionServiceRemote, ActionServiceLocal {
 	public Action get(String name) throws ActionException {
 		Action action = em.find(Action.class, name);
 		if (action == null) {
-			throw new ActionException(ActionException.NOT_FOUND);
+			throw new ActionException(ActionException.NOT_FOUND, "Action "+name+" not found");
 		}
 		return action;
 	}

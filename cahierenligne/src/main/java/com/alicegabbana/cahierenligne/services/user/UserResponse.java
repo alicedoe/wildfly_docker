@@ -1,5 +1,7 @@
 package com.alicegabbana.cahierenligne.services.user;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.json.Json;
@@ -8,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
+import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 
@@ -53,6 +56,20 @@ public class UserResponse {
 			return authService.returnResponse(e.getCode(), jsonObject);
 		}			
 		
+	}
+	
+	public Response getAll() {
+		List<User> allUser =  userService.getAll();
+		return authService.returnResponse(200, allUser);
+	}
+	
+	public Response delete( Long id ) {
+		try {
+			userService.deleteUser(id);
+			return authService.returnResponse(200);
+		} catch (UserException e) {
+			return authService.returnResponse(404);
+		}		
 	}
 	
 }

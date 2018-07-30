@@ -27,7 +27,7 @@ public class KidsclassService implements KidsclassServiceLocal, KidsclassService
 			return loadedKidsClass.get(0);
 		} 
 		
-		throw new KidsclassException("Kidsclass "+name+" does not exist !");
+		throw new KidsclassException(404, "Kidsclass "+name+" does not exist !");
 	}
 
 }

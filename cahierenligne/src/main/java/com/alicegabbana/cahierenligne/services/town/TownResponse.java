@@ -51,7 +51,7 @@ public class TownResponse {
 		try {
 			return authService.returnResponse(200, townService.get(id));
 		} catch (TownException e) {
-			return authService.returnResponse(404);
+			return authService.returnResponse(e.code);
 		}
 	}
 }

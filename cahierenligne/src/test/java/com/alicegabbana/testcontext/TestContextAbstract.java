@@ -32,7 +32,7 @@ public abstract class TestContextAbstract {
 				System.out.println("Initialize Service Context...");
 				if (ctx == null) {
 					props = new Properties();
-					props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+					props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
 					props.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 					props.put(Context.PROVIDER_URL, "http-remoting://" + JNDI_HOST + ":" + JNDI_PORT);
 					props.put(Context.SECURITY_PRINCIPAL, "remoteTest");

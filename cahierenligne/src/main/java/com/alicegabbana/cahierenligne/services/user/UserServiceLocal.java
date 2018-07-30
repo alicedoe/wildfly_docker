@@ -1,5 +1,7 @@
 package com.alicegabbana.cahierenligne.services.user;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
@@ -14,4 +16,6 @@ public interface UserServiceLocal {
 	UserDto login (JSONObject body) throws UserException, SettingException;
 	UserDto create(NewUserDto newUserDto) throws UserException;
 	User getByToken (String token) throws UserException;
+	List<User> getAll();
+	void deleteUser (Long id) throws UserException;
 }
