@@ -1,5 +1,6 @@
 package com.alicegabbana.cahierenligne.services.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -168,10 +169,23 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return null;
 	}
 	
-	public List<User> getAll () {
+	public List<UserDto> getAll () {
 		List<User> allUsers = em.createQuery("SELECT user FROM User user", User.class)
 				.getResultList();
-		return allUsers;
+		
+		List<UserDto> usersDto = userListToUserDtoList(allUsers);
+		return usersDto;
+	}
+	
+	private List<UserDto> userListToUserDtoList (List<User> userList) {
+
+		List<UserDto> userDtoList = new ArrayList<UserDto>();
+		for (User user : userList) {
+			UserDto userDto = daoToDto(user);
+			userDtoList.add(userDto);
+		}
+
+		return userDtoList;
 	}
 	
 	public void deleteUser (Long id) throws UserException {

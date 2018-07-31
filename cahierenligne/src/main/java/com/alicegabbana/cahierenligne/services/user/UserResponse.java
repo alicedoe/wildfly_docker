@@ -59,7 +59,7 @@ public class UserResponse {
 	}
 	
 	public Response getAll() {
-		List<User> allUser =  userService.getAll();
+		List<UserDto> allUser =  userService.getAll();
 		return authService.returnResponse(200, allUser);
 	}
 	
