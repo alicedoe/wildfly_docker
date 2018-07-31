@@ -45,4 +45,24 @@ public class SchoolResponse {
 		List<SchoolDto> schoolsDto = schoolService.getAll();
 		return authService.returnResponse(200, schoolsDto);
 	}
+	
+	public Response update(SchoolDto schoolDto) {
+		
+		try {
+			SchoolDto schoolDtoUpdated = schoolService.update(schoolDto);
+			return authService.returnResponse(200, schoolDtoUpdated);
+			
+		} catch (SchoolException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (TownException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		}
+		
+	}
 }

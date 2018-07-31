@@ -12,4 +12,5 @@ public interface SchoolServiceLocal {
 
 	School create (SchoolDto schoolDto) throws SchoolException, TownException;
 	List<SchoolDto> getAll();
+	SchoolDto update(SchoolDto schoolDto) throws SchoolException, TownException;
 }

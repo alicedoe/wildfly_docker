@@ -73,17 +73,20 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 			Town town = get(id);
 			em.remove(town);
 		} catch (TownException e) {
-			throw new TownException(404);
+			throw new TownException(404, "Town "+id+" does not exist !");
 		}		
 	}
 	
 	public Town update(Town town) throws TownException {
+		if ( town.getName() == "" ) {
+			throw new TownException(400, "Town has no name !");
+		}
 		try {
 			get(town.getId());
 			Town updatedTown = em.merge(town);
 			return updatedTown;			
 		} catch (TownException e) {
-			throw new TownException(404);
+			throw new TownException(404, "Town "+town.getId()+" does not exist !");
 		}
 	}
 	

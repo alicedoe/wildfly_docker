@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -35,6 +36,16 @@ public class SchoolEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getall() {
 		Response response = schoolResponse.getAll();
+		return response;
+	}
+	
+	@PUT
+	@Actions({"update all school"})
+	@Path("/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response update(SchoolDto schoolDto) {
+		Response response = schoolResponse.update(schoolDto);
 		return response;
 	}
 }

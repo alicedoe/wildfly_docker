@@ -177,17 +177,6 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return usersDto;
 	}
 	
-	private List<UserDto> userListToUserDtoList (List<User> userList) {
-
-		List<UserDto> userDtoList = new ArrayList<UserDto>();
-		for (User user : userList) {
-			UserDto userDto = daoToDto(user);
-			userDtoList.add(userDto);
-		}
-
-		return userDtoList;
-	}
-	
 	public void deleteUser (Long id) throws UserException {
 		try {
 			User user = get(id);
@@ -227,6 +216,17 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			throw new SettingException(e.getCode());
 		}
 		
+	}
+	
+	private List<UserDto> userListToUserDtoList (List<User> userList) {
+
+		List<UserDto> userDtoList = new ArrayList<UserDto>();
+		for (User user : userList) {
+			UserDto userDto = daoToDto(user);
+			userDtoList.add(userDto);
+		}
+
+		return userDtoList;
 	}
 	
 	private Boolean newUserIsCorrect(NewUserDto newUserDto) throws UserException {

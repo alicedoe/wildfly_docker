@@ -2,6 +2,8 @@ package com.alicegabbana.cahierenligne.services.town;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 import com.alicegabbana.cahierenligne.entities.Town;
@@ -21,7 +23,10 @@ public class TownResponse {
 			Town townCreated = townService.create(name);
 			return authService.returnResponse(200, townCreated);
 		} catch (TownException e) {
-			return authService.returnResponse(e.getCode());
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
 		}		
 	}
 	
@@ -30,7 +35,10 @@ public class TownResponse {
 			townService.delete(id);
 			return authService.returnResponse(200);
 		} catch (TownException e) {
-			return authService.returnResponse(e.getCode());
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
 		}		
 	}
 	
@@ -39,7 +47,10 @@ public class TownResponse {
 			Town updatedTown = townService.update(town);
 			return authService.returnResponse(200, updatedTown);
 		} catch (TownException e) {			
-			return authService.returnResponse(e.getCode());
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
 		}		
 	}
 	
@@ -51,7 +62,10 @@ public class TownResponse {
 		try {
 			return authService.returnResponse(200, townService.get(id));
 		} catch (TownException e) {
-			return authService.returnResponse(e.getCode());
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
 		}
 	}
 }
