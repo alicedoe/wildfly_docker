@@ -65,4 +65,29 @@ public class SchoolResponse {
 		}
 		
 	}
+	
+	public Response delete(Long id) {
+		
+		try {
+			schoolService.delete(id);
+			return authService.returnResponse(200);
+		} catch (SchoolException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		}
+	}
+	
+	public Response get(Long id) {
+		try {
+			SchoolDto schoolDto = schoolService.getDto(id);
+			return authService.returnResponse(200, schoolDto);
+		} catch (SchoolException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		}
+	}
 }

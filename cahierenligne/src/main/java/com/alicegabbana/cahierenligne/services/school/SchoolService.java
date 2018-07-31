@@ -31,9 +31,7 @@ public class SchoolService implements SchoolServiceLocal, SchoolServiceRemote {
 	
 	public School create (SchoolDto schoolDto) throws SchoolException, TownException {		
 		try {
-			if ( ! newSchoolIsComplete(schoolDto) ) {
-				throw new SchoolException(400, "School "+schoolDto.toString()+" is not complete !");
-			}
+			newSchoolIsComplete(schoolDto);
 			if ( schoolExist(schoolDto.getSchoolName())) {
 				throw new SchoolException(409, "School "+schoolDto.getSchoolName()+" already exist !");
 			}
@@ -42,6 +40,8 @@ public class SchoolService implements SchoolServiceLocal, SchoolServiceRemote {
 			return schoolCreated;
 		} catch (TownException e) {
 			throw new SchoolException(400, e.getMessage());
+		} catch (SchoolException e) {
+			throw new SchoolException(e.getCode(), e.getMessage());
 		}
 	}
 	
@@ -68,12 +68,30 @@ public class SchoolService implements SchoolServiceLocal, SchoolServiceRemote {
 		return school;
 	}
 	
+	public SchoolDto getDto (Long id) throws SchoolException {
+		try {
+			School school = get(id);
+			return daoToDto(school);
+		} catch (SchoolException e) {
+			throw new SchoolException(e.getCode(),e.getMessage());
+		}
+	}
+	
 	public List<SchoolDto> getAll() {
 		List<School> allSchools = em.createQuery("SELECT school FROM School school", School.class)
 				.getResultList();
 		
 		List<SchoolDto> schoolsDto = schoolListToSchoolDtoList(allSchools);
 		return schoolsDto;
+	}
+	
+	public void delete(Long id) throws SchoolException {
+		try {
+			School school = get(id);
+			em.remove(school);
+		} catch (SchoolException e) {
+			throw new SchoolException(404, "School "+id+" does not exist !");
+		}		
 	}
 	
 	private boolean schoolExist (String name) {
@@ -118,16 +136,16 @@ public class SchoolService implements SchoolServiceLocal, SchoolServiceRemote {
 		return schoolDto;
 	}	
 	
-	private boolean newSchoolIsComplete(SchoolDto schoolDto) {
+	private boolean newSchoolIsComplete(SchoolDto schoolDto) throws TownException, SchoolException {
 		if (schoolDto.getId() != null || schoolDto.getSchoolName() == ""
 				) {
-			return false;
+			throw new SchoolException(400, "Schoolname is empty or id is not null");
 		}
  
 		try {
 			townService.get(schoolDto.getTownName());
 		} catch (TownException e) {
-			return false;
+			throw new TownException(e.getCode(),e.getMessage());
 		}		
 		return true;
 	}
