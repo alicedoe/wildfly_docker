@@ -2,6 +2,7 @@ package com.alicegabbana.cahierenligne.endpoints;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,6 +26,15 @@ public class SchoolEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response add(SchoolDto schoolDto) {
 		Response response = schoolResponse.create( schoolDto );
+		return response;
+	}
+	
+	@GET
+	@Path("/getall")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getall() {
+		Response response = schoolResponse.getAll();
 		return response;
 	}
 }

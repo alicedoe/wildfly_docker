@@ -1,5 +1,7 @@
 package com.alicegabbana.cahierenligne.services.school;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.json.Json;
@@ -37,5 +39,10 @@ public class SchoolResponse {
 			return authService.returnResponse(e.getCode(), jsonObject);
 		}			
 		
+	}
+	
+	public Response getAll() {
+		List<SchoolDto> schoolsDto = schoolService.getAll();
+		return authService.returnResponse(200, schoolsDto);
 	}
 }
