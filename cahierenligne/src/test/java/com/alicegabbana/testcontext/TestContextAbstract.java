@@ -10,7 +10,9 @@ import org.junit.BeforeClass;
 
 import com.alicegabbana.cahierenligne.services.action.ActionServiceRemote;
 import com.alicegabbana.cahierenligne.services.role.RoleServiceRemote;
+import com.alicegabbana.cahierenligne.services.school.SchoolServiceRemote;
 import com.alicegabbana.cahierenligne.services.setting.SettingServiceRemote;
+import com.alicegabbana.cahierenligne.services.town.TownServiceRemote;
 import com.alicegabbana.cahierenligne.services.user.UserServiceRemote;
 
 public abstract class TestContextAbstract {
@@ -25,6 +27,8 @@ public abstract class TestContextAbstract {
 	public static RoleServiceRemote roleService;
 	public static UserServiceRemote userService;
 	public static SettingServiceRemote settingService;
+	public static TownServiceRemote townService;
+	public static SchoolServiceRemote schoolService;
 
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -51,6 +55,10 @@ public abstract class TestContextAbstract {
 							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_USER);
 					settingService = (SettingServiceRemote)
 							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_SETTING);
+					townService = (TownServiceRemote)
+							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_TOWN);
+					schoolService = (SchoolServiceRemote)
+							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_SCHOOL);
 				}
 		} catch (Exception e) {
 			e.printStackTrace();

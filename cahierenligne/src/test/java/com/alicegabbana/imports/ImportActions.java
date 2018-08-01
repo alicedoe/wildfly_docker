@@ -6,13 +6,17 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import com.alicegabbana.cahierenligne.dto.SchoolDto;
 import com.alicegabbana.cahierenligne.entities.Action;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.Setting;
+import com.alicegabbana.cahierenligne.entities.Town;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.action.ActionException;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
+import com.alicegabbana.cahierenligne.services.school.SchoolException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
+import com.alicegabbana.cahierenligne.services.town.TownException;
 import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.alicegabbana.testcontext.TestContextAbstract;
 
@@ -116,7 +120,7 @@ public class ImportActions extends TestContextAbstract {
 			adminRole = roleService.get("admin");
 			User adminUser = new User();
 			adminUser.setFirstname("prenom admin");
-			adminUser.setEmail("admin@admin.com");
+			adminUser.setEmail("admin2@admin.com");
 			adminUser.setRole(adminRole);
 			adminUser.setName("nom admin");
 			adminUser.setPwd("password");
@@ -126,8 +130,35 @@ public class ImportActions extends TestContextAbstract {
 				e.printStackTrace();
 			}
 		} catch (RoleException e) {
-//			logger.error("Role does not exist !");
+			logger.error(e.getMessage());
 		}		
+	}
+	
+	@Test
+	public void user_050_createTown() throws TownException {
+		try {
+			townService.create("Maraussan");
+		} catch (TownException e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void user_060_createSchool() throws SchoolException, TownException {
+		
+		SchoolDto schoolDto = new SchoolDto();
+		schoolDto.setSchoolName("Ecole de maraussan");
+		schoolDto.setTownName("Maraussan");
+		
+		System.out.println(schoolDto.toString());
+		
+		try {
+			schoolService.create(schoolDto);
+		} catch (SchoolException e) {
+			logger.error(e.getMessage());
+		} catch (TownException e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 }
