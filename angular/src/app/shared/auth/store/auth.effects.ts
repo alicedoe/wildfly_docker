@@ -17,7 +17,8 @@ export class AuthEffects {
     })
     , switchMap((authData: { username: string, password: string }) => {
       return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/login/', {
-        authData: authData
+        username : authData.username,
+        password : authData.password
       });
     })
     , mergeMap((authData) => {
@@ -28,8 +29,12 @@ export class AuthEffects {
         },
         {
           type: AuthActions.SET_TOKEN,
-          payload: "tttttttttt"
-        }
+          payload: authData['token']
+        },
+        {
+          type: AuthActions.SET_USER,
+          payload: authData
+        },
       ];
     }));
 

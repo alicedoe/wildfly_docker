@@ -8,3 +8,8 @@
     </div>
   </div>
 </nav>
+
+<a
+          style="cursor: pointer;"
+          (click)="onLogout()"
+          *ngIf="(authState | async).authenticated">Bonjour {{ (authState | async).userDto.firstName }}</a>

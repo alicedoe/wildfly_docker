@@ -1,18 +1,22 @@
 export class UserDto {
   public id: number;
   public roleName: string;
-  public firstname: string;
+  public firstName: string;
   public name: string;
   public email: string;
-  public kidsClassName: string;
-  public pwd: string;
+  public kidsClassName: string
 
   constructor(id: number, 
     roleName: string, 
-    firstname:string, 
+    firstName:string, 
     name: string, 
     email:string, 
-    kidsClassName: string, 
-    pwd:string ) {
+    kidsClassName: string) {
+      this.id = id;
+      this.roleName = roleName;
+      this.firstName = firstName;
+      this.name = name;
+      this.email = email;
+      this.kidsClassName = kidsClassName;
   }
 }

@@ -10,7 +10,6 @@ import com.alicegabbana.cahierenligne.dto.SchoolDto;
 import com.alicegabbana.cahierenligne.entities.Action;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.Setting;
-import com.alicegabbana.cahierenligne.entities.Town;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.action.ActionException;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
@@ -20,9 +19,9 @@ import com.alicegabbana.cahierenligne.services.town.TownException;
 import com.alicegabbana.cahierenligne.services.user.UserException;
 import com.alicegabbana.testcontext.TestContextAbstract;
 
-public class ImportActions extends TestContextAbstract {
+public class Data extends TestContextAbstract {
 	
-	Logger logger = Logger.getLogger(ImportActions.class);
+	Logger logger = Logger.getLogger(Data.class);
 	
 	List<String> actionsNames = Arrays.asList(
 			"create level", 
@@ -71,7 +70,7 @@ public class ImportActions extends TestContextAbstract {
 				Action action = actionService.get(actionName);
 				actions.add(action);
 			} catch (ActionException e) {
-				logger.error(e.getMessage());
+				System.out.println(e.getMessage());
 			}						
 		}
 		role.setName("admin");
@@ -79,7 +78,7 @@ public class ImportActions extends TestContextAbstract {
 		try {
 			roleService.create(role);
 		} catch (RoleException e) {
-			logger.error(e.getCode()+" : "+e.getMessage());
+			System.out.println(e.getCode()+" : "+e.getMessage());
 		}
 		
 	}
@@ -92,7 +91,7 @@ public class ImportActions extends TestContextAbstract {
 		try {
 			settingService.create(setting);
 		} catch (SettingException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
 		}		
 		
 		setting.setName("API_KEY");
@@ -100,7 +99,7 @@ public class ImportActions extends TestContextAbstract {
 		try {
 			settingService.create(setting);
 		} catch (SettingException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		
 		setting.setName("PASS_SALT");
@@ -108,7 +107,7 @@ public class ImportActions extends TestContextAbstract {
 		try {
 			settingService.create(setting);
 		} catch (SettingException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -127,10 +126,10 @@ public class ImportActions extends TestContextAbstract {
 			try {
 				userService.create(adminUser);
 			} catch (UserException e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		} catch (RoleException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
 		}		
 	}
 	
@@ -139,7 +138,7 @@ public class ImportActions extends TestContextAbstract {
 		try {
 			townService.create("Maraussan");
 		} catch (TownException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -150,15 +149,14 @@ public class ImportActions extends TestContextAbstract {
 		schoolDto.setSchoolName("Ecole de maraussan");
 		schoolDto.setTownName("Maraussan");
 		
-		System.out.println(schoolDto.toString());
-		
 		try {
 			schoolService.create(schoolDto);
-		} catch (SchoolException e) {
-			logger.error(e.getMessage());
 		} catch (TownException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
+		} catch (SchoolException e) {
+			System.out.println(e.getMessage());
 		}
+		
 	}
 
 }

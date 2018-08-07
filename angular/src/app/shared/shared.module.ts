@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { SchoolEffects } from './schools/store/school.effects';
 import { schoolReducer } from './schools/store/school.reducers';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { schoolReducer } from './schools/store/school.reducers';
     StoreModule.forFeature('schools', schoolReducer),
     EffectsModule.forFeature([SchoolEffects])
   ],
-  declarations: []
+  declarations: [UserComponent]
 })
 export class SharedModule { }

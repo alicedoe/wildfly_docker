@@ -27,7 +27,7 @@ public class TownService implements TownServiceLocal, TownServiceRemote {
 	
 	public Town create(String name) throws TownException {
 		if ( nameExist(name) ) {
-			throw new TownException(409);
+			throw new TownException(409, "Town "+name+" already exist !");
 		}
 		Town newTown = new Town();
 		newTown.setName(name);

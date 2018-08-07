@@ -1,7 +1,11 @@
 package com.alicegabbana.cahierenligne.dto;
 
-public class SchoolDto {
+import java.io.Serializable;
 
+public class SchoolDto implements Serializable {
+
+	private static final long serialVersionUID = 8485649287565430635L;
+	
 	private Long id;
 	private String schoolName;
 	private String townName;
