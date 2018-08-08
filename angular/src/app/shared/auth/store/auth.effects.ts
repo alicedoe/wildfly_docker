@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Router} from '@angular/router';
-import {map, switchMap, mergeMap, mapTo} from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {map, switchMap, mergeMap, tap} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 import * as AuthActions from './auth.actions';
 import { stringify } from 'querystring';
@@ -36,6 +36,13 @@ export class AuthEffects {
           payload: authData
         },
       ];
+    }));
+
+  @Effect({dispatch: false})
+  authLogout = this.actions$
+    .ofType(AuthActions.LOGOUT)
+    .pipe(tap(() => {
+      this.router.navigate(['/']);
     }));
 
   constructor(private actions$: Actions,

@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducers';
 import * as AuthActions from '../../shared/auth/store/auth.actions';
-import * as SchoolActions from '../../shared/schools/store/school.actions';
 
 @Component({
   selector: 'app-signin',

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../store/app.reducers';
 import * as fromAuth from '../../shared/auth/store/auth.reducers';
+import * as AuthActions from '../../shared/auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +20,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authState = this.store.select('auth');
+  }
+
+  onLogout() {
+    this.store.dispatch(new AuthActions.Logout());
   }
 
 }
