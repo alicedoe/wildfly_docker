@@ -4,6 +4,7 @@ export const TRY_SIGNUP = 'TRY_SIGNUP';
 export const SIGNUP = 'SIGNUP';
 export const TRY_SIGNIN = 'TRY_SIGNIN';
 export const SIGNIN = 'SIGNIN';
+export const SIGNIN_FAILED = 'SIGNIN_FAILED';
 export const LOGOUT = 'LOGOUT';
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_USER = 'SET_USER';
@@ -16,7 +17,10 @@ export class TrySignup implements Action {
 
 export class TrySignin implements Action {
   readonly type = TRY_SIGNIN;
-  constructor(public payload: {username: string, password: string}) {}
+  constructor(public payload: {username: string, password: string}) {
+
+    console.log('auth.actions : TrySignin');
+  }
 }
 
 export class Signup implements Action {
@@ -25,6 +29,10 @@ export class Signup implements Action {
 
 export class Signin implements Action {
   readonly type = SIGNIN;
+}
+
+export class SigninFailed implements Action {
+  readonly type = SIGNIN_FAILED;
 }
 
 export class Logout implements Action {
@@ -43,4 +51,4 @@ export class SetUser implements Action {
   constructor(public payload: string) {}
 }
 
-export type AuthActions = Signup | Signin | Logout | SetToken | TrySignup | TrySignin | SetUser;
+export type AuthActions = Signup | Signin | Logout | SetToken | TrySignup | TrySignin | SetUser | SigninFailed;

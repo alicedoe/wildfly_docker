@@ -21,6 +21,13 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         ...state,
         authenticated: true
       };
+    case (AuthActions.SIGNIN):
+      return {
+        ...state,
+        token: null,
+        authenticated: false,
+        userDto: null
+      };
     case (AuthActions.LOGOUT):
       localStorage.removeItem('token');
       return {
