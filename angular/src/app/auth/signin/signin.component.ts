@@ -22,9 +22,7 @@ export class SigninComponent implements OnInit {
     this.authState = this.store.select('auth');
   }
 
-
   onSignin(form: NgForm) {
-    this.authState.subscribe(res => console.log(res));
     const email = form.value.email;
     const password = form.value.password;
     this.store.dispatch(new AuthActions.TrySignin({username: email, password: password}));

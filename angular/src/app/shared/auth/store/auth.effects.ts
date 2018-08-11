@@ -28,7 +28,7 @@ export class AuthEffects {
           catchError((err: HttpErrorResponse) => {
             return of({
               type: AuthActions.SIGNIN_FAILED,
-              payload: { err }
+              payload: err.error['message']
             });
           }) ,
         )})
@@ -39,13 +39,6 @@ export class AuthEffects {
     .ofType(AuthActions.LOGOUT)
     .pipe(tap(() => {
       this.router.navigate(['/']);
-    }));
-
-  @Effect({dispatch: false})
-  authSigninFailed = this.actions$
-    .ofType(AuthActions.SIGNIN_FAILED)
-    .pipe(tap(() => {
-      console.log('nop !')
     }));
 
   constructor(private actions$: Actions,

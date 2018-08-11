@@ -5,12 +5,14 @@ export interface State {
   token: string;
   authenticated: boolean;
   userDto: UserDto;
+  error: string;
 }
 
 const initialState: State = {
   token: null,
   authenticated: false,
-  userDto: null
+  userDto: null,
+  error: null
 };
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
@@ -19,14 +21,16 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
     case (AuthActions.SIGNIN):
       return {
         ...state,
-        authenticated: true
+        authenticated: true,
+        error: null
       };
-    case (AuthActions.SIGNIN):
+    case (AuthActions.SIGNIN_FAILED):
       return {
         ...state,
         token: null,
         authenticated: false,
-        userDto: null
+        userDto: null,
+        error: action.payload
       };
     case (AuthActions.LOGOUT):
       localStorage.removeItem('token');
@@ -34,7 +38,8 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         ...state,
         token: null,
         authenticated: false,
-        userDto: null
+        userDto: null,
+        error: null
       };
     case (AuthActions.SET_TOKEN):
       localStorage.setItem('token', action.payload);    

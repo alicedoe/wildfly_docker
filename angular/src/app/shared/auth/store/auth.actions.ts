@@ -18,8 +18,6 @@ export class TrySignup implements Action {
 export class TrySignin implements Action {
   readonly type = TRY_SIGNIN;
   constructor(public payload: {username: string, password: string}) {
-
-    console.log('auth.actions : TrySignin');
   }
 }
 
@@ -33,6 +31,7 @@ export class Signin implements Action {
 
 export class SigninFailed implements Action {
   readonly type = SIGNIN_FAILED;
+  constructor(public payload: string) {}
 }
 
 export class Logout implements Action {
