@@ -5,7 +5,7 @@ import {map, switchMap, mergeMap, tap, catchError} from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import * as AuthActions from './auth.actions';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
@@ -18,6 +18,7 @@ export class AuthEffects {
           username : authData.username,
           password : authData.password }).pipe(map(res => res),      
           mergeMap((authData) => {
+            console.log(authData);
             this.router.navigate(['/']);
             return [
               { type: AuthActions.SIGNIN },
@@ -27,7 +28,25 @@ export class AuthEffects {
                 payload: authData } ]; }) ,
           catchError((err: HttpErrorResponse) => {
             return of({
-              type: AuthActions.SIGNIN_FAILED,
+              type: AuthActions.ERROR,
+              payload: err.error['message']
+            });
+          }) ,
+        )})
+  );
+
+  @Effect()
+  getRole = this.actions$
+    .ofType(AuthActions.GET_ROLE)
+    .pipe(
+      switchMap((authData: { name: string }) => {
+        return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/get/role/'+localStorage.getItem('token')).pipe(map(res => res),      
+          map((authData) => {
+            console.log(authData);
+            return { type: AuthActions.SET_ROLE, payload: authData }; }) ,
+          catchError((err: HttpErrorResponse) => {
+            return of({
+              type: AuthActions.ERROR,
               payload: err.error['message']
             });
           }) ,

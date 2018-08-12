@@ -22,6 +22,10 @@ export class HeaderComponent implements OnInit {
     this.authState = this.store.select('auth');
   }
 
+  onClick() {
+    this.store.dispatch(new AuthActions.GetRole());
+  }
+
   onLogout() {
     this.store.dispatch(new AuthActions.Logout());
   }

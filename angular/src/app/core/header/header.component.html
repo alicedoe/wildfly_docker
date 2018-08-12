@@ -4,11 +4,16 @@
       <a href="#">Cahier de texte en ligne</a>
     </div>
     <div class="navbar-nav navbar-right">
-      <a routerLink="/login">Admin login</a>
+      <a routerLink="/signin">Login</a>
       <a
           style="cursor: pointer;"
           (click)="onLogout()"
           *ngIf="(authState | async).authenticated">Logout</a>
+      <a
+          style="cursor: pointer;"
+          (click)="onClick()">Click</a>
+      <p
+          *ngIf="(authState | async).role">{{(authState | async).role}}</p>
     </div>
   </div>
 </nav>
