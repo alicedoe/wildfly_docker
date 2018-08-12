@@ -72,7 +72,6 @@ public class UserEndpoint {
 	}
 	
 	@GET
-	@Actions({"read all user"})
 	@Path("/get/role/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

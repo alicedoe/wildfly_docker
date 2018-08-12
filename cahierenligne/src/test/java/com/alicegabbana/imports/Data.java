@@ -158,5 +158,17 @@ public class Data extends TestContextAbstract {
 		}
 		
 	}
+	
+	@Test
+	public void user_070_createVisitorRole()  {
+		Role role = new Role();
+		role.setName("visitor");
+		try {
+			roleService.create(role);
+		} catch (RoleException e) {
+			System.out.println(e.getCode()+" : "+e.getMessage());
+		}
+		
+	}
 
 }

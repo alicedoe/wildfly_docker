@@ -78,19 +78,20 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				throw new UserException (UserException.UNAUTHORIZED, "Wrong credits");
 			}
 			
-			UserDto userDto = daoToDto(user);
-			
-			try {
-				String token = authService.createAndReturnToken(email);
-				userDto.setToken(token);
-				return userDto;
-			} catch (KeyLengthException e) {
-				e.printStackTrace();
-				throw new UserException (UserException.INTERNAL_SERVER_ERROR, "Impossible to generate Token");
-			} catch (JOSEException e) {
-				e.printStackTrace();
-				throw new UserException (UserException.INTERNAL_SERVER_ERROR, "Impossible to generate Token");
-			}
+			UserDto userDto = daoToDto(user);			
+
+			return userDto;
+//			try {
+//				String token = authService.createAndReturnToken(email);
+//				userDto.setToken(token);
+//				return userDto;
+//			} catch (KeyLengthException e) {
+//				e.printStackTrace();
+//				throw new UserException (UserException.INTERNAL_SERVER_ERROR, "Impossible to generate Token");
+//			} catch (JOSEException e) {
+//				e.printStackTrace();
+//				throw new UserException (UserException.INTERNAL_SERVER_ERROR, "Impossible to generate Token");
+//			}
 		} catch (SettingException e) {
 			throw new SettingException(e.getCode());
 		}
@@ -199,14 +200,25 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	}
 	
 	public RoleDto getRole(String token) throws UserException, RoleException {
+		Role role;
 		try {
 			User user = getByToken(token);
-			Role role = roleService.get(user.getRole().getName());
+			role = roleService.get(user.getRole().getName());
 			return roleService.daoToDto(role);
 		} catch (UserException e) {
-			throw new UserException(e.getCode(), e.getMessage());
+			try {
+				role = roleService.get("visitor");
+				return roleService.daoToDto(role);
+			} catch (RoleException e1) {
+				throw new RoleException(e.getCode(), e.getMessage());
+			}			
 		} catch (RoleException e) {
-			throw new RoleException(e.getCode(), e.getMessage());
+			try {
+				role = roleService.get("visitor");
+				return roleService.daoToDto(role);
+			} catch (RoleException e1) {
+				throw new RoleException(e.getCode(), e.getMessage());
+			}			
 		}
 	}
 
