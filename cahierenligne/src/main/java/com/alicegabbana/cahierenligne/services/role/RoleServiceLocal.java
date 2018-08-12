@@ -11,4 +11,5 @@ import com.alicegabbana.cahierenligne.entities.Role;
 public interface RoleServiceLocal {
 	Role get(String name) throws RoleException;
 	List<RoleDto> getAll();
+	RoleDto daoToDto(Role role);
 }

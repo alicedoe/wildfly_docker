@@ -11,9 +11,7 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 
 import com.alicegabbana.cahierenligne.dto.RoleDto;
-import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.Role;
-import com.alicegabbana.cahierenligne.entities.User;
 
 @Stateless
 public class RoleService implements RoleServiceRemote, RoleServiceLocal {
@@ -50,7 +48,7 @@ public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 		return roleDtoList;
 	}
 	
-	private RoleDto daoToDto(Role role) {
+	public RoleDto daoToDto(Role role) {
 		RoleDto roleDto = new RoleDto();
 		if (role != null) {
 			if (role.getName() != null) roleDto.setName(role.getName());

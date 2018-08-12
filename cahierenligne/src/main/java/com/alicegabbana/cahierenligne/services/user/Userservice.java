@@ -13,6 +13,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.log4j.Logger;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
+import com.alicegabbana.cahierenligne.dto.RoleDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.KidsClass;
 import com.alicegabbana.cahierenligne.entities.Role;
@@ -42,10 +43,10 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	SettingServiceLocal settingService;
 	
 	@EJB
-	KidsclassServiceLocal kidsclassServiceLocal;
+	KidsclassServiceLocal kidsclassService;
 	
 	@EJB
-	RoleServiceLocal roleServiceLocal;
+	RoleServiceLocal roleService;
 
 	@PersistenceContext(unitName = "MariadbConnexion")
 	EntityManager em;
@@ -196,6 +197,18 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		}
 		throw new UserException(404, "No user with id "+id);
 	}
+	
+	public RoleDto getRole(String token) throws UserException, RoleException {
+		try {
+			User user = getByToken(token);
+			Role role = roleService.get(user.getRole().getName());
+			return roleService.daoToDto(role);
+		} catch (UserException e) {
+			throw new UserException(e.getCode(), e.getMessage());
+		} catch (RoleException e) {
+			throw new RoleException(e.getCode(), e.getMessage());
+		}
+	}
 
 	public boolean isPasswordCorrect(String email, String password) throws SettingException {
 		
@@ -239,7 +252,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		}
 		
 		try {
-			roleServiceLocal.get(newUserDto.getRoleName());
+			roleService.get(newUserDto.getRoleName());
 			try {
 				emailAvailable(newUserDto.getEmail());
 				return true;
@@ -336,7 +349,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	
 	private KidsClass getKidsClass (NewUserDto newUserDto) throws KidsclassException {
 		try {
-			KidsClass kidsClass = kidsclassServiceLocal.getByName(newUserDto.getKidsClassName());
+			KidsClass kidsClass = kidsclassService.getByName(newUserDto.getKidsClassName());
 			return kidsClass;
 		} catch (KidsclassException e) {
 			throw new KidsclassException(e.getCode(), e.getMessage());
@@ -345,7 +358,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	
 	private Role getRole (NewUserDto newUserDto) throws RoleException {
 		try {
-			Role role = roleServiceLocal.get(newUserDto.getRoleName());
+			Role role = roleService.get(newUserDto.getRoleName());
 			return role;
 		} catch (RoleException e) {
 			throw new RoleException(e.getCode(), e.getMessage());

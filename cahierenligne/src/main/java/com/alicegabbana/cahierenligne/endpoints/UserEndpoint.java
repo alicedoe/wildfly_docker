@@ -71,4 +71,13 @@ public class UserEndpoint {
 		return response;
 	}
 	
+	@GET
+	@Actions({"read all user"})
+	@Path("/get/role/{token}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response get(@PathParam("token") String token) {
+		Response response = userResponse.getRole(token);
+		return response;
+	}
 }

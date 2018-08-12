@@ -5,8 +5,10 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
+import com.alicegabbana.cahierenligne.dto.RoleDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.User;
+import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 
 import net.minidev.json.JSONObject;
@@ -19,4 +21,5 @@ public interface UserServiceLocal {
 	List<UserDto> getAll();
 	void deleteUser (Long id) throws UserException;
 	User get(Long id) throws UserException;
+	RoleDto getRole(String token) throws UserException, RoleException;
 }

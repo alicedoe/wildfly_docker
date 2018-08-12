@@ -9,9 +9,11 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
+import com.alicegabbana.cahierenligne.dto.RoleDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
+import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 
 import net.minidev.json.JSONObject;
@@ -72,12 +74,29 @@ public class UserResponse {
 		}		
 	}
 	
-	public Response get ( Long id ) {
+	public Response get( Long id ) {
 		try {
 			User user = userService.get(id);
 			return authService.returnResponse(200, user);
 		} catch (UserException e) {
 			return authService.returnResponse(404);
+		}
+	}
+	
+	public Response getRole( String token ) {
+		try {
+			RoleDto roleDto = userService.getRole(token);
+			return authService.returnResponse(200, roleDto);
+		} catch (UserException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (RoleException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
 		}
 	}
 	
