@@ -1,12 +1,19 @@
 package com.alicegabbana.cahierenligne.services.role;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
+import com.alicegabbana.cahierenligne.dto.RoleDto;
+import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.Role;
+import com.alicegabbana.cahierenligne.entities.User;
 
 @Stateless
 public class RoleService implements RoleServiceRemote, RoleServiceLocal {
@@ -18,7 +25,7 @@ public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 	
 	Logger logger = Logger.getLogger(RoleService.class);
 	
-	public Role create (Role role) throws RoleException {		
+	public Role create(Role role) throws RoleException {		
 		try {
 			get(role.getName());
 			throw new RoleException(409, "Role already created !");
@@ -34,6 +41,32 @@ public class RoleService implements RoleServiceRemote, RoleServiceLocal {
 			throw new RoleException(404, "Role "+name+" does not exist !");
 		}
 		return role;
+	}
+	
+	public List<RoleDto> getAll() {
+		TypedQuery<Role> query_roles = em.createQuery("SELECT role FROM Role role", Role.class);
+		List<Role> loadedRoles = query_roles.getResultList();
+		List<RoleDto> roleDtoList = roleListToRoleDtoList(loadedRoles);
+		return roleDtoList;
+	}
+	
+	private RoleDto daoToDto(Role role) {
+		RoleDto roleDto = new RoleDto();
+		if (role != null) {
+			if (role.getName() != null) roleDto.setName(role.getName());
+		}
+		return roleDto;
+	}
+	
+	private List<RoleDto> roleListToRoleDtoList (List<Role> roleList) {
+
+		List<RoleDto> roleDtoList = new ArrayList<RoleDto>();
+		for (Role role : roleList) {
+			RoleDto roleDto = daoToDto(role);
+			roleDtoList.add(roleDto);
+		}
+
+		return roleDtoList;
 	}
 
 //	@EJB

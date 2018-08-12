@@ -314,7 +314,6 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			if (user.getRole() != null) userDto.setRoleName(user.getRole().getName());
 			if (user.getToken() != null) userDto.setToken(user.getToken());
 		}
-
 		return userDto;
 	}
 	

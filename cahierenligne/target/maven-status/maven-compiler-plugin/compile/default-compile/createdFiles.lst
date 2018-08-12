@@ -40,6 +40,7 @@ com/alicegabbana/cahierenligne/services/role/RoleException.class
 com/alicegabbana/cahierenligne/services/user/UserServiceLocal.class
 com/alicegabbana/cahierenligne/entities/Setting.class
 com/alicegabbana/cahierenligne/entities/Level.class
+com/alicegabbana/cahierenligne/services/role/RoleResponse.class
 com/alicegabbana/cahierenligne/entities/KidsClass.class
 com/alicegabbana/cahierenligne/services/setting/SettingService.class
 com/alicegabbana/cahierenligne/dto/UserDto.class
