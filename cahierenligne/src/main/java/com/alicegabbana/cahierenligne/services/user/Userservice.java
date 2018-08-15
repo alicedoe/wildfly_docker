@@ -98,6 +98,20 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 
 	}
 	
+	public UserDto loginToken(JSONObject body) throws UserException {
+		String token = body.getAsString("token");
+				
+		User user = getByToken(token);
+		
+		if ( user == null ) {
+			throw new UserException (UserException.NOT_FOUND,"User does not exist");
+		}
+		
+		UserDto userDto = daoToDto(user);
+		return userDto;
+
+	}
+	
 	public User create(User user) throws UserException, SettingException {
 		String token = returnTokenUserByEmail(user.getEmail());
 		try {

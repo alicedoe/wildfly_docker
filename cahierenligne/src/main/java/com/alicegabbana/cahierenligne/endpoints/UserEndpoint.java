@@ -32,6 +32,15 @@ public class UserEndpoint {
 	}
 	
 	@POST
+	@Path("/login/token")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response loginToken(JSONObject body) {
+		Response response = userResponse.loginToken( body );
+		return response;
+	}
+	
+	@POST
 	@Actions({"create user"})
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)

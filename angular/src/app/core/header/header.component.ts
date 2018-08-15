@@ -20,10 +20,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authState = this.store.select('auth');
-  }
-
-  onClick() {
-    this.store.dispatch(new AuthActions.GetRole());
+    this.store.dispatch(new AuthActions.TryTokenSignin());
   }
 
   onLogout() {

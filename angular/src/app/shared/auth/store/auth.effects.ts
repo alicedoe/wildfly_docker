@@ -36,6 +36,28 @@ export class AuthEffects {
   );
 
   @Effect()
+  authTokenSignin = this.actions$
+    .ofType(AuthActions.TRY_TOKEN_SIGNIN)
+    .pipe(
+      switchMap((authData: { token: string }) => {
+        let token  =  localStorage.getItem('token');
+        return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/login/token', {
+          token : token }).pipe(map(res => res),      
+          mergeMap((authData) => {
+            console.log(authData);
+            this.router.navigate(['/']);
+            return [
+              { type: AuthActions.SIGNIN },
+              { type: AuthActions.SET_USER,
+                payload: authData } ]; }) ,
+          catchError((err: HttpErrorResponse) => {
+            return of(
+              { type: AuthActions.LOGOUT });
+          }) ,
+        )})
+  );
+
+  @Effect()
   getRole = this.actions$
     .ofType(AuthActions.GET_ROLE)
     .pipe(

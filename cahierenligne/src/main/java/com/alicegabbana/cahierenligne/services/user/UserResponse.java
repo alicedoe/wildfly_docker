@@ -46,6 +46,20 @@ public class UserResponse {
 		}
 	}
 	
+	public Response loginToken(JSONObject body) {
+		UserDto userDto;
+		
+		try {
+			userDto = userService.loginToken(body);
+			return authService.returnResponse(200, userDto);
+		} catch (UserException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		}
+	}
+	
 	public Response create(NewUserDto newUserDto) {
 		
 		try {
