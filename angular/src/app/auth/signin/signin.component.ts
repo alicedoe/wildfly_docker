@@ -3,9 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromApp from '../../store/app.reducers';
-import * as fromAuth from '../../shared/auth/store/auth.reducers';
-import * as AuthActions from '../../shared/auth/store/auth.actions';
+import * as fromApp from '../../shared/app.reducers';
+import * as fromAuth from '../store/auth.reducers';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   selector: 'app-signin',

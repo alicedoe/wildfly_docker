@@ -14,7 +14,6 @@ import * as AuthActions from '../../auth/store/auth.actions';
 export class HeaderComponent implements OnInit {
 
   authState: Observable<fromAuth.State>;
-
   constructor(private store: Store<fromApp.AppState>) {
   }
 
@@ -26,5 +25,4 @@ export class HeaderComponent implements OnInit {
   onLogout() {
     this.store.dispatch(new AuthActions.Logout());
   }
-
 }

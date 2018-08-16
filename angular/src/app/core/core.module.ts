@@ -5,11 +5,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { AdminComponent } from './header/admin/admin.component';
-// import { AuthInterceptor } from '../shared/auth/auth.interceptor';
+import { SharedModule } from '../shared/shared.module';
+// import { AuthInterceptor } from '../shared/auth.interceptor';
 
 @NgModule({
   imports: [
+    SharedModule,
     CommonModule,
     AppRoutingModule
   ],
@@ -17,7 +18,7 @@ import { AdminComponent } from './header/admin/admin.component';
     AppRoutingModule,
     HeaderComponent
   ],
-  declarations: [HeaderComponent, HomeComponent, AdminComponent],
+  declarations: [HeaderComponent, HomeComponent],
   providers: [
     // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ]

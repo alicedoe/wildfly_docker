@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-
-import { SchoolEffects } from './schools/store/school.effects';
-import { schoolReducer } from './schools/store/school.reducers';
+import { DropdownDirective } from './dropdown.directive';
 
 @NgModule({
-  imports: [
+  declarations: [
+    DropdownDirective
+    
+  ],
+  exports: [
     CommonModule,
-    StoreModule.forFeature('schools', schoolReducer),
-    EffectsModule.forFeature([SchoolEffects])
+    DropdownDirective 
   ]
 })
 export class SharedModule { }

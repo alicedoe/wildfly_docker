@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { reducers } from './shared/app.reducers';
 import { SchoolEffects } from './shared/schools/store/school.effects';
 import { AuthEffects } from './auth/store/auth.effects';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { AuthEffects } from './auth/store/auth.effects';
     AppComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     HttpClientModule,
     CoreModule,

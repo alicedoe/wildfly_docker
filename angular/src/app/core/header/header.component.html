@@ -7,12 +7,19 @@
       <a 
           routerLink="/signin"
           *ngIf="!(authState | async).authenticated">Login</a>
+      <li
+          *ngIf="(authState | async).userDto && (authState | async).userDto.roleName == 'admin'"
+          class="dropdown" appDropdown>
+        <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
+          <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
+        </ul>
+      </li>
       <a
           style="cursor: pointer;"
           (click)="onLogout()"
           *ngIf="(authState | async).authenticated">Logout</a>
-      <p
-          *ngIf="(authState | async).userDto">{{(authState | async).userDto.roleName}}</p>
     </div>
   </div>
 </nav>
