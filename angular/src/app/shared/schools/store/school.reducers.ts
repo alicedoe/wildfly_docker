@@ -1,6 +1,6 @@
 import { SchoolDto } from '../schoolDto.model';
 import * as SchoolActions from './school.actions';
-import * as fromApp from '../../../store/app.reducers';
+import * as fromApp from '../../app.reducers';
 
 export interface FeatureState extends fromApp.AppState {
   schools: State

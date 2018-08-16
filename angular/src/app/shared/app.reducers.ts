@@ -1,7 +1,7 @@
 import { ActionReducerMap } from '@ngrx/store';
 
-import * as fromSchool from '../shared/schools/store/school.reducers';
-import * as fromAuth from '../shared/auth/store/auth.reducers';
+import * as fromSchool from './schools/store/school.reducers';
+import * as fromAuth from '../auth/store/auth.reducers';
 
 export interface AppState {
   school: fromSchool.State,

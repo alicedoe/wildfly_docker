@@ -7,9 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
-import { reducers } from './store/app.reducers';
+import { reducers } from './shared/app.reducers';
 import { SchoolEffects } from './shared/schools/store/school.effects';
-import { AuthEffects } from './shared/auth/store/auth.effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 
 @NgModule({
