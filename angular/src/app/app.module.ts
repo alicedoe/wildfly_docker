@@ -11,6 +11,7 @@ import { reducers } from './shared/app.reducers';
 import { SchoolEffects } from './shared/schools/store/school.effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { SharedModule } from './shared/shared.module';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent
   ],
   imports: [
+    AdminModule,
     SharedModule,
     BrowserModule,
     HttpClientModule,
