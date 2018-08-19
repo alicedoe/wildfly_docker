@@ -46,7 +46,9 @@ export class AuthEffects {
               map(res => res) ,      
               mergeMap((authData) => { this.router.navigate(['/']);
                 return [{ type: AuthActions.SIGNIN },{ type: AuthActions.SET_USER, payload: authData } ]; }) ,
-              catchError((err: HttpErrorResponse) => { return of( { type: AuthActions.LOGOUT }); }) ,
+              catchError((err: HttpErrorResponse) => { 
+                return of( { type: AuthActions.LOGOUT });
+             }) ,
           ) //pipe
         } //if
         else { return EMPTY; }        
@@ -63,9 +65,10 @@ export class AuthEffects {
             console.log(authData);
             return { type: AuthActions.SET_ROLE, payload: authData }; }) ,
           catchError((err: HttpErrorResponse) => {
+            console.log(err);
             return of({
               type: AuthActions.ERROR,
-              payload: err.error['message']
+              payload: 'error'
             });
           }) ,
         )})

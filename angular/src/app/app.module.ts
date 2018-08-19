@@ -12,6 +12,7 @@ import { SchoolEffects } from './shared/schools/store/school.effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
+import { UserAdminEffects } from './admin/user-admin/store/userAdmin.effects';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { AdminModule } from './admin/admin.module';
     CoreModule,
     AuthModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([SchoolEffects, AuthEffects]),
+    EffectsModule.forRoot([SchoolEffects, AuthEffects, UserAdminEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
