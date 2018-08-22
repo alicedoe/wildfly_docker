@@ -55,25 +55,6 @@ export class AuthEffects {
       }) //switchMap
   );
 
-  @Effect()
-  getRole = this.actions$
-    .ofType(AuthActions.GET_ROLE)
-    .pipe(
-      switchMap((authData: { name: string }) => {
-        return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/get/role/'+localStorage.getItem('token')).pipe(map(res => res),      
-          map((authData) => {
-            console.log(authData);
-            return { type: AuthActions.SET_ROLE, payload: authData }; }) ,
-          catchError((err: HttpErrorResponse) => {
-            console.log(err);
-            return of({
-              type: AuthActions.ERROR,
-              payload: 'error'
-            });
-          }) ,
-        )})
-  );
-
   @Effect({dispatch: false})
   authLogout = this.actions$
     .ofType(AuthActions.LOGOUT)

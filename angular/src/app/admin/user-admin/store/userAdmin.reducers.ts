@@ -17,6 +17,11 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
             return {
                 ...state,
             };
+        case (UserAdminActions.SET_ALL_USERS):           
+            return {
+                ...state,
+                users: action.payload
+            };
         case (UserAdminActions.ERROR):
         return {
             ...state,

@@ -6,7 +6,6 @@ export interface State {
   authenticated: boolean;
   userDto: UserDto;
   error: string;
-  role: string;
 }
 
 const initialState: State = {
@@ -14,7 +13,6 @@ const initialState: State = {
   authenticated: false,
   userDto: null,
   error: null,
-  role: null
 };
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
@@ -59,11 +57,6 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
                     action.payload['email'],
                     action.payload['kidsClassName'])
       };
-    case (AuthActions.SET_ROLE):
-    return {
-      ...state,
-      role: action['payload'].name
-    }
     default:
       return state;
   }

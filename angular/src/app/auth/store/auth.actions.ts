@@ -9,22 +9,10 @@ export const ERROR = 'ERROR';
 export const LOGOUT = 'LOGOUT';
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_USER = 'SET_USER';
-export const GET_ROLE = 'GET_ROLE';
-export const SET_ROLE = 'SET_ROLE';
 
 export class TrySignup implements Action {
   readonly type = TRY_SIGNUP;
   constructor(public payload: {username: string, password: string}) {}
-}
-
-export class GetRole implements Action {
-  readonly type = GET_ROLE;
-  constructor() {}
-}
-
-export class SetRole implements Action {
-  readonly type = SET_ROLE;
-  constructor(public name:string) {}
 }
 
 export class TrySignin implements Action {
@@ -68,4 +56,4 @@ export class SetUser implements Action {
   constructor(public payload: string) {}
 }
 
-export type AuthActions = Signup | Signin | Logout | SetToken | TrySignup | TrySignin | SetUser | Error | SetRole;
+export type AuthActions = Signup | Signin | Logout | SetToken | TrySignup | TrySignin | SetUser | Error ;
