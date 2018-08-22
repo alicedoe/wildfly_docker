@@ -212,29 +212,6 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		}
 		throw new UserException(404, "No user with id "+id);
 	}
-	
-	public RoleDto getRole(String token) throws UserException, RoleException {
-		Role role;
-		try {
-			User user = getByToken(token);
-			role = roleService.get(user.getRole().getName());
-			return roleService.daoToDto(role);
-		} catch (UserException e) {
-			try {
-				role = roleService.get("visitor");
-				return roleService.daoToDto(role);
-			} catch (RoleException e1) {
-				throw new RoleException(e.getCode(), e.getMessage());
-			}			
-		} catch (RoleException e) {
-			try {
-				role = roleService.get("visitor");
-				return roleService.daoToDto(role);
-			} catch (RoleException e1) {
-				throw new RoleException(e.getCode(), e.getMessage());
-			}			
-		}
-	}
 
 	public boolean isPasswordCorrect(String email, String password) throws SettingException {
 		

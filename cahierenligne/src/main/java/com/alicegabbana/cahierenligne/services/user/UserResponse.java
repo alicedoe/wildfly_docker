@@ -97,21 +97,4 @@ public class UserResponse {
 		}
 	}
 	
-	public Response getRole( String token ) {
-		try {
-			RoleDto roleDto = userService.getRole(token);
-			return authService.returnResponse(200, roleDto);
-		} catch (UserException e) {
-			JsonObject jsonObject = Json.createObjectBuilder()
-					   .add("message", e.getMessage())
-					   .build();
-			return authService.returnResponse(e.getCode(), jsonObject);
-		} catch (RoleException e) {
-			JsonObject jsonObject = Json.createObjectBuilder()
-					   .add("message", e.getMessage())
-					   .build();
-			return authService.returnResponse(e.getCode(), jsonObject);
-		}
-	}
-	
 }

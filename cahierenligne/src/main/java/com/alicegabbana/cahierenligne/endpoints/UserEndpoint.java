@@ -79,13 +79,4 @@ public class UserEndpoint {
 		Response response = userResponse.delete(id);
 		return response;
 	}
-	
-	@GET
-	@Path("/get/role/{token}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("token") String token) {
-		Response response = userResponse.getRole(token);
-		return response;
-	}
 }
