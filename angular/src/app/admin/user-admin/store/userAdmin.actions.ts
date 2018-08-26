@@ -8,11 +8,11 @@ export const SET_USERS = 'SET_USERS';
 export const GET_ROLES = 'GET_ROLES';
 export const SET_ROLES = 'SET_ROLES';
 export const CREATE_USER = 'CREATE_USER';
-export const ERROR = 'ERROR';
+export const ADMIN_ERROR = 'ADMIN_ERROR';
 
 export class CreateUser implements Action {
   readonly type = CREATE_USER;
-  constructor(public payload: NewUserDto) {}
+  constructor(public newUser: NewUserDto) {}
 }
 
 export class GetRoles implements Action {
@@ -35,9 +35,9 @@ export class SetUsers implements Action {
     constructor(public payload: Array<UserDto>) {}
   }
 
-export class Error implements Action {
-  readonly type = ERROR;
+export class AdminError implements Action {
+  readonly type = ADMIN_ERROR;
   constructor(public payload: string) {}
 }
 
-export type UserAdminActions = GetUsers | Error | SetUsers | GetRoles | SetRoles | CreateUser;
+export type UserAdminActions = GetUsers | AdminError | SetUsers | GetRoles | SetRoles | CreateUser;

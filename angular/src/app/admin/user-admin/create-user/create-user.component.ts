@@ -35,10 +35,10 @@ export class CreateUserComponent implements OnInit {
       form.value.name,
       form.value.email,
       form.value.password,
-      form.value.role, 
-      null
+      form.value.role
     );
     this.store.dispatch(new UserAdminActions.CreateUser(newUser));
+    
   }
 
 }

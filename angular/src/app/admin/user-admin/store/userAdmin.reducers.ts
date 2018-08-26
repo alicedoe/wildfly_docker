@@ -16,6 +16,17 @@ const initialState: State = {
 
 export function userAdminReducers(state = initialState, action: UserAdminActions.UserAdminActions) {
     switch (action.type) {
+        case (UserAdminActions.ADMIN_ERROR):
+            switch (String(action.payload)) {
+                case '400' :  return {
+                    ...state,
+                    error: "Form not complete"
+                };
+                case '401' :  return {
+                    ...state,
+                    error: "Not authorized"
+                };
+            }
         case (UserAdminActions.GET_USERS):            
             return {
                 ...state,
@@ -34,12 +45,7 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
                 ...state,
                 roles: action.payload
             };
-        case (UserAdminActions.ERROR):
-        return {
-            ...state,
-            error: action.payload
-            };
         default:
-        return state;
+            return state;
     }
 }

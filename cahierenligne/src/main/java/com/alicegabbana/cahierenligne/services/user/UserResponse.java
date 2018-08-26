@@ -9,11 +9,9 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
-import com.alicegabbana.cahierenligne.dto.RoleDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
-import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 
 import net.minidev.json.JSONObject;

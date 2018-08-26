@@ -25,8 +25,8 @@ export class UserAdminEffects {
               ]; }) , //mergemap
             catchError((err: HttpErrorResponse) => {
                 return of({
-                    type: UserAdminAction.ERROR,
-                    payload: err.error['message']
+                    type: UserAdminAction.ADMIN_ERROR,
+                    payload: err.status
                 }); 
             }) //catcherror
           ) //pipe
@@ -47,8 +47,8 @@ export class UserAdminEffects {
               ]; }) , //mergemap
             catchError((err: HttpErrorResponse) => {
                 return of({
-                    type: UserAdminAction.ERROR,
-                    payload: err.error['message']
+                    type: UserAdminAction.ADMIN_ERROR,
+                    payload: err.status
                 }); 
             }) //catcherror
           ) //pipe
@@ -59,25 +59,24 @@ export class UserAdminEffects {
     createUser = this.actions$
       .ofType(UserAdminAction.CREATE_USER)
       .pipe(
-        switchMap((authData) => {
-          return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/add', authData['payload']).pipe(
+        switchMap((createUser) => {
+          return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/add', createUser['newUser']).pipe(
             map(res => res),
             mergeMap((authData) => {
               console.log(authData);
               return EMPTY;
             }) , //mergemap
             catchError((err: HttpErrorResponse) => {
-                return of({
-                    type: UserAdminAction.ERROR,
-                    payload: err.error['message']
-                }); 
+              return of({
+                  type: UserAdminAction.ADMIN_ERROR,
+                  payload: err.status
+              }); 
             }) //catcherror
           ) //pipe
         }) //switchmap
     );
 
   constructor(private actions$: Actions,
-    private httpClient: HttpClient,
-    private router: Router) {
+    private httpClient: HttpClient) {
   }
 }

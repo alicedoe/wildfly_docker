@@ -13,9 +13,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.log4j.Logger;
 
 import com.alicegabbana.cahierenligne.dto.NewUserDto;
-import com.alicegabbana.cahierenligne.dto.RoleDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
-import com.alicegabbana.cahierenligne.entities.KidsClass;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
@@ -246,11 +244,13 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	}
 	
 	private Boolean newUserIsCorrect(NewUserDto newUserDto) throws UserException {
-		if ( newUserDto.getRoleName() == null 
-				|| newUserDto.getName() == null 
-				|| newUserDto.getFirstname() == null 
-				|| newUserDto.getEmail() == null
-				|| newUserDto.getPwd() == null ) {
+		if ( 
+				newUserDto.getRoleName() == null || newUserDto.getRoleName().isEmpty()
+				|| newUserDto.getName() == null || newUserDto.getName().isEmpty()
+				|| newUserDto.getFirstname() == null || newUserDto.getFirstname().isEmpty()
+				|| newUserDto.getEmail() == null || newUserDto.getEmail().isEmpty()
+				|| newUserDto.getPwd() == null || newUserDto.getPwd().isEmpty()
+			) {
 			throw new UserException (UserException.BAD_REQUEST, "User "+newUserDto.toString()+" incomplete !");
 		}
 		
@@ -269,12 +269,13 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	}
 	
 	private Boolean userIsComplete(User user) throws UserException {
-		if ( user.getRole() == null 
-				|| user.getName() == null 
-				|| user.getFirstname() == null 
-				|| user.getEmail() == null
-				|| user.getToken() == null 
-				|| user.getPwd() == null ) {
+		if ( user.getRole() == null
+				|| user.getName() == null || user.getName().isEmpty() 
+				|| user.getFirstname() == null || user.getFirstname().isEmpty()
+				|| user.getEmail() == null || user.getEmail().isEmpty()
+				|| user.getToken() == null  || user.getToken().isEmpty()
+				|| user.getPwd() == null || user.getPwd().isEmpty()
+			) {
 			throw new UserException (UserException.BAD_REQUEST, "User "+user.toString()+" incomplete !");
 		}
 		return true;
@@ -324,7 +325,6 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		if (user != null) {
 			if (user.getId() != null) userDto.setId(user.getId());
 			if (user.getEmail() != null) userDto.setEmail(user.getEmail());
-			if (user.getKidsClass() != null) userDto.setKidsClassName(user.getKidsClass().getName());
 			if (user.getName() != null) userDto.setName(user.getName());
 			if (user.getFirstname() != null) userDto.setFirstname(user.getFirstname());
 			if (user.getRole() != null) userDto.setRoleName(user.getRole().getName());
@@ -339,24 +339,11 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 		user.setEmail(newUserDto.getEmail());
 		
-		if (newUserDto.getKidsClassName() != null) {
-			user.setKidsClass(getKidsClass(newUserDto));	
-		}	
-		
 		user.setName(newUserDto.getName());
 		user.setFirstname(newUserDto.getFirstname());
 		user.setRole(getRole(newUserDto));
 		
 		return user;
-	}
-	
-	private KidsClass getKidsClass (NewUserDto newUserDto) throws KidsclassException {
-		try {
-			KidsClass kidsClass = kidsclassService.getByName(newUserDto.getKidsClassName());
-			return kidsClass;
-		} catch (KidsclassException e) {
-			throw new KidsclassException(e.getCode(), e.getMessage());
-		}
 	}
 	
 	private Role getRole (NewUserDto newUserDto) throws RoleException {

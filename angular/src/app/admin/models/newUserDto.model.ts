@@ -3,7 +3,6 @@ export class NewUserDto {
 	public firstname: string;
 	public name: string;
 	public email: string;
-	public kidsClassName: string;
 	public pwd: string;
 	
 	constructor(
@@ -11,14 +10,12 @@ export class NewUserDto {
 		name: string,
 		email: string,
 		pwd: string, 
-		roleName: string, 
-		kidsClassName: string
+		roleName: string
 	) {
 		this.roleName = roleName;
 		this.firstname = firstname;
 		this.name = name;
 		this.email = email;
-		this.kidsClassName = kidsClassName;
 		this.pwd = pwd;
 	}
 }

@@ -46,6 +46,7 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(NewUserDto newUserDto) {
+		System.out.println(newUserDto);
 		Response response = userResponse.create( newUserDto );
 		return response;
 	}

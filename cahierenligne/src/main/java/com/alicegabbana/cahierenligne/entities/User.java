@@ -27,8 +27,6 @@ public class User implements Serializable {
 	private String name;
 	@NotNull
 	private String email;
-	@ManyToOne
-	private KidsClass kidsClass;
 	@NotNull
 	private String pwd;
 	@NotNull
@@ -64,12 +62,6 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public KidsClass getKidsClass() {
-		return kidsClass;
-	}
-	public void setKidsClass(KidsClass kidsClass) {
-		this.kidsClass = kidsClass;
-	}
 	public String getPwd() {
 		return pwd;
 	}
@@ -85,6 +77,6 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", role=" + role + ", firstname=" + firstname + ", name=" + name + ", email=" + email
-				+ ", kidsClass=" + kidsClass + ", pwd=" + pwd + ", token=" + token + "]";
+				+ ", pwd=" + pwd + ", token=" + token + "]";
 	}
 }

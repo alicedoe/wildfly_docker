@@ -48,15 +48,14 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         token: action.payload
       };
     case (AuthActions.SET_USER):
-    return {
-      ...state,
-      userDto: new UserDto(action.payload['id'], 
-                    action.payload['roleName'], 
-                    action.payload['firstname'], 
-                    action.payload['name'], 
-                    action.payload['email'],
-                    action.payload['kidsClassName'])
-      };
+      return {
+        ...state,
+        userDto: new UserDto(action.payload['id'], 
+                      action.payload['roleName'], 
+                      action.payload['firstname'], 
+                      action.payload['name'], 
+                      action.payload['email'])
+        };
     default:
       return state;
   }
