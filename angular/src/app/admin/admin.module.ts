@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { SchoolAdminComponent } from './school-admin/school-admin.component';
 import { HomeworkAdminComponent } from './homework-admin/homework-admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { CreateUserComponent } from './user-admin/create-user/create-user.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ],
   declarations: [
     UserAdminComponent, 
     SchoolAdminComponent, 
-    HomeworkAdminComponent]
+    HomeworkAdminComponent, CreateUserComponent]
 })
 export class AdminModule { }

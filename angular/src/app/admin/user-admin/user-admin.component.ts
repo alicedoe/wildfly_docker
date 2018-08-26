@@ -20,7 +20,7 @@ export class UserAdminComponent implements OnInit {
 
   ngOnInit() {
     this.userAdminState = this.store.select('userAdmin');
-    this.store.dispatch(new UserAdminActions.GetAllUsers());
+    this.store.dispatch(new UserAdminActions.GetUsers());
     this.userAdminState.subscribe(res => {
       this.users = res.users;
     })
