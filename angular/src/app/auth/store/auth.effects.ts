@@ -18,7 +18,6 @@ export class AuthEffects {
           username : authData.username,
           password : authData.password }).pipe(map(res => res),      
           mergeMap((authData) => {
-            console.log(authData);
             this.router.navigate(['/']);
             return [
               { type: AuthActions.SIGNIN },
