@@ -76,6 +76,27 @@ export class UserAdminEffects {
         }) //switchmap
     );
 
+    @Effect()
+    deleteUser = this.actions$
+      .ofType(UserAdminAction.DELETE_USER)
+      .pipe(
+        switchMap((authData: { id: number }) => {
+          return this.httpClient.delete('http://172.17.0.3:8080/application/v1/user/delete/'+authData.id).pipe(
+            map(res => res),
+            mergeMap((authData) => {
+              console.log(authData);
+              return EMPTY;
+            }) , //mergemap
+            catchError((err: HttpErrorResponse) => {
+              return of({
+                  type: UserAdminAction.ADMIN_ERROR,
+                  payload: err.status
+              }); 
+            }) //catcherror
+          ) //pipe
+        }) //switchmap
+    );
+
   constructor(private actions$: Actions,
     private httpClient: HttpClient) {
   }

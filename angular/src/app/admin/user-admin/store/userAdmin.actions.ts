@@ -8,7 +8,13 @@ export const SET_USERS = 'SET_USERS';
 export const GET_ROLES = 'GET_ROLES';
 export const SET_ROLES = 'SET_ROLES';
 export const CREATE_USER = 'CREATE_USER';
+export const DELETE_USER = 'DELETE_USER';
 export const ADMIN_ERROR = 'ADMIN_ERROR';
+
+export class DeleteUser implements Action {
+  readonly type = DELETE_USER;
+  constructor(public id: number) {}
+}
 
 export class CreateUser implements Action {
   readonly type = CREATE_USER;
@@ -40,4 +46,4 @@ export class AdminError implements Action {
   constructor(public payload: string) {}
 }
 
-export type UserAdminActions = GetUsers | AdminError | SetUsers | GetRoles | SetRoles | CreateUser;
+export type UserAdminActions = GetUsers | AdminError | SetUsers | GetRoles | SetRoles | CreateUser | DeleteUser;
