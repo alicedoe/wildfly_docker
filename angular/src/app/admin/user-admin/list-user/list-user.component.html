@@ -1,5 +1,8 @@
 <ul>
   <li *ngFor="let user of users">
     {{user.id}} / {{user.name}}
+    <a
+          style="cursor: pointer;"
+          (click)="onDeleteUser(user.id)">X</a>
   </li>
 </ul>

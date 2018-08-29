@@ -26,4 +26,8 @@ export class ListUserComponent implements OnInit {
     })
   }
 
+  onDeleteUser(id:number) {
+    this.store.dispatch(new UserAdminActions.DeleteUser(id));
+  }
+
 }
