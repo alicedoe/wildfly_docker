@@ -7,7 +7,6 @@ public class UserDto {
 		private String firstname;
 		private String name;
 		private String email;
-		private String kidsClassName;
 		private String token;
 		
 		public Long getId() {
@@ -40,12 +39,6 @@ public class UserDto {
 		public void setEmail(String email) {
 			this.email = email;
 		}
-		public String getKidsClassName() {
-			return kidsClassName;
-		}
-		public void setKidsClassName(String kidsClassName) {
-			this.kidsClassName = kidsClassName;
-		}
 		public String getToken() {
 			return token;
 		}
@@ -56,6 +49,6 @@ public class UserDto {
 		@Override
 		public String toString() {
 			return "UserDto [id=" + id + ", roleName=" + roleName + ", firstname=" + firstname + ", name=" + name
-					+ ", email=" + email + ", kidsClassName=" + kidsClassName + ", token=" + token + "]";
+					+ ", email=" + email + ", token=" + token + "]";
 		}
 }
