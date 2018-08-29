@@ -12,6 +12,7 @@ import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
+import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 
 import net.minidev.json.JSONObject;
@@ -64,6 +65,16 @@ public class UserResponse {
 			UserDto userDto = userService.create(newUserDto);
 			return authService.returnResponse(200, userDto);
 		} catch (UserException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (RoleException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (SettingException e) {
 			JsonObject jsonObject = Json.createObjectBuilder()
 					   .add("message", e.getMessage())
 					   .build();

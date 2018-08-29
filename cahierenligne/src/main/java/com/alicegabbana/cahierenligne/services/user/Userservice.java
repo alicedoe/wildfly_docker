@@ -136,7 +136,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 	}
 	
-	public UserDto create(NewUserDto newUserDto) throws UserException {
+	public UserDto create(NewUserDto newUserDto) throws UserException, RoleException, SettingException {
 		
 		try {
 			newUserIsCorrect(newUserDto);
@@ -148,8 +148,12 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			User usercreated = em.merge(user);
 			UserDto userDto = daoToDto(usercreated);
 			return userDto;
-		} catch (Exception e) {
-			throw new UserException(UserException.BAD_REQUEST, e.getMessage());
+		} catch (UserException e) {
+			throw new UserException(e.getCode(), e.getMessage());
+		} catch (RoleException e) {
+			throw new RoleException(e.getCode(), e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode(), e.getMessage());
 		}
 		
 	}
@@ -256,15 +260,16 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 		try {
 			roleService.get(newUserDto.getRoleName());
-			try {
-				emailAvailable(newUserDto.getEmail());
-				return true;
-			} catch (UserException e) {
-				throw new UserException(UserException.CONFLICT, e.getMessage());
-			}
 		} catch (Exception e) {
 			throw new UserException(UserException.NOT_FOUND, e.getMessage());
-		}	
+		}
+		
+		try {
+			emailAvailable(newUserDto.getEmail());
+			return true;
+		} catch (UserException e) {
+			throw new UserException(UserException.CONFLICT, e.getMessage());
+		}
 		
 	}
 	
@@ -333,7 +338,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return userDto;
 	}
 	
-	private User dtoToDao(NewUserDto newUserDto) throws UserException, KidsclassException, RoleException {
+	private User dtoToDao(NewUserDto newUserDto) throws UserException, RoleException {
 		
 		User user = new User();
 		
