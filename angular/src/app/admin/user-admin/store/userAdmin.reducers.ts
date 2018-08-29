@@ -26,6 +26,10 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
                     ...state,
                     error: "Not authorized"
                 };
+                case '409' :  return {
+                    ...state,
+                    error: "Conflict"
+                };
             }
         case (UserAdminActions.GET_USERS):            
             return {
