@@ -7,6 +7,7 @@ import { SchoolAdminComponent } from './school-admin/school-admin.component';
 import { HomeworkAdminComponent } from './homework-admin/homework-admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CreateUserComponent } from './user-admin/create-user/create-user.component';
+import { ListUserComponent } from './user-admin/list-user/list-user.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { CreateUserComponent } from './user-admin/create-user/create-user.compon
   declarations: [
     UserAdminComponent, 
     SchoolAdminComponent, 
-    HomeworkAdminComponent, CreateUserComponent]
+    HomeworkAdminComponent, CreateUserComponent, ListUserComponent]
 })
 export class AdminModule { }
