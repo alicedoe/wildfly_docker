@@ -17,7 +17,6 @@ import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
-import com.alicegabbana.cahierenligne.services.kidsclass.KidsclassException;
 import com.alicegabbana.cahierenligne.services.kidsclass.KidsclassServiceLocal;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.role.RoleServiceLocal;
@@ -256,6 +255,10 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				|| newUserDto.getPwd() == null || newUserDto.getPwd().isEmpty()
 			) {
 			throw new UserException (UserException.BAD_REQUEST, "User "+newUserDto.toString()+" incomplete !");
+		}
+		
+		if ( !emailFormatCorrect(newUserDto.getEmail()) ) {
+			throw new UserException(UserException.BAD_REQUEST, "Wrong email format");
 		}
 		
 		try {
