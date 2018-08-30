@@ -5,8 +5,9 @@ import {map, switchMap, mergeMap, tap, catchError} from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import * as UserAdminAction from './userAdmin.actions';
-import { of, EMPTY } from 'rxjs';
+import { of, EMPTY, defer, Observable } from 'rxjs';
 import { NewUserDto } from '../../models/newUserDto.model';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Injectable()
 export class UserAdminEffects {
@@ -64,7 +65,11 @@ export class UserAdminEffects {
             map(res => res),
             mergeMap((authData) => {
               console.log(authData);
-              return EMPTY;
+              return [{
+                type: UserAdminAction.GET_USERS
+              },{
+                type: UserAdminAction.SET_USERS
+              }]
             }) , //mergemap
             catchError((err: HttpErrorResponse) => {
               return of({
@@ -85,10 +90,15 @@ export class UserAdminEffects {
             map(res => res),
             mergeMap((authData) => {
               console.log(authData);
-              return EMPTY;
+              return [{
+                  type: UserAdminAction.GET_USERS
+                },{
+                  type: UserAdminAction.SET_USERS
+                }];              
             }) , //mergemap
             catchError((err: HttpErrorResponse) => {
-              return of({
+              return of(
+                {
                   type: UserAdminAction.ADMIN_ERROR,
                   payload: err.status
               }); 

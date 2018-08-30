@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { SchoolAdminComponent } from './school-admin/school-admin.component';
@@ -13,7 +13,8 @@ import { ListUserComponent } from './user-admin/list-user/list-user.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     UserAdminComponent, 

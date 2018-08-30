@@ -35,7 +35,8 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
             return {
                 ...state,
             };
-        case (UserAdminActions.SET_USERS):           
+        case (UserAdminActions.SET_USERS):   
+        console.log(action.payload)        
             return {
                 ...state,
                 users: action.payload
