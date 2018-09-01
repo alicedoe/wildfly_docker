@@ -196,14 +196,14 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	
 	public void deleteUser (Long id) throws UserException {
 		try {
-			User user = get(id);
+			User user = getUser(id);
 			em.remove(user);
 		} catch (UserException e) {
 			throw new UserException(e.getCode(), e.getMessage());
 		}
 	}
 	
-	public User get(Long id) throws UserException {
+	public User getUser(Long id) throws UserException {
 		TypedQuery<User> query_id = em.createQuery("SELECT user FROM User user WHERE user.id = :id", User.class)
 				.setParameter("id", id);
 		List<User> loadedUsers = query_id.getResultList();
@@ -212,6 +212,16 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			return loadedUsers.get(0);
 		}
 		throw new UserException(404, "No user with id "+id);
+	}
+	
+	public UserDto getUserDto(Long id) throws UserException {		
+		try {
+			User user = getUser(id);
+			UserDto userDto = daoToDto(user);
+			return userDto;
+		} catch ( UserException e) {
+			throw new UserException(e.getCode(), e.getMessage());
+		}		
 	}
 
 	public boolean isPasswordCorrect(String email, String password) throws SettingException {

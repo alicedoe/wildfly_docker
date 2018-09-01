@@ -99,8 +99,8 @@ public class UserResponse {
 	
 	public Response get( Long id ) {
 		try {
-			User user = userService.get(id);
-			return authService.returnResponse(200, user);
+			UserDto userDto = userService.getUserDto(id);
+			return authService.returnResponse(200, userDto);
 		} catch (UserException e) {
 			return authService.returnResponse(404);
 		}
