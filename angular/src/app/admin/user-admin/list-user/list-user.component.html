@@ -1,8 +1,11 @@
-<ul>
+<ul>  
   <li *ngFor="let user of (userAdminState | async).users">
-    {{user.id}} / {{user.name}}
     <a
-          style="cursor: pointer;"
-          (click)="onDeleteUser(user.id)">X</a>
+      style="cursor: pointer;"
+      (click)="onGetUser(user.id)">
+    {{user.id}} / {{user.name}}</a>
+    <a
+      style="cursor: pointer;"
+      (click)="onDeleteUser(user.id)">X</a>
   </li>
 </ul>

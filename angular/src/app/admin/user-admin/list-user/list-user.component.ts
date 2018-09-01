@@ -30,4 +30,8 @@ export class ListUserComponent implements OnInit {
     this.store.dispatch(new UserAdminActions.DeleteUser(id));
   }
 
+  onGetUser(id:number) {
+    this.store.dispatch(new UserAdminActions.GetUser(id));
+  }
+
 }

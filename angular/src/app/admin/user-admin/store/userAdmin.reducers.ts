@@ -6,17 +6,19 @@ export interface State {
     users: Array<UserDto>,
     roles: Array<RoleDto>,
     error: string;
+    user: UserDto;
   }
 
 const initialState: State = {
     users: null,
     roles: null,
-    error: null
+    error: null,
+    user: null
 };
 
 export function userAdminReducers(state = initialState, action: UserAdminActions.UserAdminActions) {
     switch (action.type) {
-        case (UserAdminActions.ADMIN_ERROR):
+        case (UserAdminActions.AU_ADMIN_ERROR):
             switch (String(action.payload)) {
                 case '400' :  return {
                     ...state,
@@ -31,21 +33,25 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
                     error: "Conflict"
                 };
             }
-        case (UserAdminActions.GET_USERS):            
+        case (UserAdminActions.AU_GET_USERS):            
             return {
                 ...state,
             };
-        case (UserAdminActions.SET_USERS):   
-        console.log(action.payload)        
+        case (UserAdminActions.AU_SET_USER):
+            return {
+                ...state,
+                user: action.payload
+            };
+        case (UserAdminActions.AU_SET_USERS):       
             return {
                 ...state,
                 users: action.payload
             };
-        case (UserAdminActions.GET_ROLES):            
+        case (UserAdminActions.AU_GET_ROLES):            
             return {
                 ...state,
             };
-        case (UserAdminActions.SET_ROLES):           
+        case (UserAdminActions.AU_SET_ROLES):           
             return {
                 ...state,
                 roles: action.payload

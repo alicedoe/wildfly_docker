@@ -17,14 +17,14 @@ const initialState: State = {
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
   switch (action.type) {
-    case (AuthActions.SIGNUP):
-    case (AuthActions.SIGNIN):
+    case (AuthActions.AUTH_SIGNUP):
+    case (AuthActions.AUTH_SIGNIN):
       return {
         ...state,
         authenticated: true,
         error: null
       };
-    case (AuthActions.ERROR):
+    case (AuthActions.AUTH_ERROR):
       return {
         ...state,
         token: null,
@@ -32,7 +32,7 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         userDto: null,
         error: action.payload
       };
-    case (AuthActions.LOGOUT):
+    case (AuthActions.AUTH_LOGOUT):
       localStorage.removeItem('token');
       return {
         ...state,
@@ -41,13 +41,13 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         userDto: null,
         error: null
       };
-    case (AuthActions.SET_TOKEN):
+    case (AuthActions.AUTH_SET_TOKEN):
       localStorage.setItem('token', action.payload);    
       return {
         ...state,
         token: action.payload
       };
-    case (AuthActions.SET_USER):
+    case (AuthActions.AUTH_SET_USER):
       return {
         ...state,
         userDto: new UserDto(action.payload['id'], 

@@ -11,7 +11,7 @@ import { of, EMPTY } from 'rxjs';
 export class AuthEffects {
   @Effect()
   authSignin = this.actions$
-    .ofType(AuthActions.TRY_SIGNIN)
+    .ofType(AuthActions.AUTH_TRY_SIGNIN)
     .pipe(map((action: AuthActions.TrySignin) => { return action.payload; }) ,
       switchMap((authData: { username: string, password: string }) => {
         return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/login/', {
@@ -20,14 +20,14 @@ export class AuthEffects {
           mergeMap((authData) => {
             this.router.navigate(['/']);
             return [
-              { type: AuthActions.SIGNIN },
-              { type: AuthActions.SET_TOKEN,
+              { type: AuthActions.AUTH_SIGNIN },
+              { type: AuthActions.AUTH_SET_TOKEN,
                 payload: authData['token'] },
-              { type: AuthActions.SET_USER,
+              { type: AuthActions.AUTH_SET_USER,
                 payload: authData } ]; }) ,
           catchError((err: HttpErrorResponse) => {
             return of({
-              type: AuthActions.ERROR,
+              type: AuthActions.AUTH_ERROR,
               payload: err.error['message']
             });
           }) ,
@@ -36,7 +36,7 @@ export class AuthEffects {
 
   @Effect()
   authTokenSignin = this.actions$
-    .ofType(AuthActions.TRY_TOKEN_SIGNIN)
+    .ofType(AuthActions.AUTH_TRY_TOKEN_SIGNIN)
     .pipe(
       switchMap((authData: { token: string }) => {
         if (localStorage.getItem('token')) {
@@ -44,9 +44,9 @@ export class AuthEffects {
           return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/login/token', { token : token }).pipe( 
               map(res => res) ,      
               mergeMap((authData) => { this.router.navigate(['/']);
-                return [{ type: AuthActions.SIGNIN },{ type: AuthActions.SET_USER, payload: authData } ]; }) ,
+                return [{ type: AuthActions.AUTH_SIGNIN },{ type: AuthActions.AUTH_SET_USER, payload: authData } ]; }) ,
               catchError((err: HttpErrorResponse) => { 
-                return of( { type: AuthActions.LOGOUT });
+                return of( { type: AuthActions.AUTH_LOGOUT });
              }) ,
           ) //pipe
         } //if
@@ -56,7 +56,7 @@ export class AuthEffects {
 
   @Effect({dispatch: false})
   authLogout = this.actions$
-    .ofType(AuthActions.LOGOUT)
+    .ofType(AuthActions.AUTH_LOGOUT)
     .pipe(tap(() => {
       this.router.navigate(['/']);
     }));

@@ -3,7 +3,7 @@ export class UserDto {
   public roleName: string;
   public firstName: string;
   public name: string;
-  public email: string
+  public email: string;
 
   constructor(
     id: number, 
