@@ -7,7 +7,7 @@ import * as fromApp from '../../../shared/app.reducers';
 import * as fromUserAdmin from '../store/userAdmin.reducers';
 import * as UserAdminActions from '../store/userAdmin.actions';
 import { RoleDto } from '../../models/roleDto.model';
-import { NewUserDto } from '../../models/newUserDto.model';
+import { UserDto } from '../../../shared/models/userDto.model';
 
 @Component({
   selector: 'app-create-user',
@@ -19,16 +19,15 @@ export class CreateUserComponent implements OnInit {
   roles: Array<RoleDto>;
   userAdminState: Observable<fromUserAdmin.State>;
   userForm: FormGroup;
+  editMode: boolean;
+  userToEdit: UserDto;
 
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
+    this.editMode = false;
     this.userAdminState = this.store.select('userAdmin');
     this.store.dispatch(new UserAdminActions.GetRoles());
-    this.userAdminState.subscribe(res => {
-      this.roles = res.roles;
-    })
-
     this.userForm = new FormGroup({
       'name': new FormControl( '', Validators.required ),
       'firstname': new FormControl( '', Validators.required ),
@@ -36,18 +35,40 @@ export class CreateUserComponent implements OnInit {
       'role': new FormControl( '', Validators.required ),
       'password': new FormControl( '', Validators.required )
     });
+    this.userAdminState.subscribe(res => {
+      this.roles = res.roles;
+      this.editMode = res.edit;
+      this.userToEdit = res.user;
+      if (res.user) {
+        this.userForm.get('firstname').setValue(res.user.firstname);
+        this.userForm.get('name').setValue(res.user.name);
+        this.userForm.get('email').setValue(res.user.email);
+        this.userForm.get('role').setValue(res.user.roleName);
+      }
+    })
   }
 
-  onCreateUser() {
+  onSaveUser() {
     
-    let newUser = new NewUserDto(
+    let newUser = new UserDto(
+      null,
       this.userForm.value['firstname'],
       this.userForm.value['name'],
       this.userForm.value['email'],
       this.userForm.value['password'],
       this.userForm.value['role']
     );
-    this.store.dispatch(new UserAdminActions.CreateUser(newUser));
+
+    if ( this.editMode ) {
+      newUser.id = this.userToEdit.id;
+      this.store.dispatch(new UserAdminActions.SaveUser(newUser));
+    } else this.store.dispatch(new UserAdminActions.CreateUser(newUser));
+    
+  }
+
+  onCancel() {
+    
+    
     
   }
 

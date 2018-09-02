@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -46,9 +47,17 @@ public class UserEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(UserDto userDto) {
-		System.out.println(userDto.toString());
 		Response response = userResponse.create( userDto );
-		System.out.println(response.getEntity());
+		return response;
+	}
+	
+	@PUT
+	@Actions({"update all user"})
+	@Path("/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateUser(UserDto userDto) {
+		Response response = userResponse.update( userDto );
 		return response;
 	}
 	

@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
-import { UserDto } from '../../../shared/models/userDto.model';
 import { RoleDto } from '../../models/roleDto.model';
-import { NewUserDto } from '../../models/newUserDto.model';
+import { UserDto } from '../../../shared/models/userDto.model';
 
 export const AU_GET_USER = 'AU_GET_USER';
 export const AU_EDIT_USER = 'AU_EDIT_USER';
@@ -17,7 +16,7 @@ export const AU_ADMIN_ERROR = 'AU_ADMIN_ERROR';
 
 export class SaveUser implements Action {
   readonly type = AU_SAVE_USER;
-  constructor(public id: number) {}
+  constructor(public newUser: UserDto) {}
 }
 
 export class DeleteUser implements Action {
@@ -27,7 +26,7 @@ export class DeleteUser implements Action {
 
 export class CreateUser implements Action {
   readonly type = AU_CREATE_USER;
-  constructor(public newUser: NewUserDto) {}
+  constructor(public newUser: UserDto) {}
 }
 
 export class GetRoles implements Action {

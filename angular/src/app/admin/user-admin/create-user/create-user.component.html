@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
     <p *ngIf="(userAdminState | async).error">{{ (userAdminState | async).error }}</p>
-    <form [formGroup]="userForm" (ngSubmit)="onCreateUser()">
+    
+    <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
       <div class="form-group">
         <label for="firstname">First Name</label>
         <input type="text" id="firstname" name="firstname" formControlName="firstname" class="form-control">
@@ -25,10 +26,14 @@
           formControlName="password"
           class="form-control">
       </div>
-      <button
+      <button *ngIf="!editMode"
             type="submit"
             class="btn btn-success"
             [disabled]="!userForm.valid">Create user</button>
+      <button *ngIf="editMode"
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!userForm.valid">Edit user</button>
     </form>
   </div>
 </div>

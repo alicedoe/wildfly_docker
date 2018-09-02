@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import * as UserAdminAction from './userAdmin.actions';
 import { of } from 'rxjs';
+import { UserDto } from '../../../shared/models/userDto.model';
 
 @Injectable()
 export class UserAdminEffects {
@@ -52,8 +53,7 @@ export class UserAdminEffects {
           mergeMap((authData) => {
             return [
               { type: UserAdminAction.AU_SET_USER,
-                payload: authData },
-              { type: UserAdminAction.AU_EDIT_USER }
+                payload: authData }
             ]; }) , // mergemap
           catchError((err: HttpErrorResponse) => {
               return of({
@@ -68,15 +68,15 @@ export class UserAdminEffects {
   saveUser$ = this.actions$
     .ofType(UserAdminAction.AU_SAVE_USER)
     .pipe(
-      switchMap((authData: { id: number }) => {
-        return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/get/'+authData.id)        
+      switchMap((authData: { newUser: UserDto }) => {
+        return this.httpClient.put('http://172.17.0.3:8080/application/v1/user/update/', authData.newUser)        
         .pipe(
           map(res => res),
           mergeMap((authData) => {
+            console.log(authData);
             return [
-              { type: UserAdminAction.AU_SET_USER,
-                payload: authData },
-              { type: UserAdminAction.AU_EDIT_USER }
+              // { type: UserAdminAction.AU_SAVE_USER,
+              //   payload: authData }
             ]; }) , // mergemap
           catchError((err: HttpErrorResponse) => {
               return of({
@@ -116,8 +116,7 @@ export class UserAdminEffects {
       switchMap((createUser) => {
         return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/add', createUser['newUser']).pipe(
           map(res => res),
-          mergeMap((authData) => {
-            console.log(authData);
+          mergeMap(() => {
             return [{
               type: UserAdminAction.AU_GET_USERS
             },{
@@ -141,8 +140,7 @@ export class UserAdminEffects {
       switchMap((authData: { id: number }) => {
         return this.httpClient.delete('http://172.17.0.3:8080/application/v1/user/delete/'+authData.id).pipe(
           map(res => res),
-          mergeMap((authData) => {
-            console.log(authData);
+          mergeMap(() => {
             return [{
                 type: UserAdminAction.AU_GET_USERS
               },{

@@ -35,7 +35,7 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
                     error: "Conflict"
                 };
             }
-        case (UserAdminActions.AU_EDIT_USER):            
+        case (UserAdminActions.AU_EDIT_USER):       
             return {
                 ...state,
                 edit: true

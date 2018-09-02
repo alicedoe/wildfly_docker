@@ -16,6 +16,7 @@ public interface UserServiceLocal {
 	UserDto login (JSONObject body) throws UserException, SettingException;
 	UserDto loginToken(JSONObject body) throws UserException;
 	UserDto create(UserDto userDto) throws UserException, RoleException, SettingException;
+	UserDto update(UserDto userDto) throws UserException, RoleException, SettingException;
 	User getByToken (String token) throws UserException;
 	List<UserDto> getAll();
 	void deleteUser (Long id) throws UserException;

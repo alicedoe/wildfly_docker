@@ -141,7 +141,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		}
 		
 		try {
-			userFieldsAreNotEmpty(userDto);
+			userFieldsAreNotEmpty(userDto, false);
 			userEmailIsCorrect(userDto);
 			userRoleIsCorrect(userDto);
 			userEmailIsAvailable(userDto);			
@@ -173,7 +173,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		String token = oldUser.getToken();
 		
 		try {
-			userFieldsAreNotEmpty(userDto);
+			userFieldsAreNotEmpty(userDto, true);
 			userEmailIsCorrect(userDto);
 			userRoleIsCorrect(userDto);
 			if ( !oldUser.getEmail().equals(userDto.getEmail())) {
@@ -296,13 +296,19 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return userDtoList;
 	}
 	
-	private Boolean userFieldsAreNotEmpty(UserDto userDto) throws UserException {
+	private Boolean userFieldsAreNotEmpty(UserDto userDto, boolean update) throws UserException {
 		if ( 
 				userDto.getRoleName() == null || userDto.getRoleName().isEmpty()
 				|| userDto.getName() == null || userDto.getName().isEmpty()
 				|| userDto.getFirstname() == null || userDto.getFirstname().isEmpty()
 				|| userDto.getEmail() == null || userDto.getEmail().isEmpty()
 				|| userDto.getPwd() == null || userDto.getPwd().isEmpty()
+			) {
+			throw new UserException (UserException.BAD_REQUEST, "User "+userDto.toString()+" incomplete !");
+		}
+		
+		if ( 
+				!update && ( userDto.getPwd() == null || userDto.getPwd().isEmpty() )
 			) {
 			throw new UserException (UserException.BAD_REQUEST, "User "+userDto.toString()+" incomplete !");
 		}
@@ -403,6 +409,8 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 	private User dtoToDao(UserDto userDto) throws UserException, RoleException {
 		
 		User user = new User();
+		
+		if (userDto.getId() != null) user.setId(userDto.getId());
 		
 		user.setEmail(userDto.getEmail());
 		

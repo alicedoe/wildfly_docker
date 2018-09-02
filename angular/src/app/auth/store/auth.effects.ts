@@ -43,9 +43,13 @@ export class AuthEffects {
           let token  =  localStorage.getItem('token');
           return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/login/token', { token : token }).pipe( 
               map(res => res) ,      
-              mergeMap((authData) => { this.router.navigate(['/']);
-                return [{ type: AuthActions.AUTH_SIGNIN },{ type: AuthActions.AUTH_SET_USER, payload: authData } ]; }) ,
-              catchError((err: HttpErrorResponse) => { 
+              mergeMap((authData) => {
+                this.router.navigate(['/']);
+                return [{ type: AuthActions.AUTH_SIGNIN },
+                  { type: AuthActions.AUTH_SET_TOKEN,
+                    payload: token },
+                  { type: AuthActions.AUTH_SET_USER, payload: authData } ]; }) ,
+              catchError(() => { 
                 return of( { type: AuthActions.AUTH_LOGOUT });
              }) ,
           ) //pipe

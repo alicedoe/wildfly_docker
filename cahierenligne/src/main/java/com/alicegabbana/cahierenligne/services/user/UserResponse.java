@@ -81,6 +81,31 @@ public class UserResponse {
 		
 	}
 	
+	public Response update(UserDto userDto) {
+		
+		try {
+			UserDto userUpdatedDto = userService.update(userDto);
+			System.out.println(userUpdatedDto);
+			return authService.returnResponse(200, userUpdatedDto);
+		} catch (UserException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (RoleException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		} catch (SettingException e) {
+			JsonObject jsonObject = Json.createObjectBuilder()
+					   .add("message", e.getMessage())
+					   .build();
+			return authService.returnResponse(e.getCode(), jsonObject);
+		}			
+		
+	}
+	
 	public Response getAll() {
 		List<UserDto> allUser =  userService.getAll();
 		return authService.returnResponse(200, allUser);

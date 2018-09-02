@@ -2,7 +2,7 @@
   <li *ngFor="let user of (userAdminState | async).users">
     <a
       style="cursor: pointer;"
-      (click)="onGetUser(user.id)">
+      (click)="onEditUser(user.id)">
     {{user.id}} / {{user.name}}</a>
     <a
       style="cursor: pointer;"
