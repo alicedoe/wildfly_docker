@@ -1,4 +1,4 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
@@ -18,7 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
         switchMap((authState: fromAuth.State) => {
             if (localStorage.getItem('token')) {
                 const copiedReq = req.clone({
-                    headers: req.headers.set('Token', localStorage.getItem('token'))
+                    headers: new HttpHeaders({'Token': localStorage.getItem('token')
+                  , 'Content-Type':'application/json; charset=utf-8'})
                   });
                 return next.handle(copiedReq);
             }

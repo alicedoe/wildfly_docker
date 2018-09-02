@@ -4,6 +4,8 @@ import { RoleDto } from '../../models/roleDto.model';
 import { NewUserDto } from '../../models/newUserDto.model';
 
 export const AU_GET_USER = 'AU_GET_USER';
+export const AU_EDIT_USER = 'AU_EDIT_USER';
+export const AU_SAVE_USER = 'AU_SAVE_USER';
 export const AU_GET_USERS = 'AU_GET_USERS';
 export const AU_SET_USERS = 'AU_SET_USERS';
 export const AU_SET_USER = 'AU_SET_USER';
@@ -12,6 +14,11 @@ export const AU_SET_ROLES = 'AU_SET_ROLES';
 export const AU_CREATE_USER = 'AU_CREATE_USER';
 export const AU_DELETE_USER = 'AU_DELETE_USER';
 export const AU_ADMIN_ERROR = 'AU_ADMIN_ERROR';
+
+export class SaveUser implements Action {
+  readonly type = AU_SAVE_USER;
+  constructor(public id: number) {}
+}
 
 export class DeleteUser implements Action {
   readonly type = AU_DELETE_USER;
@@ -31,6 +38,11 @@ export class GetRoles implements Action {
 export class SetRoles implements Action {
   readonly type = AU_SET_ROLES;
   constructor(public payload: Array<RoleDto>) {}
+}
+
+export class EditUser implements Action {
+  readonly type = AU_EDIT_USER;
+  constructor(public id: number) {}
 }
 
 export class GetUser implements Action {
@@ -58,4 +70,5 @@ export class AdminError implements Action {
   constructor(public payload: string) {}
 }
 
-export type UserAdminActions = GetUsers | GetUser | AdminError | SetUsers | SetUser | GetRoles | SetRoles | CreateUser | DeleteUser;
+export type UserAdminActions = 
+    SaveUser |  EditUser | GetUsers | GetUser | AdminError | SetUsers | SetUser | GetRoles | SetRoles | CreateUser | DeleteUser;

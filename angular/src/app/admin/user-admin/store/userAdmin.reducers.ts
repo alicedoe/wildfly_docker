@@ -7,13 +7,15 @@ export interface State {
     roles: Array<RoleDto>,
     error: string;
     user: UserDto;
+    edit: boolean;
   }
 
 const initialState: State = {
     users: null,
     roles: null,
     error: null,
-    user: null
+    user: null,
+    edit: false
 };
 
 export function userAdminReducers(state = initialState, action: UserAdminActions.UserAdminActions) {
@@ -33,6 +35,11 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
                     error: "Conflict"
                 };
             }
+        case (UserAdminActions.AU_EDIT_USER):            
+            return {
+                ...state,
+                edit: true
+            };
         case (UserAdminActions.AU_GET_USERS):            
             return {
                 ...state,
