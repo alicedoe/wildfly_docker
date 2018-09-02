@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.alicegabbana.cahierenligne.dto.NewUserDto;
+import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.services.user.UserResponse;
 import com.alicegabbana.cahierenligne.services.utils.Actions;
 
@@ -45,9 +45,10 @@ public class UserEndpoint {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addUser(NewUserDto newUserDto) {
-		System.out.println(newUserDto);
-		Response response = userResponse.create( newUserDto );
+	public Response addUser(UserDto userDto) {
+		System.out.println(userDto.toString());
+		Response response = userResponse.create( userDto );
+		System.out.println(response.getEntity());
 		return response;
 	}
 	

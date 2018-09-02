@@ -8,7 +8,14 @@ public class UserDto {
 		private String name;
 		private String email;
 		private String token;
+		private String pwd;
 		
+		public String getPwd() {
+			return pwd;
+		}
+		public void setPwd(String pwd) {
+			this.pwd = pwd;
+		}
 		public Long getId() {
 			return id;
 		}
@@ -49,6 +56,6 @@ public class UserDto {
 		@Override
 		public String toString() {
 			return "UserDto [id=" + id + ", roleName=" + roleName + ", firstname=" + firstname + ", name=" + name
-					+ ", email=" + email + ", token=" + token + "]";
+					+ ", email=" + email + ", token=" + token + ", pwd=" + pwd + "]";
 		}
 }

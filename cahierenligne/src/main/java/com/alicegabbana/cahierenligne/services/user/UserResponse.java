@@ -8,9 +8,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
-import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
-import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
@@ -59,11 +57,11 @@ public class UserResponse {
 		}
 	}
 	
-	public Response create(NewUserDto newUserDto) {
-		
+	public Response create(UserDto userDto) {
+				
 		try {
-			UserDto userDto = userService.create(newUserDto);
-			return authService.returnResponse(200, userDto);
+			UserDto userCreatedDto = userService.create(userDto);
+			return authService.returnResponse(200, userCreatedDto);
 		} catch (UserException e) {
 			JsonObject jsonObject = Json.createObjectBuilder()
 					   .add("message", e.getMessage())

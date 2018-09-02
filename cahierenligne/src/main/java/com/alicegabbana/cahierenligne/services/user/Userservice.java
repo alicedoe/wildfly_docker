@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.log4j.Logger;
 
-import com.alicegabbana.cahierenligne.dto.NewUserDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.Role;
 import com.alicegabbana.cahierenligne.entities.User;
@@ -135,18 +134,59 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		
 	}
 	
-	public UserDto create(NewUserDto newUserDto) throws UserException, RoleException, SettingException {
+	public UserDto create(UserDto userDto) throws UserException, RoleException, SettingException {
+		
+		if ( userDto.getId() != null ) {
+			throw new UserException(UserException.BAD_REQUEST, "New user can not have an id");
+		}
 		
 		try {
-			newUserIsCorrect(newUserDto);
-			String token = returnTokenUserByEmail(newUserDto.getEmail());
-			String hashPwd = hashPassword(newUserDto.getPwd());
-			User user = dtoToDao(newUserDto);
+			userFieldsAreNotEmpty(userDto);
+			userEmailIsCorrect(userDto);
+			userRoleIsCorrect(userDto);
+			userEmailIsAvailable(userDto);			
+			String token = returnTokenUserByEmail(userDto.getEmail());
+			String hashPwd = hashPassword(userDto.getPwd());
+			User user = dtoToDao(userDto);
 			user.setPwd(hashPwd);
 			user.setToken(token);
 			User usercreated = em.merge(user);
-			UserDto userDto = daoToDto(usercreated);
-			return userDto;
+			UserDto userCreatedDto = daoToDto(usercreated);
+			return userCreatedDto;
+		} catch (UserException e) {
+			throw new UserException(e.getCode(), e.getMessage());
+		} catch (RoleException e) {
+			throw new RoleException(e.getCode(), e.getMessage());
+		} catch (SettingException e) {
+			throw new SettingException(e.getCode(), e.getMessage());
+		}
+		
+	}
+	
+	public UserDto update(UserDto userDto) throws UserException, RoleException, SettingException {		
+		
+		if ( userDto.getId() == null ) {
+			throw new UserException(UserException.BAD_REQUEST, "User has no id");
+		}
+
+		User oldUser = getUser(userDto.getId());
+		String token = oldUser.getToken();
+		
+		try {
+			userFieldsAreNotEmpty(userDto);
+			userEmailIsCorrect(userDto);
+			userRoleIsCorrect(userDto);
+			if ( !oldUser.getEmail().equals(userDto.getEmail())) {
+				userEmailIsAvailable(userDto);
+				token = returnTokenUserByEmail(userDto.getEmail());
+			}			
+			String hashPwd = hashPassword(userDto.getPwd());
+			User user = dtoToDao(userDto);
+			user.setPwd(hashPwd);
+			user.setToken(token);
+			User userCreated = em.merge(user);
+			UserDto userCreatedDto = daoToDto(userCreated);
+			return userCreatedDto;
 		} catch (UserException e) {
 			throw new UserException(e.getCode(), e.getMessage());
 		} catch (RoleException e) {
@@ -256,34 +296,43 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return userDtoList;
 	}
 	
-	private Boolean newUserIsCorrect(NewUserDto newUserDto) throws UserException {
+	private Boolean userFieldsAreNotEmpty(UserDto userDto) throws UserException {
 		if ( 
-				newUserDto.getRoleName() == null || newUserDto.getRoleName().isEmpty()
-				|| newUserDto.getName() == null || newUserDto.getName().isEmpty()
-				|| newUserDto.getFirstname() == null || newUserDto.getFirstname().isEmpty()
-				|| newUserDto.getEmail() == null || newUserDto.getEmail().isEmpty()
-				|| newUserDto.getPwd() == null || newUserDto.getPwd().isEmpty()
+				userDto.getRoleName() == null || userDto.getRoleName().isEmpty()
+				|| userDto.getName() == null || userDto.getName().isEmpty()
+				|| userDto.getFirstname() == null || userDto.getFirstname().isEmpty()
+				|| userDto.getEmail() == null || userDto.getEmail().isEmpty()
+				|| userDto.getPwd() == null || userDto.getPwd().isEmpty()
 			) {
-			throw new UserException (UserException.BAD_REQUEST, "User "+newUserDto.toString()+" incomplete !");
+			throw new UserException (UserException.BAD_REQUEST, "User "+userDto.toString()+" incomplete !");
 		}
 		
-		if ( !emailFormatCorrect(newUserDto.getEmail()) ) {
+		return true;		
+	}
+	
+	private Boolean userEmailIsCorrect(UserDto userDto) throws UserException {
+		if ( !emailFormatCorrect(userDto.getEmail()) ) {
 			throw new UserException(UserException.BAD_REQUEST, "Wrong email format");
-		}
-		
+		}		
+		return true;		
+	}
+	
+	private Boolean userRoleIsCorrect(UserDto userDto) throws UserException {
 		try {
-			roleService.get(newUserDto.getRoleName());
+			roleService.get(userDto.getRoleName());
 		} catch (Exception e) {
 			throw new UserException(UserException.NOT_FOUND, e.getMessage());
-		}
-		
+		}		
+		return true;		
+	}
+	
+	private Boolean userEmailIsAvailable(UserDto userDto) throws UserException {
 		try {
-			emailAvailable(newUserDto.getEmail());
+			emailAvailable(userDto.getEmail());
 			return true;
 		} catch (UserException e) {
 			throw new UserException(UserException.CONFLICT, e.getMessage());
-		}
-		
+		}		
 	}
 	
 	private Boolean userIsComplete(User user) throws UserException {
@@ -351,22 +400,22 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 		return userDto;
 	}
 	
-	private User dtoToDao(NewUserDto newUserDto) throws UserException, RoleException {
+	private User dtoToDao(UserDto userDto) throws UserException, RoleException {
 		
 		User user = new User();
 		
-		user.setEmail(newUserDto.getEmail());
+		user.setEmail(userDto.getEmail());
 		
-		user.setName(newUserDto.getName());
-		user.setFirstname(newUserDto.getFirstname());
-		user.setRole(getRole(newUserDto));
+		user.setName(userDto.getName());
+		user.setFirstname(userDto.getFirstname());
+		user.setRole(getRole(userDto));
 		
 		return user;
 	}
 	
-	private Role getRole (NewUserDto newUserDto) throws RoleException {
+	private Role getRole (UserDto userDto) throws RoleException {
 		try {
-			Role role = roleService.get(newUserDto.getRoleName());
+			Role role = roleService.get(userDto.getRoleName());
 			return role;
 		} catch (RoleException e) {
 			throw new RoleException(e.getCode(), e.getMessage());
