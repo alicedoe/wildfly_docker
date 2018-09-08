@@ -179,10 +179,14 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 			if ( !oldUser.getEmail().equals(userDto.getEmail())) {
 				userEmailIsAvailable(userDto);
 				token = returnTokenUserByEmail(userDto.getEmail());
-			}			
-			String hashPwd = hashPassword(userDto.getPwd());
+			}
 			User user = dtoToDao(userDto);
-			user.setPwd(hashPwd);
+			if ( !userDto.getPwd().equals("") ) {
+				String hashPwd = hashPassword(userDto.getPwd());
+				user.setPwd(hashPwd);
+			} else {
+				user.setPwd(oldUser.getPwd());
+			}
 			user.setToken(token);
 			User userCreated = em.merge(user);
 			UserDto userCreatedDto = daoToDto(userCreated);
@@ -302,7 +306,6 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				|| userDto.getName() == null || userDto.getName().isEmpty()
 				|| userDto.getFirstname() == null || userDto.getFirstname().isEmpty()
 				|| userDto.getEmail() == null || userDto.getEmail().isEmpty()
-				|| userDto.getPwd() == null || userDto.getPwd().isEmpty()
 			) {
 			throw new UserException (UserException.BAD_REQUEST, "User "+userDto.toString()+" incomplete !");
 		}
