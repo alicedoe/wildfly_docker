@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -39,6 +39,14 @@ export class CreateUserComponent implements OnInit {
       this.roles = res.roles;
       this.editMode = res.edit;
       this.userToEdit = res.user;
+      if ( this.editMode ) {
+        console.log('mode edition');
+        this.userForm.controls['password'].clearValidators();
+      } else {
+        console.log('mode creation');
+        this.userForm.controls['password'].setValidators( Validators.required );
+      }
+      this.userForm.get('password').updateValueAndValidity();
       if (res.user) {
         this.userForm.get('firstname').setValue(res.user.firstname);
         this.userForm.get('name').setValue(res.user.name);
@@ -49,9 +57,17 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSaveUser() {
+
+    let id;
+
+    if ( this.editMode ) {
+      id = this.userToEdit.id;
+    } else {
+      id = null;
+    }
     
     let newUser = new UserDto(
-      null,
+      id,
       this.userForm.value['firstname'],
       this.userForm.value['name'],
       this.userForm.value['email'],

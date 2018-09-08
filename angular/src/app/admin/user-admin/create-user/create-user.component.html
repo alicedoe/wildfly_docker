@@ -24,16 +24,13 @@
           id="password"
           name="password"
           formControlName="password"
+          [placeholder]="editMode ? 'Laissez vide si vous ne changez pas le mdp' : ''"
           class="form-control">
       </div>
-      <button *ngIf="!editMode"
+      <button
             type="submit"
             class="btn btn-success"
-            [disabled]="!userForm.valid">Create user</button>
-      <button *ngIf="editMode"
-            type="submit"
-            class="btn btn-success"
-            [disabled]="!userForm.valid">Edit user</button>
+            [disabled]="!userForm.valid">{{ editMode ? "Edit user" : "Create user" }}</button>
     </form>
   </div>
 </div>
