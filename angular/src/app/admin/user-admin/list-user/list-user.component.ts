@@ -15,7 +15,8 @@ import { UserDto } from '../../../shared/models/userDto.model';
 export class ListUserComponent implements OnInit {
 
   userAdminState: Observable<fromUserAdmin.State>;
-  users: Array<UserDto>
+  users: Array<UserDto>;
+
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {

@@ -1,11 +1,37 @@
-<ul>  
-  <li *ngFor="let user of (userAdminState | async).users">
-    <a
-      style="cursor: pointer;"
-      (click)="onEditUser(user.id)">
-    {{user.id}} / {{user.name}}</a>
-    <a
-      style="cursor: pointer;"
-      (click)="onDeleteUser(user.id)">X</a>
-  </li>
-</ul>
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> Liste des utilisateurs
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Role</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of (userAdminState | async).users">
+            <td>{{user.id}}</td>
+            <td>{{user.firstname}}</td>
+            <td>{{user.name}}</td>
+            <td>
+              <span [className]="user.roleName == 'admin' ? 'badge badge-success' : 'badge badge-secondary'">{{user.roleName}}</span>
+            </td>
+            <td><a class="icon-edit" style="cursor: pointer;" (click)="onEditUser(user.id)">
+                <i class="fa fa-pencil fa-lg mt-4"></i>
+              </a></td>
+            <td><a class="icon-delete" style="cursor: pointer;" (click)="onDeleteUser(user.id)">
+                <i class="fa fa-trash fa-lg mt-4"></i>
+              </a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
