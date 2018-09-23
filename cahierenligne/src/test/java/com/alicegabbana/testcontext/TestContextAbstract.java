@@ -29,6 +29,15 @@ public abstract class TestContextAbstract {
 	public static SettingServiceRemote settingService;
 	public static TownServiceRemote townService;
 	public static SchoolServiceRemote schoolService;
+	
+	static String JNDI_DEPLOYMENT_UNIT 			= "application";
+	
+	static String JNDI_SERVICE_ACTION 				= "/ActionService!com.alicegabbana.cahierenligne.services.action.ActionServiceRemote";
+	static String JNDI_SERVICE_ROLE 				= "/RoleService!com.alicegabbana.cahierenligne.services.role.RoleServiceRemote";
+	static String JNDI_SERVICE_USER				= "/Userservice!com.alicegabbana.cahierenligne.services.user.UserServiceRemote";
+	static String JNDI_SERVICE_SETTING				= "/SettingService!com.alicegabbana.cahierenligne.services.setting.SettingServiceRemote";
+	static String JNDI_SERVICE_TOWN				= "/TownService!com.alicegabbana.cahierenligne.services.town.TownServiceRemote";
+	static String JNDI_SERVICE_SCHOOL				= "/SchoolService!com.alicegabbana.cahierenligne.services.school.SchoolServiceRemote";
 
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -48,17 +57,17 @@ public abstract class TestContextAbstract {
 
 					System.out.println("Getting remote services endpoints...");					
 					actionService = (ActionServiceRemote)
-							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_ACTION);
+							getContext(JNDI_DEPLOYMENT_UNIT+JNDI_SERVICE_ACTION);
 					roleService = (RoleServiceRemote)
-							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_ROLE);
+							getContext(JNDI_DEPLOYMENT_UNIT+JNDI_SERVICE_ROLE);
 					userService = (UserServiceRemote)
-							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_USER);
+							getContext(JNDI_DEPLOYMENT_UNIT+JNDI_SERVICE_USER);
 					settingService = (SettingServiceRemote)
-							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_SETTING);
+							getContext(JNDI_DEPLOYMENT_UNIT+JNDI_SERVICE_SETTING);
 					townService = (TownServiceRemote)
-							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_TOWN);
+							getContext(JNDI_DEPLOYMENT_UNIT+JNDI_SERVICE_TOWN);
 					schoolService = (SchoolServiceRemote)
-							getContext(JndiResources.JNDI_DEPLOYMENT_UNIT+JndiResources.JNDI_SERVICE_SCHOOL);
+							getContext(JNDI_DEPLOYMENT_UNIT+JNDI_SERVICE_SCHOOL);
 				}
 		} catch (Exception e) {
 			e.printStackTrace();
