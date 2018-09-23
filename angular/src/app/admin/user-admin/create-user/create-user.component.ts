@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as fromApp from '../../../shared/app.reducers';
-import * as fromUserAdmin from '../store/userAdmin.reducers';
-import * as UserAdminActions from '../store/userAdmin.actions';
+import * as fromUserAdmin from '../../store/reducers/userAdmin.reducers';
+import * as UserAdminActions from '../../store/actions/userAdmin.actions';
 import { RoleDto } from '../../models/roleDto.model';
 import { UserDto } from '../../../shared/models/userDto.model';
 
@@ -17,7 +17,7 @@ import { UserDto } from '../../../shared/models/userDto.model';
 export class CreateUserComponent implements OnInit {
 
   roles: Array<RoleDto>;
-  userAdminState: Observable<fromUserAdmin.State>;
+  userAdminState: Observable<fromUserAdmin.UserAdminState>;
   userForm: FormGroup;
   editMode: boolean;
   userToEdit: UserDto;
@@ -40,10 +40,8 @@ export class CreateUserComponent implements OnInit {
       this.editMode = res.edit;
       this.userToEdit = res.user;
       if ( this.editMode ) {
-        console.log('mode edition');
         this.userForm.controls['password'].clearValidators();
       } else {
-        console.log('mode creation');
         this.userForm.controls['password'].setValidators( Validators.required );
       }
       this.userForm.get('password').updateValueAndValidity();

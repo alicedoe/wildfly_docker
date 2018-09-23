@@ -4,12 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { SigninComponent } from './signin/signin.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers} from './store';
 
 @NgModule({
   imports: [
     CommonModule,
     AuthRoutingModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forFeature('auth', reducers)
   ],
   declarations: [SigninComponent]
 })

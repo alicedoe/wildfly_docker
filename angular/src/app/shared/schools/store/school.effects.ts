@@ -26,7 +26,6 @@ export class SchoolEffects {
       });
     }), map(
       (school) => {
-        console.log(school);
         return {
           type: SchoolActions.SET_SCHOOLS,
           payload: school

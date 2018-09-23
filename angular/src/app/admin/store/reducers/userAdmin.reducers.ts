@@ -1,8 +1,8 @@
 import { UserDto } from "../../../shared/models/userDto.model";
-import * as UserAdminActions from './userAdmin.actions';
+import * as UserAdminActions from '../actions/userAdmin.actions';
 import { RoleDto } from "../../models/roleDto.model";
 
-export interface State {
+export interface UserAdminState {
     users: Array<UserDto>,
     roles: Array<RoleDto>,
     error: string;
@@ -10,7 +10,7 @@ export interface State {
     edit: boolean;
   }
 
-const initialState: State = {
+const initialState: UserAdminState = {
     users: null,
     roles: null,
     error: null,
@@ -18,7 +18,7 @@ const initialState: State = {
     edit: false
 };
 
-export function userAdminReducers(state = initialState, action: UserAdminActions.UserAdminActions) {
+export function userAdminReducer(state = initialState, action: UserAdminActions.UserAdminActions) {
     switch (action.type) {
         case (UserAdminActions.AU_ADMIN_ERROR):
             switch (String(action.payload)) {
@@ -67,3 +67,5 @@ export function userAdminReducers(state = initialState, action: UserAdminActions
             return state;
     }
 }
+
+export const getRolesFromState = (userAdminState : UserAdminState) => userAdminState.roles;

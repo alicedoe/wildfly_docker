@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {map, switchMap, mergeMap, tap, catchError} from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import * as AuthActions from './auth.actions';
+import * as AuthActions from './actions/auth.actions';
 import { of, EMPTY } from 'rxjs';
 
 @Injectable()

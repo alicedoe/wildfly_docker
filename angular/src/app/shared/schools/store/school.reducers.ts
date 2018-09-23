@@ -17,7 +17,6 @@ const initialState: State = {
 export function schoolReducer(state = initialState, action: SchoolActions.SchoolActions) {
   switch (action.type) {
     case (SchoolActions.GET_SCHOOLS):
-      console.log('SchoolActions.GET_SCHOOLS');
       return {
         ...state
       };

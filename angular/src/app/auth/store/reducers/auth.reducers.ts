@@ -1,5 +1,5 @@
-import * as AuthActions from './auth.actions';
-import { UserDto } from '../../shared/models/userDto.model';
+import * as AuthActions from '../actions/auth.actions';
+import { UserDto } from '../../../shared/models/userDto.model';
 
 export interface State {
   token: string;

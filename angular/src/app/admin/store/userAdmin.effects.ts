@@ -3,9 +3,8 @@ import {Actions, Effect} from '@ngrx/effects';
 import {map, switchMap, mergeMap, tap, catchError} from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import * as UserAdminAction from './userAdmin.actions';
+import * as UserAdminAction from './actions/userAdmin.actions';
 import { of } from 'rxjs';
-import { UserDto } from '../../../shared/models/userDto.model';
 
 @Injectable()
 export class UserAdminEffects {

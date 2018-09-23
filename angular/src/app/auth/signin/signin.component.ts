@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromApp from '../../shared/app.reducers';
-import * as fromAuth from '../store/auth.reducers';
-import * as AuthActions from '../store/auth.actions';
+import * as fromAuth from '../store';
+import * as AuthActions from '../store/actions/auth.actions';
 
 @Component({
   selector: 'app-signin',
@@ -14,12 +14,12 @@ import * as AuthActions from '../store/auth.actions';
 })
 export class SigninComponent implements OnInit {
 
-  authState: Observable<fromAuth.State>;
+  authState: Observable<fromAuth.AuthState>;
 
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    this.authState = this.store.select('auth');
+    this.authState = this.store<any>(fromAuth.reducer;
   }
 
   onSignin(form: NgForm) {

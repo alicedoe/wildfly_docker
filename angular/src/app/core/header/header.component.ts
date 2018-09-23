@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../shared/app.reducers';
-import * as fromAuth from '../../auth/store/auth.reducers';
-import * as AuthActions from '../../auth/store/auth.actions';
+import * as fromAuth from '../../auth/store/reducers/auth.reducers';
+import * as AuthActions from '../../auth/store/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
