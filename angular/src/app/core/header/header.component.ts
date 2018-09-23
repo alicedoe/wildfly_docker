@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as fromApp from '../../shared/app.reducers';
-import * as fromAuth from '../../auth/store/reducers/auth.reducers';
+import * as fromStore from '../../auth/store';
 import * as AuthActions from '../../auth/store/actions/auth.actions';
+import { UserDto } from '../../shared/models/userDto.model';
 
 @Component({
   selector: 'app-header',
@@ -13,17 +13,20 @@ import * as AuthActions from '../../auth/store/actions/auth.actions';
 })
 export class HeaderComponent implements OnInit {
 
-  authState: Observable<fromAuth.State>;
-  constructor(private store: Store<fromApp.AppState>) {
+  authenticated$ : Observable<boolean>;
+  user$ : Observable<UserDto>;
+
+  constructor(private store: Store<fromStore.AuthState>) {
   }
 
   ngOnInit() {
-    this.authState = this.store.select('auth');
-    this.authState.subscribe(res=> {
-      if (res.authenticated != true) {
+    this.authenticated$ = this.store.select(fromStore.getAuthenticated);   
+    this.user$ = this.store.select(fromStore.getUser);    
+    this.store.select(fromStore.getAuthenticated).subscribe(res=>{
+      if (!res) {
         this.store.dispatch(new AuthActions.TryTokenSignin());
       }
-    });    
+    })
   }
 
   onLogout() {

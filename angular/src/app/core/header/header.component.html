@@ -6,9 +6,9 @@
     <div class="navbar-nav navbar-right">
       <a 
           routerLink="/signin"
-          *ngIf="!(authState | async).authenticated">Login</a>
+          *ngIf="!(authenticated$ | async)" >Login</a>
       <li
-          *ngIf="(authState | async).userDto && (authState | async).userDto.roleName == 'admin'"
+          *ngIf="(user$ | async) && (user$ | async)?.roleName == 'admin'"
           class="dropdown" appDropdown>
         <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -20,7 +20,7 @@
       <a
           style="cursor: pointer;"
           (click)="onLogout()"
-          *ngIf="(authState | async).authenticated">Logout</a>
+          *ngIf="authenticated$ | async">Logout</a>
     </div>
   </div>
 </nav>

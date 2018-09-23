@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SigninComponent } from './signin/signin.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { StoreModule } from '@ngrx/store';
-import { reducers} from './store';
+import { reducers } from './store';
 
 @NgModule({
   imports: [

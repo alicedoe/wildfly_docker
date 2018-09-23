@@ -1,21 +1,21 @@
 import * as AuthActions from '../actions/auth.actions';
 import { UserDto } from '../../../shared/models/userDto.model';
 
-export interface State {
+export interface AuthState {
   token: string;
   authenticated: boolean;
   userDto: UserDto;
   error: string;
 }
 
-const initialState: State = {
+const initialState: AuthState = {
   token: null,
   authenticated: false,
   userDto: null,
   error: null,
 };
 
-export function authReducer(state = initialState, action: AuthActions.AuthActions) {
+export function reducer(state = initialState, action: AuthActions.AuthActions) {
   switch (action.type) {
     case (AuthActions.AUTH_SIGNUP):
     case (AuthActions.AUTH_SIGNIN):
@@ -61,3 +61,8 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
       return state;
   }
 }
+
+export const getToken = (state: AuthState) => state.token;
+export const getAuthenticated = (state: AuthState) => state.authenticated;
+export const getUser = (state: AuthState) => state.userDto;
+export const getError = (state: AuthState) => state.error;

@@ -68,4 +68,8 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
     }
 }
 
-export const getRolesFromState = (userAdminState : UserAdminState) => userAdminState.roles;
+export const getRoles = (userAdminState : UserAdminState) => userAdminState.roles;
+export const getUsers = (userAdminState : UserAdminState) => userAdminState.users;
+export const getError = (userAdminState : UserAdminState) => userAdminState.error;
+export const getUser = (userAdminState : UserAdminState) => userAdminState.user;
+export const getEditMode = (userAdminState : UserAdminState) => userAdminState.edit;

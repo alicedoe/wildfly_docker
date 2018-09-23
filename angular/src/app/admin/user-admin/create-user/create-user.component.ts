@@ -3,8 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import * as fromApp from '../../../shared/app.reducers';
-import * as fromUserAdmin from '../../store/reducers/userAdmin.reducers';
+import * as fromStore from '../../store';
 import * as UserAdminActions from '../../store/actions/userAdmin.actions';
 import { RoleDto } from '../../models/roleDto.model';
 import { UserDto } from '../../../shared/models/userDto.model';
@@ -16,17 +15,15 @@ import { UserDto } from '../../../shared/models/userDto.model';
 })
 export class CreateUserComponent implements OnInit {
 
-  roles: Array<RoleDto>;
-  userAdminState: Observable<fromUserAdmin.UserAdminState>;
+  roles$: Observable<Array<RoleDto>>;
+  editMode$: Observable<boolean>;
+  userToEdit$: Observable<UserDto>;
   userForm: FormGroup;
-  editMode: boolean;
-  userToEdit: UserDto;
+  
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromStore.UserAdminState>) { }
 
   ngOnInit() {
-    this.editMode = false;
-    this.userAdminState = this.store.select('userAdmin');
     this.store.dispatch(new UserAdminActions.GetRoles());
     this.userForm = new FormGroup({
       'name': new FormControl( '', Validators.required ),
@@ -35,22 +32,24 @@ export class CreateUserComponent implements OnInit {
       'role': new FormControl( '', Validators.required ),
       'password': new FormControl( '', Validators.required )
     });
-    this.userAdminState.subscribe(res => {
-      this.roles = res.roles;
-      this.editMode = res.edit;
-      this.userToEdit = res.user;
-      if ( this.editMode ) {
+    this.roles$ = this.store.select(fromStore.getRoles);
+    this.editMode$ = this.store.select(fromStore.getEditMode);
+    this.userToEdit$ = this.store.select(fromStore.getUser);
+
+    this.store.select(fromStore.getEditMode).subscribe(res=>{
+      if (res) {
         this.userForm.controls['password'].clearValidators();
       } else {
         this.userForm.controls['password'].setValidators( Validators.required );
       }
       this.userForm.get('password').updateValueAndValidity();
-      if (res.user) {
-        this.userForm.get('firstname').setValue(res.user.firstname);
-        this.userForm.get('name').setValue(res.user.name);
-        this.userForm.get('email').setValue(res.user.email);
-        this.userForm.get('role').setValue(res.user.roleName);
-      }
+    })
+
+    this.store.select(fromStore.getUser).subscribe(res=>{
+      this.userForm.get('firstname').setValue(res.firstname);
+      this.userForm.get('name').setValue(res.name);
+      this.userForm.get('email').setValue(res.email);
+      this.userForm.get('role').setValue(res.roleName);
     })
   }
 
@@ -58,11 +57,13 @@ export class CreateUserComponent implements OnInit {
 
     let id;
 
-    if ( this.editMode ) {
-      id = this.userToEdit.id;
-    } else {
-      id = null;
-    }
+    this.store.select(fromStore.getEditMode).subscribe(res=>{
+      if (res) {
+        id = this.userToEdit$.id;
+      } else {
+        id = null;
+      }
+    })
     
     let newUser = new UserDto(
       id,

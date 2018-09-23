@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-    <p *ngIf="(authState | async).error">{{ (authState | async).error }}</p>
+    <p *ngIf="error$ | async">{{ error$ | async }}</p>
     <form (ngSubmit)="onSignin(f)" #f="ngForm">
       <div class="form-group">
         <label for="email">Mail</label>

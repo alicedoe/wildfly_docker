@@ -3,8 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromApp from '../../shared/app.reducers';
-import * as fromAuth from '../store';
+import * as fromStore from '../store';
 import * as AuthActions from '../store/actions/auth.actions';
 
 @Component({
@@ -13,13 +12,13 @@ import * as AuthActions from '../store/actions/auth.actions';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
+  
+  error$: Observable<string>;
 
-  authState: Observable<fromAuth.AuthState>;
-
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromStore.AuthState>) { }
 
   ngOnInit() {
-    this.authState = this.store<any>(fromAuth.reducer;
+    this.error$ = this.store.select(fromStore.getError);
   }
 
   onSignin(form: NgForm) {
