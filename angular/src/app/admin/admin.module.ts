@@ -17,7 +17,7 @@ import { reducers } from './store';
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forFeature('admin', reducers)
+    StoreModule.forFeature('userAdmin', reducers)
   ],
   declarations: [
     UserAdminComponent, 

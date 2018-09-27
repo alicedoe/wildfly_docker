@@ -17,7 +17,6 @@ export class UserAdminEffects {
     .ofType(UserAdminAction.AU_GET_USERS)
     .pipe(
       switchMap(() => {
-
         return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/getall')
         
         .pipe(
@@ -40,6 +39,29 @@ export class UserAdminEffects {
 
       }) // switchmap
   ); // 2nd pipe
+
+  @Effect()
+  getRoles$ = this.actions$
+    .ofType(UserAdminAction.AU_GET_ROLES)
+    .pipe(
+      switchMap(() => {
+        console.log("getRoles");
+        return this.httpClient.get('http://172.17.0.3:8080/application/v1/role/getall').pipe(
+          map(res => res),
+          mergeMap((authData) => {
+            return [
+              { type: UserAdminAction.AU_SET_ROLES,
+                payload: authData }
+            ]; }) , //mergemap
+          catchError((err: HttpErrorResponse) => {
+              return of({
+                  type: UserAdminAction.AU_ADMIN_ERROR,
+                  payload: err.status
+              }); 
+          }) //catcherror
+        ) //pipe
+      }) //switchmap
+  );
 
   // @Effect()
   // editUser$ = this.actions$
@@ -86,28 +108,6 @@ export class UserAdminEffects {
   //       ) // 1st pipe
   //     }) // switchmap
   // ); // 2nd pipe
-
-  @Effect()
-  getRoles$ = this.actions$
-    .ofType(UserAdminAction.AU_GET_ROLES)
-    .pipe(
-      switchMap(() => {
-        return this.httpClient.get('http://172.17.0.3:8080/application/v1/role/getall').pipe(
-          map(res => res),
-          mergeMap((authData) => {
-            return [
-              { type: UserAdminAction.AU_SET_ROLES,
-                payload: authData }
-            ]; }) , //mergemap
-          catchError((err: HttpErrorResponse) => {
-              return of({
-                  type: UserAdminAction.AU_ADMIN_ERROR,
-                  payload: err.status
-              }); 
-          }) //catcherror
-        ) //pipe
-      }) //switchmap
-  );
 
   @Effect()
   createUser$ = this.actions$

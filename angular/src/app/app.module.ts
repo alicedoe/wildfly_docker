@@ -11,7 +11,6 @@ import { SchoolEffects } from './shared/schools/store/school.effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
-import { reducers } from './shared/app.reducers';
 import { UserAdminEffects } from './admin/store/userAdmin.effects';
 
 // console.log all actions

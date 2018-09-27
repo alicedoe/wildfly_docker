@@ -4,18 +4,17 @@ import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {take, switchMap} from 'rxjs/operators';
 
-import * as fromApp from './app.reducers';
-import * as fromAuth from '../auth/store/reducers/auth.reducers';
+import * as fromStore from '../auth/store/reducers/auth.reducers';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(private store: Store<fromStore.AuthState>) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return this.store.select('auth')
+    return this.store.select(fromStore.getAuthenticated)
       .pipe(take(1),
-        switchMap((authState: fromAuth.State) => {
+        switchMap(() => {
             if (localStorage.getItem('token')) {
                 const copiedReq = req.clone({
                     headers: new HttpHeaders({'Token': localStorage.getItem('token')

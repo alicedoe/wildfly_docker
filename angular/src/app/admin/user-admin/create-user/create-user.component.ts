@@ -16,15 +16,18 @@ import { UserDto } from '../../../shared/models/userDto.model';
 export class CreateUserComponent implements OnInit {
 
   roles$: Observable<Array<RoleDto>>;
-  editMode$: Observable<boolean>;
-  userToEdit$: Observable<UserDto>;
-  userForm: FormGroup;
-  
+  error$: Observable<String>;
+  editMode: boolean;
+  userForm: FormGroup;  
+  userId: number;
 
   constructor(private store: Store<fromStore.UserAdminState>) { }
 
   ngOnInit() {
     this.store.dispatch(new UserAdminActions.GetRoles());
+    this.getEditMode();
+    this.roles$ = this.store.select(fromStore.getRoles);
+    this.error$ = this.store.select(fromStore.getError);
     this.userForm = new FormGroup({
       'name': new FormControl( '', Validators.required ),
       'firstname': new FormControl( '', Validators.required ),
@@ -32,38 +35,27 @@ export class CreateUserComponent implements OnInit {
       'role': new FormControl( '', Validators.required ),
       'password': new FormControl( '', Validators.required )
     });
-    this.roles$ = this.store.select(fromStore.getRoles);
-    this.editMode$ = this.store.select(fromStore.getEditMode);
-    this.userToEdit$ = this.store.select(fromStore.getUser);
+    
+    if (this.editMode) {
+      this.store.select(fromStore.getUser).subscribe(res=>{
+        this.userForm.get('firstname').setValue(res.firstname);
+        this.userForm.get('name').setValue(res.name);
+        this.userForm.get('email').setValue(res.email);
+        this.userForm.get('role').setValue(res.roleName);
+        this.userId = res.id;
+      })
+      this.userForm.controls['password'].clearValidators();
+    } else {
+      this.userForm.controls['password'].setValidators( Validators.required );
+    }
+    this.userForm.get('password').updateValueAndValidity();
 
-    this.store.select(fromStore.getEditMode).subscribe(res=>{
-      if (res) {
-        this.userForm.controls['password'].clearValidators();
-      } else {
-        this.userForm.controls['password'].setValidators( Validators.required );
-      }
-      this.userForm.get('password').updateValueAndValidity();
-    })
-
-    this.store.select(fromStore.getUser).subscribe(res=>{
-      this.userForm.get('firstname').setValue(res.firstname);
-      this.userForm.get('name').setValue(res.name);
-      this.userForm.get('email').setValue(res.email);
-      this.userForm.get('role').setValue(res.roleName);
-    })
+    
   }
 
   onSaveUser() {
 
-    let id;
-
-    this.store.select(fromStore.getEditMode).subscribe(res=>{
-      if (res) {
-        id = this.userToEdit$.id;
-      } else {
-        id = null;
-      }
-    })
+    let id;   
     
     let newUser = new UserDto(
       id,
@@ -75,7 +67,7 @@ export class CreateUserComponent implements OnInit {
     );
 
     if ( this.editMode ) {
-      newUser.id = this.userToEdit.id;
+      newUser.id = this.userId;
       this.store.dispatch(new UserAdminActions.SaveUser(newUser));
     } else this.store.dispatch(new UserAdminActions.CreateUser(newUser));
     
@@ -85,6 +77,12 @@ export class CreateUserComponent implements OnInit {
     
     
     
+  }
+
+  getEditMode() {
+    this.store.select(fromStore.getEditMode).subscribe(res=>{      
+      this.editMode=res;
+    })
   }
 
 }

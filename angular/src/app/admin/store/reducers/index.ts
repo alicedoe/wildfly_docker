@@ -12,7 +12,10 @@ export const reducers : ActionReducerMap<UserAdminState> = {
 export const getUserAdminStates = createFeatureSelector<UserAdminState>('userAdmin');
 
 export const getUserAdminState = createSelector(
-    getUserAdminStates, (state: UserAdminState) => state.userAdmin
+    
+    getUserAdminStates, (state: UserAdminState) => {
+        return state.userAdmin
+    }
 );
 
 export const getEditMode = createSelector(

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromApp from '../../../shared/app.reducers';
-import * as fromUserAdmin from '../../store/reducers/userAdmin.reducers';
+import * as fromStore from '../../store';
 import * as UserAdminActions from '../../store/actions/userAdmin.actions';
 import { UserDto } from '../../../shared/models/userDto.model';
 
@@ -14,17 +13,13 @@ import { UserDto } from '../../../shared/models/userDto.model';
 })
 export class ListUserComponent implements OnInit {
 
-  userAdminState: Observable<fromUserAdmin.UserAdminState>;
-  users: Array<UserDto>;
+  users: Observable<Array<UserDto>>;
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromStore.UserAdminState>) { }
 
   ngOnInit() {
-    this.userAdminState = this.store.select('userAdmin');
-    this.store.dispatch(new UserAdminActions.GetUsers());
-    this.userAdminState.subscribe(res => {
-      this.users = res.users;
-    })
+    this.store.select(fromStore.getUsers).subscribe((res)=>console.log(res))
+    this.users = this.store.select(fromStore.getUsers);
   }
 
   onDeleteUser(id:number) {
