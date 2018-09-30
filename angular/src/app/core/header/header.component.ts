@@ -22,11 +22,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.authenticated$ = this.store.select(fromStore.getAuthenticated);   
     this.user$ = this.store.select(fromStore.getUser);    
-    this.store.select(fromStore.getAuthenticated).subscribe(res=>{
-      if (!res) {
-        this.store.dispatch(new AuthActions.TryTokenSignin());
-      }
-    })
+    
   }
 
   onLogout() {
