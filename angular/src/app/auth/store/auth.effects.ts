@@ -3,9 +3,10 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {map, switchMap, mergeMap, tap, catchError} from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { of, EMPTY, Observable } from 'rxjs';
 
 import * as AuthActions from './actions/auth.actions';
-import { of, EMPTY } from 'rxjs';
+import { RoleDto } from '../../admin/models/roleDto.model';
 
 @Injectable()
 export class AuthEffects {
@@ -38,7 +39,7 @@ export class AuthEffects {
   authTokenSignin = this.actions$
     .ofType(AuthActions.AUTH_TRY_TOKEN_SIGNIN)
     .pipe(
-      switchMap((authData: { token: string }) => {
+      switchMap(() => {
         if (localStorage.getItem('token')) {
           let token  =  localStorage.getItem('token');
           return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/login/token', { token : token }).pipe( 

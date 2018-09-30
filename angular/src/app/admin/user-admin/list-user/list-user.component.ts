@@ -13,13 +13,12 @@ import { UserDto } from '../../../shared/models/userDto.model';
 })
 export class ListUserComponent implements OnInit {
 
-  users: Observable<Array<UserDto>>;
+  users$: Observable<Array<UserDto>>;
 
   constructor(private store: Store<fromStore.UserAdminState>) { }
 
   ngOnInit() {
-    this.store.select(fromStore.getUsers).subscribe((res)=>console.log(res))
-    this.users = this.store.select(fromStore.getUsers);
+    this.users$ = this.store.select(fromStore.getUsers);
   }
 
   onDeleteUser(id:number) {

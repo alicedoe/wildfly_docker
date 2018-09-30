@@ -22,6 +22,6 @@ import { reducers } from './store';
   declarations: [
     UserAdminComponent, 
     SchoolAdminComponent, 
-    HomeworkAdminComponent, CreateUserComponent, ListUserComponent]
+    HomeworkAdminComponent, CreateUserComponent, ListUserComponent],
 })
 export class AdminModule { }

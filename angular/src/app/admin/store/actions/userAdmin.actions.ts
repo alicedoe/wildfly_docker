@@ -31,7 +31,7 @@ export class CreateUser implements Action {
 
 export class GetRoles implements Action {
   readonly type = AU_GET_ROLES;
-  constructor() {console.log("AU_GET_ROLES");}
+  constructor() {}
 }
 
 export class SetRoles implements Action {
@@ -51,7 +51,7 @@ export class GetUser implements Action {
 
 export class GetUsers implements Action {  
     readonly type = AU_GET_USERS;
-    constructor() {console.log("AU_GET_USERS");}
+    constructor() {}
   }
 
 export class SetUsers implements Action {

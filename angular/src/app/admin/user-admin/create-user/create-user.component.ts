@@ -21,12 +21,14 @@ export class CreateUserComponent implements OnInit {
   userForm: FormGroup;  
   userId: number;
 
-  constructor(private store: Store<fromStore.UserAdminState>) { }
+  constructor(private store: Store<fromStore.UserAdminState>) { 
+    
+  }
 
   ngOnInit() {
-    this.store.dispatch(new UserAdminActions.GetRoles());
-    this.getEditMode();
     this.roles$ = this.store.select(fromStore.getRoles);
+    this.getEditMode();
+    
     this.error$ = this.store.select(fromStore.getError);
     this.userForm = new FormGroup({
       'name': new FormControl( '', Validators.required ),

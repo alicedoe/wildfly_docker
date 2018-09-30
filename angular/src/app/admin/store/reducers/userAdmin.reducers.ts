@@ -49,13 +49,13 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
                 ...state,
                 user: action.payload
             };
-        case (UserAdminActions.AU_SET_USERS):  
-        console.log("AU_SET_USERS")     
+        case (UserAdminActions.AU_SET_USERS):
             return {
                 ...state,
                 users: action.payload
             };
-        case (UserAdminActions.AU_GET_ROLES):            
+        case (UserAdminActions.AU_GET_ROLES):  
+        console.log('reducers get_roles');          
             return {
                 ...state,
             };
@@ -70,9 +70,7 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
 }
 
 export const getRoles = (userAdminState : UserAdminState) => userAdminState.roles;
-export const getUsers = (userAdminState : UserAdminState) => {
-    console.log(userAdminState.users)
-    return userAdminState.users; }
+export const getUsers = (userAdminState : UserAdminState) => userAdminState.users;
 export const getError = (userAdminState : UserAdminState) => userAdminState.error;
 export const getUser = (userAdminState : UserAdminState) => userAdminState.user;
 export const getEditMode = (userAdminState : UserAdminState) => userAdminState.edit;

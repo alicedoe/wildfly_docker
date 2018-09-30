@@ -45,7 +45,6 @@ export class UserAdminEffects {
     .ofType(UserAdminAction.AU_GET_ROLES)
     .pipe(
       switchMap(() => {
-        console.log("getRoles");
         return this.httpClient.get('http://172.17.0.3:8080/application/v1/role/getall').pipe(
           map(res => res),
           mergeMap((authData) => {
@@ -133,29 +132,29 @@ export class UserAdminEffects {
       }) //switchmap
   );
 
-  // @Effect()
-  // deleteUser$ = this.actions$
-  //   .ofType(UserAdminAction.AU_DELETE_USER)
-  //   .pipe(
-  //     switchMap((authData: { id: string }) => {
-  //       return this.httpClient.delete('http://172.17.0.3:8080/application/v1/user/delete/'+authData.id).pipe(
-  //         map(res => res),
-  //         mergeMap(() => {
-  //           return [{
-  //             type: UserAdminAction.AU_GET_USERS
-  //           },{
-  //             type: UserAdminAction.AU_SET_USERS
-  //           }];              
-  //         }) , //mergemap
-  //         catchError((err: HttpErrorResponse) => {
-  //           return of(
-  //             {
-  //               type: UserAdminAction.AU_ADMIN_ERROR,
-  //               payload: err.status
-  //           }); 
-  //         }) //catcherror
-  //       ) //pipe
-  //     }) //switchmap
-  // );
+  @Effect()
+  deleteUser$ = this.actions$
+    .ofType(UserAdminAction.AU_DELETE_USER)
+    .pipe(
+      switchMap((authData: { id: string }) => {
+        return this.httpClient.delete('http://172.17.0.3:8080/application/v1/user/delete/'+authData.id).pipe(
+          map(res => res),
+          mergeMap(() => {
+            return [{
+              type: UserAdminAction.AU_GET_USERS
+            },{
+              type: UserAdminAction.AU_SET_USERS
+            }];              
+          }) , //mergemap
+          catchError((err: HttpErrorResponse) => {
+            return of(
+              {
+                type: UserAdminAction.AU_ADMIN_ERROR,
+                payload: err.status
+            }); 
+          }) //catcherror
+        ) //pipe
+      }) //switchmap
+  );
 
 }
