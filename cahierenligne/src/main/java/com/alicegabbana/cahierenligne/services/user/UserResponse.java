@@ -8,9 +8,13 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
+import com.alicegabbana.cahierenligne.dto.RoleDto;
 import com.alicegabbana.cahierenligne.dto.UserDto;
+import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
+import com.alicegabbana.cahierenligne.services.role.RoleService;
+import com.alicegabbana.cahierenligne.services.role.RoleServiceLocal;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 
 import net.minidev.json.JSONObject;
@@ -23,6 +27,9 @@ public class UserResponse {
 	
 	@EJB
 	UserServiceLocal userService;
+	
+	@EJB
+	RoleServiceLocal roleServiceLocal;
 	
 	public Response login(JSONObject body) {
 		UserDto userDto;
@@ -124,6 +131,19 @@ public class UserResponse {
 		try {
 			UserDto userDto = userService.getUserDto(id);
 			return authService.returnResponse(200, userDto);
+		} catch (UserException e) {
+			return authService.returnResponse(404);
+		}
+	}
+	
+	public Response userIsAdmin( String token ) {
+		try {
+			User user = userService.getByToken(token);
+			RoleDto roleDto = roleServiceLocal.daoToDto(user.getRole());
+			boolean isAdmin;
+			if ( roleDto.getName().equals("admin") ) isAdmin=true;
+			else isAdmin = false;
+			return authService.returnResponse(200, isAdmin);
 		} catch (UserException e) {
 			return authService.returnResponse(404);
 		}

@@ -81,6 +81,16 @@ public class UserEndpoint {
 		return response;
 	}
 	
+	@GET
+	@Actions({"read all user"})
+	@Path("/get/{token}/role/admin")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getRole(@PathParam("token") String token) {
+		Response response = userResponse.userIsAdmin(token);
+		return response;
+	}
+	
 	@DELETE
 	@Actions({"delete all user"})
 	@Path("/delete/{id}")
