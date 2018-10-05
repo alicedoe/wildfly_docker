@@ -35,7 +35,13 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
                     error: "Conflict"
                 };
             }
-        case (UserAdminActions.AU_EDIT_USER):       
+        case (UserAdminActions.AU_CLEAR):
+            return {
+                ...state,
+                edit: false,
+                user: null
+            };
+        case (UserAdminActions.AU_EDIT_USER):
             return {
                 ...state,
                 edit: true
@@ -54,8 +60,7 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
                 ...state,
                 users: action.payload
             };
-        case (UserAdminActions.AU_GET_ROLES):  
-        console.log('reducers get_roles');          
+        case (UserAdminActions.AU_GET_ROLES):         
             return {
                 ...state,
             };

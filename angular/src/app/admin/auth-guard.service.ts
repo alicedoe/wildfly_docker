@@ -21,44 +21,6 @@ export class AuthGuardService implements CanActivate {
       map(response => response === true),
       catchError(error => of(false))
     );
-//     if (localStorage.getItem('token')) {
-//         let token  =  localStorage.getItem('token');
-//         let role = this.httpClient
-//         .get('http://172.17.0.3:8080/application/v1/user/get/'+token+'/role')
-//         .pipe(    
-//             map((authData: RoleDto) => {
-//               return authData;
-//             }) ,
-//             catchError((err: HttpErrorResponse) => {
-//               return of({
-//                 type: HttpErrorResponse,
-//                 payload: err
-//               });
-//             }) ,
-//           )
-//         role.subscribe((res:RoleDto)=>{
-//             if (res.name === "admin") {
-//                 console.log('yep from http')
-//                 return of({
-//                     type: Boolean,
-//                     payload: true
-//                   });
-//             } else {
-//                 console.log('nop from http')
-//                 return of({
-//                     type: Boolean,
-//                     payload: false
-//                   });
-//             }
-//         })
-        
-//     } else {
-//         console.log('nop no token')
-//         return of({
-//             type: Boolean,
-//             payload: false
-//           }); 
-//     }
-//   }
+  }
 
 }

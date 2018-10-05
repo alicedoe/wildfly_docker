@@ -13,6 +13,12 @@ export const AU_SET_ROLES = 'AU_SET_ROLES';
 export const AU_CREATE_USER = 'AU_CREATE_USER';
 export const AU_DELETE_USER = 'AU_DELETE_USER';
 export const AU_ADMIN_ERROR = 'AU_ADMIN_ERROR';
+export const AU_CLEAR = 'AU_CLEAR';
+
+export class Clear implements Action {
+  readonly type = AU_CLEAR;
+  constructor() {}
+}
 
 export class SaveUser implements Action {
   readonly type = AU_SAVE_USER;
@@ -70,4 +76,4 @@ export class AdminError implements Action {
 }
 
 export type UserAdminActions = 
-    SaveUser |  EditUser | GetUsers | GetUser | AdminError | SetUsers | SetUser | GetRoles | SetRoles | CreateUser | DeleteUser;
+    SaveUser |  EditUser | GetUsers | GetUser | AdminError | SetUsers | SetUser | GetRoles | SetRoles | CreateUser | DeleteUser | Clear;

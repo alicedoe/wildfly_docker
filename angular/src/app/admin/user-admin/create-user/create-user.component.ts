@@ -26,9 +26,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.roles$ = this.store.select(fromStore.getRoles);
-    this.getEditMode();
-    
+    this.roles$ = this.store.select(fromStore.getRoles);    
     this.error$ = this.store.select(fromStore.getError);
     this.userForm = new FormGroup({
       'name': new FormControl( '', Validators.required ),
@@ -38,21 +36,27 @@ export class CreateUserComponent implements OnInit {
       'password': new FormControl( '', Validators.required )
     });
     
-    if (this.editMode) {
-      this.store.select(fromStore.getUser).subscribe(res=>{
+    this.store.select(fromStore.getEditMode).subscribe(res=>{      
+      this.editMode=res;
+      if (this.editMode) this.fillForm();
+    })   
+  }
+
+  fillForm() {
+      let user: Observable<UserDto> = this.store.select(fromStore.getUser);
+      user.subscribe(res=> {console.log(res) 
+        if (res!== null) {
         this.userForm.get('firstname').setValue(res.firstname);
         this.userForm.get('name').setValue(res.name);
         this.userForm.get('email').setValue(res.email);
         this.userForm.get('role').setValue(res.roleName);
         this.userId = res.id;
-      })
-      this.userForm.controls['password'].clearValidators();
-    } else {
-      this.userForm.controls['password'].setValidators( Validators.required );
-    }
-    this.userForm.get('password').updateValueAndValidity();
-
-    
+        this.userForm.controls['password'].clearValidators();
+        this.userForm.get('password').updateValueAndValidity();  
+        } else {
+          this.userForm.reset();
+        }
+      });    
   }
 
   onSaveUser() {
@@ -79,12 +83,6 @@ export class CreateUserComponent implements OnInit {
     
     
     
-  }
-
-  getEditMode() {
-    this.store.select(fromStore.getEditMode).subscribe(res=>{      
-      this.editMode=res;
-    })
   }
 
 }
