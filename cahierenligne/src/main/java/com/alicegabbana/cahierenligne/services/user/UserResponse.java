@@ -13,7 +13,6 @@ import com.alicegabbana.cahierenligne.dto.UserDto;
 import com.alicegabbana.cahierenligne.entities.User;
 import com.alicegabbana.cahierenligne.services.auth.AuthServiceLocal;
 import com.alicegabbana.cahierenligne.services.role.RoleException;
-import com.alicegabbana.cahierenligne.services.role.RoleService;
 import com.alicegabbana.cahierenligne.services.role.RoleServiceLocal;
 import com.alicegabbana.cahierenligne.services.setting.SettingException;
 

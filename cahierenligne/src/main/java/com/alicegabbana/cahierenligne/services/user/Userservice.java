@@ -181,7 +181,7 @@ public class Userservice implements UserServiceLocal, UserServiceRemote {
 				token = returnTokenUserByEmail(userDto.getEmail());
 			}
 			User user = dtoToDao(userDto);
-			if ( !userDto.getPwd().equals("") ) {
+			if ( userDto.getPwd() != null && !userDto.getPwd().equals("")  ) {
 				String hashPwd = hashPassword(userDto.getPwd());
 				user.setPwd(hashPwd);
 			} else {
