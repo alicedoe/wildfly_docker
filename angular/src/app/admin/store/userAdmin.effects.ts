@@ -21,9 +21,6 @@ export class UserAdminEffects {
         return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/getall')
         
         .pipe(
-
-          map(res => res),
-
           mergeMap((authData) => {
             return [
               { type: UserAdminAction.AU_SET_USERS,
@@ -47,7 +44,6 @@ export class UserAdminEffects {
     .pipe(
       switchMap(() => {
         return this.httpClient.get('http://172.17.0.3:8080/application/v1/role/getall').pipe(
-          map(res => res),
           mergeMap((authData) => {
             return [
               { type: UserAdminAction.AU_SET_ROLES,
@@ -67,11 +63,10 @@ export class UserAdminEffects {
   editUser$ = this.actions$
     .ofType(UserAdminAction.AU_EDIT_USER)
     .pipe(
-      switchMap((authData: { id: number }) => {
-        return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/get/'+authData.id)        
+      switchMap( (actionParam: { id: number }) => {
+        return this.httpClient.get('http://172.17.0.3:8080/application/v1/user/get/'+actionParam.id)        
         .pipe(
-          map(res => res),
-          mergeMap((authData) => {
+          mergeMap( authData => {
             return [
               { type: UserAdminAction.AU_SET_USER,
                 payload: authData }
@@ -89,11 +84,10 @@ export class UserAdminEffects {
   saveUser$ = this.actions$
     .ofType(UserAdminAction.AU_SAVE_USER)
     .pipe(
-      switchMap((authData: { newUser: UserDto }) => {
-        return this.httpClient.put('http://172.17.0.3:8080/application/v1/user/update/', authData.newUser)        
+      switchMap((actionParam: { newUser: UserDto }) => {
+        return this.httpClient.put('http://172.17.0.3:8080/application/v1/user/update/', actionParam.newUser)        
         .pipe(
-          map(res => res),
-          mergeMap((authData) => {
+          mergeMap(() => {
             return [{
               type: UserAdminAction.AU_GET_USERS
             },{
@@ -114,10 +108,8 @@ export class UserAdminEffects {
   createUser$ = this.actions$
     .ofType(UserAdminAction.AU_CREATE_USER)
     .pipe(
-      switchMap((createUser) => {
-        console.log(createUser);
-        return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/add', createUser['newUser']).pipe(
-          map(res => res),
+      switchMap((actionParam: { newUser:UserDto }) => {
+        return this.httpClient.post('http://172.17.0.3:8080/application/v1/user/add', actionParam.newUser).pipe(
           mergeMap(() => {
             return [{
               type: UserAdminAction.AU_GET_USERS
@@ -139,9 +131,8 @@ export class UserAdminEffects {
   deleteUser$ = this.actions$
     .ofType(UserAdminAction.AU_DELETE_USER)
     .pipe(
-      switchMap((authData: { id: string }) => {
-        return this.httpClient.delete('http://172.17.0.3:8080/application/v1/user/delete/'+authData.id).pipe(
-          map(res => res),
+      switchMap((actionParam: { id: string }) => {
+        return this.httpClient.delete('http://172.17.0.3:8080/application/v1/user/delete/'+actionParam.id).pipe(
           mergeMap(() => {
             return [{
               type: UserAdminAction.AU_GET_USERS
