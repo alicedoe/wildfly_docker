@@ -2,7 +2,7 @@
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
     <p *ngIf="(error$ | async)">{{ (error | async) }}</p>
     
-    <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
+    <!-- <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
       <div class="form-group">
         <label for="firstname">First Name</label>
         <input type="text" id="firstname" name="firstname" formControlName="firstname" class="form-control">
@@ -30,7 +30,55 @@
       <button
             type="submit"
             class="btn btn-success"
-            [disabled]="!userForm.valid">{{ editMode ? "Edit user" : "Create user" }}</button>
-    </form>
+            [disabled]="!userForm.valid">{{ (editMode$ | async) ? "Edit user" : "Create user" }}</button>
+      <button
+            type="button"
+            (click)="onCancel()"
+            class="btn btn-danger"
+            >Cancel</button>
+    </form> -->
   </div>
 </div>
+
+<!-- Modal -->
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="onCancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
+    <div class="modal-body">
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input type="text" id="firstname" name="firstname" formControlName="firstname" class="form-control">
+          <label for="name">Last Name</label>
+          <input type="text" id="name" name="name" formControlName="name" class="form-control">
+          <label for="email">email</label>
+          <input type="email" id="email" name="email" formControlName="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="role">role</label>
+          <select id="role" name="role" formControlName="role">
+            <option value="{{role.name}}" *ngFor="let role of (roles$ | async)">{{role.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            formControlName="password"
+            [placeholder]="editMode ? 'Laissez vide si vous ne changez pas le mdp' : ''"
+            class="form-control">
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="onCancel()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-success" [disabled]="!userForm.valid">Save changes</button>
+    </div>
+  </form>
+</ng-template>
