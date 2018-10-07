@@ -1,0 +1,11 @@
+#tbl_list-users .mt-4 {
+    margin: 0!important;
+}
+
+#tbl_list-users {
+    text-align: center;
+}
+
+#tbl_list-users td {
+    padding: .2rem;
+}

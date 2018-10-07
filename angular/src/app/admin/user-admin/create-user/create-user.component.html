@@ -1,47 +1,7 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-    <p *ngIf="(error$ | async)">{{ (error | async) }}</p>
-    
-    <!-- <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
-      <div class="form-group">
-        <label for="firstname">First Name</label>
-        <input type="text" id="firstname" name="firstname" formControlName="firstname" class="form-control">
-        <label for="name">Last Name</label>
-        <input type="text" id="name" name="name" formControlName="name" class="form-control">
-        <label for="email">email</label>
-        <input type="email" id="email" name="email" formControlName="email" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="role">role</label>
-        <select id="role" name="role" formControlName="role">
-          <option value="{{role.name}}" *ngFor="let role of (roles$ | async)">{{role.name}}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          formControlName="password"
-          [placeholder]="editMode ? 'Laissez vide si vous ne changez pas le mdp' : ''"
-          class="form-control">
-      </div>
-      <button
-            type="submit"
-            class="btn btn-success"
-            [disabled]="!userForm.valid">{{ (editMode$ | async) ? "Edit user" : "Create user" }}</button>
-      <button
-            type="button"
-            (click)="onCancel()"
-            class="btn btn-danger"
-            >Cancel</button>
-    </form> -->
-  </div>
+<div id="create-user" class="row">
+  <button type="button" class="btn btn-success" (click)="openModal(modal)">Create new user<i class="fa fa-user-plus" aria-hidden="true"></i></button>
 </div>
 
-<!-- Modal -->
-<button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Modal</h4>

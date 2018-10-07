@@ -1,0 +1,9 @@
+#create-user {
+    justify-content: center;
+    padding: 2rem;
+}
+
+#create-user_error {
+    color: red;
+    font-weight: bold;
+}
