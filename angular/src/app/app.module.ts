@@ -14,6 +14,7 @@ import { AdminModule } from './admin/admin.module';
 import { UserAdminEffects } from './admin/store/userAdmin.effects';
 import { ModalModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -35,6 +36,7 @@ export const metaReducers: MetaReducer<any>[] = [debug];
     AdminModule,
     SharedModule,
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
     AuthModule,

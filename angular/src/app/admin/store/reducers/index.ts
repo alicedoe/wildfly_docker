@@ -24,6 +24,9 @@ export const getEditMode = createSelector(
 export const getError = createSelector(
     getUserAdminState, fromUserAdmin.getError
 );
+export const getStatus = createSelector(
+    getUserAdminState, fromUserAdmin.getStatus
+);
 export const getRoles = createSelector(
     getUserAdminState, fromUserAdmin.getRoles
 );

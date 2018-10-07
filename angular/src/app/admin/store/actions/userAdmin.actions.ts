@@ -13,6 +13,7 @@ export const AU_SET_ROLES = 'AU_SET_ROLES';
 export const AU_CREATE_USER = 'AU_CREATE_USER';
 export const AU_DELETE_USER = 'AU_DELETE_USER';
 export const AU_ADMIN_ERROR = 'AU_ADMIN_ERROR';
+export const AU_ADMIN_STATUS = 'AU_ADMIN_STATUS';
 export const AU_CLEAR = 'AU_CLEAR';
 
 export class Clear implements Action {
@@ -62,7 +63,7 @@ export class GetUsers implements Action {
 
 export class SetUsers implements Action {
     readonly type = AU_SET_USERS;
-    constructor(public payload: Array<UserDto>) {}
+    constructor(public payload: Array<UserDto>, public status: string) {}
   }
 
 export class SetUser implements Action {
@@ -75,5 +76,10 @@ export class AdminError implements Action {
   constructor(public payload: string) {}
 }
 
+export class AdminStatus implements Action {
+  readonly type = AU_ADMIN_STATUS;
+  constructor(public payload: string) {}
+}
+
 export type UserAdminActions = 
-    SaveUser |  EditUser | GetUsers | GetUser | AdminError | SetUsers | SetUser | GetRoles | SetRoles | CreateUser | DeleteUser | Clear;
+    SaveUser |  EditUser | GetUsers | GetUser | AdminError | AdminStatus | SetUsers | SetUser | GetRoles | SetRoles | CreateUser | DeleteUser | Clear;

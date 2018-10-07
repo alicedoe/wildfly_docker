@@ -94,7 +94,10 @@ export class UserAdminEffects {
               type: UserAdminAction.AU_SET_USERS
             },{
               type: UserAdminAction.AU_CLEAR
-            }] }) , // mergemap
+            },
+            {
+              type: UserAdminAction.AU_ADMIN_STATUS,
+              payload: "Utilisateur mis à jour avec succès"}] }) , // mergemap
           catchError((err: HttpErrorResponse) => {
               return ([
                 {type: UserAdminAction.AU_CLEAR},
@@ -116,7 +119,12 @@ export class UserAdminEffects {
               type: UserAdminAction.AU_GET_USERS
             },{
               type: UserAdminAction.AU_SET_USERS
-            }]
+            },{
+              type: UserAdminAction.AU_CLEAR
+            },
+            {
+              type: UserAdminAction.AU_ADMIN_STATUS,
+              payload: "Utilisateur créé avec succès"}]
           }) , //mergemap
           catchError((err: HttpErrorResponse) => {
             return ([
@@ -140,7 +148,8 @@ export class UserAdminEffects {
             return [{
               type: UserAdminAction.AU_GET_USERS
             },{
-              type: UserAdminAction.AU_SET_USERS
+              type: UserAdminAction.AU_SET_USERS,
+              payload: "Utilisateur supprimé avec succès"
             }];              
           }) , //mergemap
           catchError((err: HttpErrorResponse) => {

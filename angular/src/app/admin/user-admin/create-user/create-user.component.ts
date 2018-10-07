@@ -20,6 +20,7 @@ export class CreateUserComponent implements OnInit {
 
   roles$: Observable<Array<RoleDto>>;
   error$: Observable<string>;
+  status$: Observable<string>;
   editMode$: Observable<boolean>;
   userToEdit$: Observable<UserDto>;
   userForm: FormGroup;  
@@ -32,7 +33,8 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit() {
     this.roles$ = this.store.select(fromStore.getRoles);    
-    this.error$ = this.store.select(fromStore.getError);   
+    this.error$ = this.store.select(fromStore.getError);  
+    this.status$ = this.store.select(fromStore.getStatus); 
     this.editMode$ = this.store.select(fromStore.getEditMode);
     this.userToEdit$ = this.store.select(fromStore.getUser);
     this.initForm();
@@ -44,11 +46,15 @@ export class CreateUserComponent implements OnInit {
       }
     })
 
-    this.toastr.success('Utilisateur créé avec succès !');
-
     this.error$.subscribe( res => {
-      if ( res!== null) {
-        
+      if ( res !== null ) {        
+        this.toastr.error(res);
+      }
+    })
+
+    this.status$.subscribe( res => {
+      if ( res !== null ) {        
+        this.toastr.success(res);
       }
     })
   }

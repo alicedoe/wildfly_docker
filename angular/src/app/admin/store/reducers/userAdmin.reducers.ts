@@ -8,9 +8,11 @@ export interface UserAdminState {
     error: string;
     user: UserDto;
     edit: boolean;
+    status: string;
   }
 
 const initialState: UserAdminState = {
+    status: null,
     users: null,
     roles: null,
     error: null,
@@ -35,6 +37,11 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
                     error: "Email déjà enregistré"
                 };
             }
+        case (UserAdminActions.AU_ADMIN_STATUS):
+            return {
+                ...state,
+                status: action.payload
+            };
         case (UserAdminActions.AU_CLEAR):
             return {
                 ...state,
@@ -77,5 +84,6 @@ export function userAdminReducer(state = initialState, action: UserAdminActions.
 export const getRoles = (userAdminState : UserAdminState) => userAdminState.roles;
 export const getUsers = (userAdminState : UserAdminState) => userAdminState.users;
 export const getError = (userAdminState : UserAdminState) => userAdminState.error;
+export const getStatus = (userAdminState : UserAdminState) => userAdminState.status;
 export const getUser = (userAdminState : UserAdminState) => userAdminState.user;
 export const getEditMode = (userAdminState : UserAdminState) => userAdminState.edit;
