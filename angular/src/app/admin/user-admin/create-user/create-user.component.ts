@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import {SnotifyService} from 'ng-snotify';
 
 import * as fromStore from '../../store';
 import * as UserAdminActions from '../../store/actions/userAdmin.actions';
@@ -27,7 +26,7 @@ export class CreateUserComponent implements OnInit {
   modalRef: BsModalRef;
   @ViewChild('modal') modal; 
 
-  constructor(private store: Store<fromStore.UserAdminState>, private modalService: BsModalService, private snotifyService: SnotifyService) {
+  constructor(private store: Store<fromStore.UserAdminState>, private modalService: BsModalService) {
   }
 
   ngOnInit() {
@@ -46,12 +45,7 @@ export class CreateUserComponent implements OnInit {
 
     this.error$.subscribe( res => {
       if ( res!== null) {
-        this.snotifyService.error(res, {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
+        
       }
     })
   }
