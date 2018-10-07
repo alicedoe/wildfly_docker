@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
 import { UserAdminEffects } from './admin/store/userAdmin.effects';
 import { ModalModule } from 'ngx-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -39,7 +40,12 @@ export const metaReducers: MetaReducer<any>[] = [debug];
     AuthModule,
     StoreModule.forRoot({}, {metaReducers}),
     EffectsModule.forRoot([SchoolEffects, AuthEffects, UserAdminEffects]),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-center',
+      progressBar: true
+    })
   ],
   bootstrap: [AppComponent]
 })
