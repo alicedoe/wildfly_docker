@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {SnotifyService} from 'ng-snotify';
 
 import * as fromStore from '../../store';
 import * as UserAdminActions from '../../store/actions/userAdmin.actions';
@@ -18,7 +19,7 @@ import { UserDto } from '../../../shared/models/userDto.model';
 export class CreateUserComponent implements OnInit {
 
   roles$: Observable<Array<RoleDto>>;
-  error$: Observable<String>;
+  error$: Observable<string>;
   editMode$: Observable<boolean>;
   userToEdit$: Observable<UserDto>;
   userForm: FormGroup;  
@@ -26,7 +27,7 @@ export class CreateUserComponent implements OnInit {
   modalRef: BsModalRef;
   @ViewChild('modal') modal; 
 
-  constructor(private store: Store<fromStore.UserAdminState>, private modalService: BsModalService) {
+  constructor(private store: Store<fromStore.UserAdminState>, private modalService: BsModalService, private snotifyService: SnotifyService) {
   }
 
   ngOnInit() {
@@ -40,6 +41,17 @@ export class CreateUserComponent implements OnInit {
       if (res) {
         this.fillForm();
         this.openModal(this.modal);
+      }
+    })
+
+    this.error$.subscribe( res => {
+      if ( res!== null) {
+        this.snotifyService.error(res, {
+          timeout: 2000,
+          showProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true
+        });
       }
     })
   }
@@ -83,7 +95,6 @@ export class CreateUserComponent implements OnInit {
       this.userForm.value['password'],
       this.userForm.value['role']
     );
-
     if ( this.isEditModeTrue() ) {
       user.id = this.userIdToEdit;
       this.store.dispatch(new UserAdminActions.SaveUser(user));
@@ -95,10 +106,12 @@ export class CreateUserComponent implements OnInit {
   }
 
   isEditModeTrue() {
+    let edit;
     this.editMode$.subscribe( res => {
-      if (res) return true; 
-      else return false;
+      if (res) edit=true; 
+      else edit=false;
     })
+    return edit;
   }
 
   onCancel() {
