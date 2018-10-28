@@ -15,12 +15,13 @@ import { UserAdminEffects } from './admin/store/userAdmin.effects';
 import { ModalModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state, action) {
-    console.log('state', state);
-    console.log('action', action);
+    // console.log('state', state);
+    // console.log('action', action);
 
     return reducer(state, action);
   };
@@ -41,6 +42,9 @@ export const metaReducers: MetaReducer<any>[] = [debug];
     CoreModule,
     AuthModule,
     StoreModule.forRoot({}, {metaReducers}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10
+    }),
     EffectsModule.forRoot([SchoolEffects, AuthEffects, UserAdminEffects]),
     ModalModule.forRoot(),
     ToastrModule.forRoot({

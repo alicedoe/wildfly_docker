@@ -41,19 +41,22 @@ export class CreateUserComponent implements OnInit {
     
     this.editMode$.subscribe( res => {
       if (res) {
+        console.log("this.editMode$ : "+res) 
         this.fillForm();
         this.openModal(this.modal);
       }
     })
 
     this.error$.subscribe( res => {
-      if ( res !== null ) {        
+      if ( res !== null ) {            
+        console.log("this.error$ : "+res)        
         this.toastr.error(res);
       }
     })
 
     this.status$.subscribe( res => {
-      if ( res !== null ) {        
+      if ( res !== null ) {    
+        console.log("this.status$ : "+res)    
         this.toastr.success(res);
       }
     })

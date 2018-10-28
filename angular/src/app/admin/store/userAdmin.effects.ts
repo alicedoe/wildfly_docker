@@ -148,9 +148,13 @@ export class UserAdminEffects {
             return [{
               type: UserAdminAction.AU_GET_USERS
             },{
-              type: UserAdminAction.AU_SET_USERS,
-              payload: "Utilisateur supprimé avec succès"
-            }];              
+              type: UserAdminAction.AU_SET_USERS
+            },{
+              type: UserAdminAction.AU_CLEAR
+            },
+            {
+              type: UserAdminAction.AU_ADMIN_STATUS,
+              payload: "Utilisateur supprimé avec succès"}];              
           }) , //mergemap
           catchError((err: HttpErrorResponse) => {
             return of(
